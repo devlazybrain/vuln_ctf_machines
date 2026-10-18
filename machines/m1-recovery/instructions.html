@@ -170,7 +170,7 @@ vagrant up            # builds + provisions the VM</code></pre>
 
   <section class="step" id="s5" data-title="Run an assessment">
     <h2><span class="num">5</span>Run an assessment</h2>
-    <p>Give the player the box's <span class="ph">&lt;target-ip&gt;</span> and the challenger brief — <code>challenge.html</code> — which holds the scenario, objective, rules, and a built-in flag checker. The full solution lives in <code>writeups/m1-recovery.html</code> (spoilers).</p>
+    <p>Give the player the box's <span class="ph">&lt;target-ip&gt;</span> and the challenger brief — <code>challenger_instructions.html</code> — which holds the scenario, objective, rules, and a built-in flag checker. The full solution lives in <code>writeups/m1-recovery.html</code> (spoilers).</p>
     <p><b>Reset between players</b> with a VirtualBox snapshot — instant, no rebuild:</p>
     <pre><code>VBoxManage snapshot "lab-m1-recovery" take clean
 # after a player:
@@ -178,7 +178,7 @@ VBoxManage controlvm "lab-m1-recovery" poweroff
 VBoxManage snapshot "lab-m1-recovery" restore clean</code></pre>
     <div class="note">
       <h3>Document set for this box</h3>
-      <p><code>instructions.html</code> (this page — host) · <code>challenge.html</code> (player brief) · <code>writeups/m1-recovery.html</code> (solution)</p>
+      <p><code>instructions.html</code> (this page — host) · <code>challenger_instructions.html</code> (player brief) · <code>writeups/m1-recovery.html</code> (solution)</p>
     </div>
   </section>
 

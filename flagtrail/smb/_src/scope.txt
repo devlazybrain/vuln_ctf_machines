@@ -1,4 +1,0 @@
-In scope : this VM only (web, SSH, SMB, and anything bound to localhost)
-Out of scope: the host machine, the LAN, the internet, other candidates' VMs
-Flags    : 6 total, formatted FLAG{...}
-Contact  : security@doppiomart.local

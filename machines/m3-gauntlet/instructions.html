@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>gauntlet – Instructions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#e9f7ec; --bg2:#d8f3dc; --card:#fbfffc; --ink:#081c15; --muted:#2d6a4f; --line:#b7e4c7;
+  --accent:#0077b6; --accent2:#00b4d8; --accentink:#ffffff;
+  --ok:#1b4332; --okbg:#d8f3dc; --okline:#40916c; --bad:#a4133c; --badbg:#ffccd5; --badline:#ff4d6d;
+  --code:#e4f3e9; --codeink:#0b2e22; --why:#e3f6fb; --whyline:#00b4d8;
+  --hero1:#081c15; --hero2:#1b4332; --hero3:#2d6a4f; --shadow:0 10px 30px -14px rgba(8,28,21,.45);
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#06140f; --bg2:#081c15; --card:#0e281d; --ink:#d8f3dc; --muted:#95d5b2; --line:#1f4a38;
+  --accent:#48cae4; --accent2:#90e0ef; --accentink:#03045e; --ok:#b7e4c7; --okbg:#123024; --okline:#52b788;
+  --bad:#ffb3c1; --badbg:#590d22; --badline:#ff4d6d; --code:#030d09; --codeink:#caf0f8; --why:#0b2a36; --whyline:#48cae4;
+  --hero1:#030d09; --hero2:#123024; --hero3:#1b4332; --shadow:0 12px 32px -16px rgba(0,0,0,.8);
+}}
+:root[data-theme="dark"]{
+  --bg:#06140f; --bg2:#081c15; --card:#0e281d; --ink:#d8f3dc; --muted:#95d5b2; --line:#1f4a38;
+  --accent:#48cae4; --accent2:#90e0ef; --accentink:#03045e; --ok:#b7e4c7; --okbg:#123024; --okline:#52b788;
+  --bad:#ffb3c1; --badbg:#590d22; --badline:#ff4d6d; --code:#030d09; --codeink:#caf0f8; --why:#0b2a36; --whyline:#48cae4;
+  --hero1:#030d09; --hero2:#123024; --hero3:#1b4332; --shadow:0 12px 32px -16px rgba(0,0,0,.8);
+}
+html{min-height:100%;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 76px);scroll-behavior:smooth}
+body{margin:0;color:var(--ink);font:16px/1.6 "Figtree","Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+  background:radial-gradient(1200px 500px at 85% -5%,rgba(0,180,216,.18),transparent 60%),linear-gradient(180deg,var(--bg2),var(--bg) 420px);background-color:var(--bg)}
+main{max-width:780px;margin:0 auto;padding:0 14px 90px}
+header{margin:0 -14px 18px;padding:34px 22px 30px;color:#d8f3dc;border-radius:0 0 28px 28px;position:relative;overflow:hidden;
+  background:linear-gradient(135deg,var(--hero1) 0%,var(--hero2) 55%,var(--hero3) 100%)}
+header::after{content:"";position:absolute;right:-70px;top:-70px;width:240px;height:240px;border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,#90e0ef,#00b4d8 45%,#0077b6 75%,transparent 76%);opacity:.9}
+header::before{content:"";position:absolute;right:60px;bottom:-60px;width:130px;height:130px;border-radius:50%;background:#52b788;opacity:.35}
+.eyebrow{position:relative;z-index:1;margin:0 0 8px;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:#90e0ef;font-weight:700}
+h1{font-family:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;font-size:clamp(1.9rem,6vw,2.7rem);line-height:1.05;margin:0 0 10px;letter-spacing:-.02em;font-weight:800;position:relative;z-index:1;max-width:80%}
+header p{margin:0;max-width:34em;color:#b7e4c7;position:relative;z-index:1}
+header p b{color:#90e0ef}
+.ph{color:var(--accent2);font-weight:700}
+.bar{position:sticky;top:calc(env(safe-area-inset-top,0px) + 8px);z-index:5;margin:0 -8px 18px;padding:10px 14px;border-radius:14px;
+  background:color-mix(in srgb,var(--card) 88%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  border:1px solid var(--line);box-shadow:var(--shadow);display:grid;grid-template-columns:1fr auto auto;gap:6px 12px;align-items:center}
+.score{font-weight:700;font-size:.92rem}
+.track{grid-column:1 / -1;height:8px;border-radius:99px;background:var(--line);overflow:hidden}
+.fill{height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,#40916c,#52b788,#00b4d8);transition:width .4s ease}
+.bar button{font:inherit;font-weight:600;font-size:.88rem;padding:6px 12px;border-radius:10px;border:1px solid var(--line);background:transparent;color:var(--ink);cursor:pointer}
+.bar button:hover{border-color:var(--accent);color:var(--accent)}
+.bar button:focus-visible{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent2) 45%,transparent)}
+section.step{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px 20px 18px;margin:0 0 20px;box-shadow:var(--shadow)}
+section.step h2{font-family:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;font-size:1.25rem;font-weight:700;margin:0 0 10px;display:flex;align-items:center;gap:12px;letter-spacing:-.01em}
+.num{flex:none;display:inline-grid;place-items:center;width:36px;height:36px;border-radius:12px;font-size:1rem;font-weight:800;color:#fff;background:linear-gradient(135deg,#2d6a4f,#0096c7)}
+section.step p{margin:10px 0}
+ul{margin:10px 0;padding-left:1.3em}
+li{margin:6px 0}
+pre{position:relative;background:var(--code);color:var(--codeink);padding:14px 46px 14px 16px;border-radius:14px;overflow-x:auto;margin:12px 0;font:13.5px/1.55 ui-monospace,Menlo,Consolas,monospace;max-width:100%;border:1px solid var(--line);border-left:4px solid #00b4d8}
+pre code{background:none;padding:0;color:inherit;white-space:pre}
+code{font:0.9em ui-monospace,Menlo,Consolas,monospace;background:var(--why);padding:1px 6px;border-radius:6px;color:var(--ink)}
+.copy{position:absolute;top:8px;right:8px;font:inherit;font-size:.72rem;font-weight:600;cursor:pointer;border:1px solid var(--line);border-radius:8px;padding:3px 8px;background:var(--card);color:var(--muted)}
+.copy.done{color:var(--okline);border-color:var(--okline)}
+.note{margin-top:14px;background:var(--why);border:1px solid color-mix(in srgb,var(--whyline) 35%,transparent);border-left:5px solid var(--whyline);padding:12px 16px;border-radius:14px}
+.note h3{margin:0 0 6px;font-family:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;font-size:1.02rem}
+.sig{margin:30px 0 0;text-align:center;font-size:.85rem;color:var(--muted)}
+.sig a{color:var(--accent);text-decoration:none;font-weight:700}
+.sig a:hover{text-decoration:underline}
+@media (prefers-reduced-motion:reduce){.fill{transition:none}html{scroll-behavior:auto}}
+@media (max-width:520px){section.step{padding:16px 14px}h1{max-width:100%}header::after{opacity:.5}}
+.side{display:none}
+@media (min-width:1180px){
+  .side{display:block;position:fixed;top:calc(env(safe-area-inset-top,0px) + 96px);left:calc(50% - 390px - 240px);width:216px;box-sizing:border-box;padding:14px;border-radius:20px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);z-index:4}
+  .side h2{font-family:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;font-size:1.05rem;margin:0 0 10px}
+  .chips{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+  .chips a{aspect-ratio:1;display:grid;place-items:center;border-radius:10px;border:1.5px solid var(--line);color:var(--ink);text-decoration:none;font-weight:700;font-size:.9rem;transition:border-color .15s,transform .15s}
+  .chips a:hover{border-color:var(--accent2);transform:translateY(-1px)}
+  .chips a.here{box-shadow:0 0 0 3px color-mix(in srgb,var(--accent2) 55%,transparent);border-color:var(--accent)}
+  .now{margin:12px 0 0;font-size:.82rem;color:var(--muted);line-height:1.35;min-height:2.2em}
+  .metacard{margin-top:12px;padding-top:12px;border-top:1px solid var(--line)}
+  .metarow{display:flex;justify-content:space-between;gap:8px;font-size:.84rem;padding:3px 0}
+  .metarow b{color:var(--muted);font-weight:600}
+  .tag{display:inline-block;font-size:.72rem;font-weight:600;padding:2px 8px;border-radius:99px;background:var(--bg2);border:1px solid var(--line);color:var(--muted);margin:6px 4px 0 0}
+}
+.skip{position:absolute;left:-999px}
+.skip:focus{left:14px;top:14px;z-index:40;background:var(--card);color:var(--ink);padding:8px 12px;border-radius:10px;border:1px solid var(--line)}
+</style>
+</head>
+<body id="top">
+<a href="#s1" class="skip">Skip to setup</a>
+
+<nav class="side" aria-label="Sections">
+  <h2>Sections</h2>
+  <div class="chips" id="chips"></div>
+  <p class="now" id="now">1 · What this box is</p>
+  <div class="metacard">
+    <div class="metarow"><b>Level</b><span>Medium</span></div>
+    <div class="metarow"><b>OS</b><span>Debian 12</span></div>
+    <div class="metarow"><b>Flags</b><span>user + root</span></div>
+    <div><span class="tag">SQLi</span><span class="tag">cracking</span><span class="tag">privesc</span></div>
+  </div>
+</nav>
+
+<main>
+<header>
+  <p class="eyebrow">Practice Lab · Instructions</p>
+  <h1>gauntlet</h1>
+  <p>How to build, run, and host this box. No solutions here — the full walkthrough is in <code>writeups/m3-gauntlet.html</code>.</p>
+</header>
+
+<div class="bar">
+  <span class="score" id="score">Section 1 / 5</span>
+  <button id="themeBtn" type="button">Theme</button>
+  <button id="topBtn" type="button">Top</button>
+  <div class="track"><div class="fill" id="fill"></div></div>
+</div>
+
+<div id="doc">
+
+  <section class="step" id="s1" data-title="What this box is">
+    <h2><span class="num">1</span>What this box is</h2>
+    <p><b>gauntlet</b> is the medium machine in the set — a Debian VM with a PHP + MariaDB web app. The chain is SQL injection into credential cracking, then a two-step privilege escalation. The best test of methodology in the set.</p>
+    <p>Self-contained and offline once built. Runs on a laptop or a headless server VM.</p>
+  </section>
+
+  <section class="step" id="s2" data-title="Requirements">
+    <h2><span class="num">2</span>Requirements</h2>
+    <pre><code># Debian / Ubuntu / Kali
+sudo apt update &amp;&amp; sudo apt install -y virtualbox vagrant</code></pre>
+    <p>About 1&nbsp;GB RAM and ~5&nbsp;GB disk while building. Players will want <code>rockyou.txt</code> for the cracking step (ships with Kali).</p>
+  </section>
+
+  <section class="step" id="s3" data-title="Build the box">
+    <h2><span class="num">3</span>Build the box</h2>
+    <pre><code>cd machines/m3-gauntlet
+vagrant up</code></pre>
+    <p>Export a portable <span class="ph">.ova</span> with the helper from <code>machines/</code>:</p>
+    <pre><code>cd machines
+./build-all.sh m3-gauntlet      # -&gt; machines/ova/lab-m3-gauntlet.ova</code></pre>
+    <div class="note"><h3>Note</h3>The build disables the Vagrant provisioning account before export, so there is no build-time backdoor.</div>
+  </section>
+
+  <section class="step" id="s4" data-title="Run it &amp; get the IP">
+    <h2><span class="num">4</span>Run it &amp; get the IP</h2>
+    <p>Import the <code>.ova</code>, set the adapter to a <b>Host-only</b> network (never expose it to the internet), and boot. Find the IP from the host:</p>
+    <pre><code>sudo nmap -sn 192.168.56.0/24</code></pre>
+    <p>That address is the challenger's <span class="ph">&lt;target-ip&gt;</span>.</p>
+    <div class="note"><h3>Headless / server</h3><code>VBoxManage startvm "lab-m3-gauntlet" --type headless</code></div>
+  </section>
+
+  <section class="step" id="s5" data-title="Run an assessment">
+    <h2><span class="num">5</span>Run an assessment</h2>
+    <p>Give the player the <span class="ph">&lt;target-ip&gt;</span> and the challenger brief — <code>challenger_instructions.html</code> — which has the scenario, objective, rules, and a built-in flag checker. The solution is <code>writeups/m3-gauntlet.html</code> (spoilers).</p>
+    <p><b>Reset between players</b> with a snapshot:</p>
+    <pre><code>VBoxManage snapshot "lab-m3-gauntlet" take clean
+VBoxManage controlvm "lab-m3-gauntlet" poweroff
+VBoxManage snapshot "lab-m3-gauntlet" restore clean</code></pre>
+    <div class="note"><h3>Document set for this box</h3><p><code>instructions.html</code> (host) · <code>challenger_instructions.html</code> (player) · <code>writeups/m3-gauntlet.html</code> (solution)</p></div>
+  </section>
+
+</div>
+
+<footer class="sig">Practice lab by <a href="https://github.com/devlazybrain" target="_blank" rel="noopener">devlazybrain</a></footer>
+</main>
+
+<script>
+(function(){
+  "use strict";
+  var root=document.documentElement;
+  document.getElementById("themeBtn").addEventListener("click",function(){var s=root.getAttribute("data-theme");var cur=s?s:(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light");root.setAttribute("data-theme",cur==="dark"?"light":"dark");});
+  document.getElementById("topBtn").addEventListener("click",function(){window.scrollTo({top:0,behavior:(matchMedia("(prefers-reduced-motion:reduce)").matches?"auto":"smooth")});});
+  document.querySelectorAll("pre").forEach(function(pre){var b=document.createElement("button");b.className="copy";b.type="button";b.textContent="copy";b.addEventListener("click",function(){var t=pre.querySelector("code").innerText;if(navigator.clipboard)navigator.clipboard.writeText(t).then(function(){b.textContent="copied";b.classList.add("done");setTimeout(function(){b.textContent="copy";b.classList.remove("done");},1400);});});pre.appendChild(b);});
+  var steps=[].slice.call(document.querySelectorAll("section.step"));
+  var chips=document.getElementById("chips"),now=document.getElementById("now"),score=document.getElementById("score"),fill=document.getElementById("fill");
+  steps.forEach(function(s,i){var a=document.createElement("a");a.href="#"+s.id;a.textContent=(i+1);a.setAttribute("aria-label","Section "+(i+1)+": "+s.dataset.title);chips.appendChild(a);});
+  var links=[].slice.call(chips.children);
+  function setActive(i){links.forEach(function(a,j){a.classList.toggle("here",j===i);});now.textContent=(i+1)+" · "+steps[i].dataset.title;score.textContent="Section "+(i+1)+" / "+steps.length;fill.style.width=(((i+1)/steps.length)*100)+"%";}
+  setActive(0);
+  if("IntersectionObserver" in window){var io=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting){var i=steps.indexOf(x.target);if(i>=0)setActive(i);}});},{rootMargin:"-45% 0px -50% 0px",threshold:0});steps.forEach(function(s){io.observe(s);});}
+})();
+</script>
+</body>
+</html>
