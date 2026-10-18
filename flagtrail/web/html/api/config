@@ -1,0 +1,18 @@
+{
+  "app": "doppiomart-api",
+  "env": "staging",
+  "debug": true,
+  "database": {
+    "host": "127.0.0.1",
+    "port": 5432,
+    "name": "doppiomart",
+    "user": "app_ro",
+    "password": "pg_ro_demo_only"
+  },
+  "deploy": {
+    "_comment": "SSH used by the deploy pipeline. Rotate before go-live.",
+    "ssh_host": "127.0.0.1",
+    "ssh_username": "hasker",
+    "ssh_password": "DoppiPomidor!27"
+  }
+}

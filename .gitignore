@@ -1,0 +1,19 @@
+# Never commit base images, built machines, or VM state — too big / not source
+iso/
+ova/
+*.iso
+*.ova
+*.box
+*.vmdk
+*.vdi
+.vagrant/
+
+# Build artifacts / archives
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+
+# Editor / OS noise
+*.swp
+.DS_Store
