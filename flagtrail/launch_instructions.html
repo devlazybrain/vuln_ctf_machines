@@ -132,7 +132,7 @@ nmap -p 22,80,445 192.168.56.0/24 --open</pre>
   <ul>
     <li>Points a browser / <code>curl</code> at <code>http://&lt;IP&gt;/</code> and enumerates.</li>
     <li>Pulls the brief from the anonymous SMB share: <code>smbclient //&lt;IP&gt;/public -N</code>.</li>
-    <li>Works the chain to root and submits each flag in the <b>Flag Checker</b> page (<code>challenger.html</code>).</li>
+    <li>Works the chain to root and submits each flag in the <b>Flag Checker</b> page (<code>challenger_instruction.html</code>).</li>
   </ul>
   <p>The checker validates flags by salted hash locally — candidates can't read the answers from its source.</p>
 </div></div>
