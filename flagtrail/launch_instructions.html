@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FlagTrail – Launch Instructions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#e9f7ec;--bg2:#d8f3dc;--card:#fbfffc;--ink:#081c15;--muted:#2d6a4f;--line:#b7e4c7;
+  --accent:#0077b6;--accent2:#00b4d8;--ok:#1b4332;--okbg:#d8f3dc;--okline:#40916c;
+  --bad:#a4133c;--badbg:#ffccd5;--badline:#ff4d6d;--code:#e4f3e9;--codeink:#0b2e22;--why:#e3f6fb;--whyline:#00b4d8;
+  --hero1:#081c15;--hero2:#1b4332;--hero3:#2d6a4f;--shadow:0 10px 30px -14px rgba(8,28,21,.45);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#06140f;--bg2:#081c15;--card:#0e281d;--ink:#d8f3dc;--muted:#95d5b2;--line:#1f4a38;
+  --accent:#48cae4;--accent2:#90e0ef;--ok:#b7e4c7;--okbg:#123024;--okline:#52b788;
+  --bad:#ffb3c1;--badbg:#590d22;--badline:#ff4d6d;--code:#030d09;--codeink:#caf0f8;--why:#0b2a36;--whyline:#48cae4;
+  --hero1:#030d09;--hero2:#123024;--hero3:#1b4332;--shadow:0 12px 32px -16px rgba(0,0,0,.8);}}
+:root[data-theme="dark"]{
+  --bg:#06140f;--bg2:#081c15;--card:#0e281d;--ink:#d8f3dc;--muted:#95d5b2;--line:#1f4a38;
+  --accent:#48cae4;--accent2:#90e0ef;--ok:#b7e4c7;--okbg:#123024;--okline:#52b788;
+  --bad:#ffb3c1;--badbg:#590d22;--badline:#ff4d6d;--code:#030d09;--codeink:#caf0f8;--why:#0b2a36;--whyline:#48cae4;
+  --hero1:#030d09;--hero2:#123024;--hero3:#1b4332;--shadow:0 12px 32px -16px rgba(0,0,0,.8);}
+html{min-height:100%;scroll-padding-top:16px;scroll-behavior:smooth}
+body{margin:0;color:var(--ink);font:16px/1.6 "Figtree","Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+  background:radial-gradient(1200px 500px at 85% -5%,rgba(0,180,216,.18),transparent 60%),linear-gradient(180deg,var(--bg2),var(--bg) 420px);background-color:var(--bg)}
+main{max-width:800px;margin:0 auto;padding:0 14px 90px}
+header{margin:0 -14px 18px;padding:34px 22px 30px;color:#d8f3dc;border-radius:0 0 28px 28px;position:relative;overflow:hidden;
+  background:linear-gradient(135deg,var(--hero1) 0%,var(--hero2) 55%,var(--hero3) 100%)}
+header::after{content:"";position:absolute;right:-70px;top:-70px;width:240px;height:240px;border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,#90e0ef,#00b4d8 45%,#0077b6 75%,transparent 76%);opacity:.9}
+header::before{content:"";position:absolute;right:60px;bottom:-60px;width:130px;height:130px;border-radius:50%;background:#52b788;opacity:.35}
+h1{font-family:"Bricolage Grotesque",system-ui,sans-serif;font-size:clamp(1.9rem,6vw,2.7rem);line-height:1.05;margin:0 0 10px;letter-spacing:-.02em;font-weight:800;position:relative;z-index:1;max-width:82%}
+header p{margin:0;max-width:34em;color:#b7e4c7;position:relative;z-index:1}
+header p b{color:#90e0ef}
+.toggle{position:absolute;top:18px;right:18px;z-index:2;font:inherit;font-weight:600;font-size:.82rem;padding:6px 12px;border-radius:10px;cursor:pointer;color:#d8f3dc;background:rgba(0,0,0,.25);border:1px solid rgba(144,224,239,.4)}
+.toggle:hover{border-color:#90e0ef}
+h2{font-family:"Bricolage Grotesque",system-ui,sans-serif;font-size:1.4rem;font-weight:800;letter-spacing:-.01em;margin:32px 4px 14px}
+.step{display:flex;gap:15px;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px 20px;margin:0 0 16px;box-shadow:var(--shadow)}
+.num{flex:none;display:inline-grid;place-items:center;width:38px;height:38px;border-radius:12px;font-size:1.05rem;font-weight:800;color:#fff;background:linear-gradient(135deg,#2d6a4f,#0096c7)}
+.step .body{flex:1;min-width:0}
+.step h3{font-family:"Bricolage Grotesque",system-ui,sans-serif;font-size:1.12rem;font-weight:700;margin:4px 0 6px}
+p{margin:8px 0}
+a{color:var(--accent);font-weight:600}
+pre{background:var(--code);color:var(--codeink);padding:13px 15px;border-radius:12px;overflow-x:auto;margin:10px 0;
+  font:13px/1.6 ui-monospace,Menlo,Consolas,monospace;border:1px solid var(--line);border-left:4px solid var(--accent2)}
+pre .c{color:var(--muted)}
+code{font:0.9em ui-monospace,Menlo,Consolas,monospace;background:var(--why);padding:1px 6px;border-radius:6px;color:var(--ink)}
+ul,ol{margin:8px 0;padding-left:1.25em}
+li{margin:5px 0}
+.why{background:var(--why);border:1px solid color-mix(in srgb,var(--whyline) 35%,transparent);border-left:5px solid var(--whyline);padding:12px 16px;border-radius:14px;margin:10px 0;font-size:.95rem}
+.why h4{margin:0 0 6px;font-family:"Bricolage Grotesque",system-ui,sans-serif;font-size:1.0rem}
+.warn{background:var(--badbg);border:1px solid var(--badline);color:var(--bad);padding:12px 16px;border-radius:14px;margin:0 0 20px;font-size:.94rem;font-weight:500}
+.warn b{color:var(--bad)}
+.kv{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:6px 18px;box-shadow:var(--shadow);margin:0 0 20px}
+.kv div{display:flex;justify-content:space-between;gap:16px;padding:9px 0;border-bottom:1px solid var(--line);font-size:.95rem}
+.kv div:last-child{border-bottom:0}
+.kv .k{color:var(--muted);font-weight:600}
+.kv .v{font-family:ui-monospace,monospace;text-align:right}
+.muted{color:var(--muted)}
+footer{margin-top:36px;padding:16px 4px 0;border-top:1px solid var(--line);color:var(--muted);font-size:.86rem}
+@media (max-width:520px){h1{max-width:100%}header::after{opacity:.5}}
+</style>
+</head>
+<body>
+<header>
+  <button class="toggle" id="themeToggle" type="button">◐ Theme</button>
+  <h1>FlagTrail — Launch Instructions</h1>
+  <p>How to import, network, and boot the <b>FlagTrail-Linux-CTF.ova</b> appliance in VirtualBox,
+     then hand it to candidates.</p>
+</header>
+
+<main>
+
+<div class="warn">⚠️ <b>Host-only use only.</b> This VM is intentionally vulnerable. Never attach a bridged adapter
+or expose it to the internet, and never reuse its credentials anywhere.</div>
+
+<h2>At a glance</h2>
+<div class="kv">
+  <div><span class="k">Appliance</span><span class="v">FlagTrail-Linux-CTF.ova (~3.2 GB)</span></div>
+  <div><span class="k">Guest OS</span><span class="v">Debian 13 (64-bit)</span></div>
+  <div><span class="k">Network</span><span class="v">Host-only (vboxnet0)</span></div>
+  <div><span class="k">Services</span><span class="v">HTTP 80 · SSH 22 · SMB 139/445</span></div>
+  <div><span class="k">Flags</span><span class="v">6 · FLAG{…}</span></div>
+</div>
+
+<h2>Setup</h2>
+
+<div class="step"><span class="num">1</span><div class="body">
+  <h3>Import the appliance</h3>
+  <p>VirtualBox → <b>File → Import Appliance…</b> → select <code>FlagTrail-Linux-CTF.ova</code> → <b>Next → Finish</b>.
+     Wait for it to unpack (a minute or two).</p>
+  <p class="muted">CLI equivalent:</p>
+  <pre>VBoxManage import FlagTrail-Linux-CTF.ova</pre>
+</div></div>
+
+<div class="step"><span class="num">2</span><div class="body">
+  <h3>Confirm Host-only networking</h3>
+  <p>Select the VM → <b>Settings → Network → Adapter 1</b>. It should be <b>Host-only Adapter</b>
+     (e.g. <code>vboxnet0</code>). If you have no host-only network yet, create one in
+     <b>Tools → Network → Host-only Networks → Create</b>, then make sure its <b>DHCP server is enabled</b>.</p>
+  <div class="why"><h4>Why host-only</h4>
+    It puts the target and the candidate's attack box on a private lab segment they can reach, with no path
+    to your real network or the internet.</div>
+  <p class="muted">CLI equivalent:</p>
+  <pre>VBoxManage modifyvm "FlagTrail-CTF" --nic1 hostonly --hostonlyadapter1 vboxnet0</pre>
+</div></div>
+
+<div class="step"><span class="num">3</span><div class="body">
+  <h3>Boot it</h3>
+  <p>Start the VM. It boots headless to a login prompt — you do <b>not</b> log in at the console; everything is
+     done over the network by the candidate. Give it ~30 seconds to get a DHCP lease.</p>
+</div></div>
+
+<div class="step"><span class="num">4</span><div class="body">
+  <h3>Find its IP (and give it to the candidate)</h3>
+  <p>From your host or the candidate's attack box on the same host-only net:</p>
+  <pre><span class="c"># sweep the host-only subnet (adjust if yours differs)</span>
+nmap -sn 192.168.56.0/24
+<span class="c"># the target answers on 80/22/445</span>
+nmap -p 22,80,445 192.168.56.0/24 --open</pre>
+  <p>Hand the candidate <b>only the IP</b> (and, if you like, the hint that an SMB share exists). Everything else
+     they must discover.</p>
+</div></div>
+
+<h2>Running the challenge</h2>
+<div class="step"><span class="num">5</span><div class="body">
+  <h3>What the candidate does</h3>
+  <ul>
+    <li>Points a browser / <code>curl</code> at <code>http://&lt;IP&gt;/</code> and enumerates.</li>
+    <li>Pulls the brief from the anonymous SMB share: <code>smbclient //&lt;IP&gt;/public -N</code>.</li>
+    <li>Works the chain to root and submits each flag in the <b>Flag Checker</b> page (<code>challenger.html</code>).</li>
+  </ul>
+  <p>The checker validates flags by salted hash locally — candidates can't read the answers from its source.</p>
+</div></div>
+
+<h2>Reset between candidates</h2>
+<div class="step"><span class="num">6</span><div class="body">
+  <h3>Snapshot &amp; roll back</h3>
+  <p>Before the first run, take a snapshot. After each candidate, roll back so everyone gets an identical box.</p>
+  <pre><span class="c"># once, before the first candidate:</span>
+VBoxManage snapshot "FlagTrail-CTF" take clean --description "pristine"
+<span class="c"># after each candidate:</span>
+VBoxManage controlvm "FlagTrail-CTF" poweroff
+VBoxManage snapshot "FlagTrail-CTF" restore clean</pre>
+  <p class="muted">The flags are fixed, so a roll-back is optional — but it clears any mess a candidate left behind.</p>
+</div></div>
+
+<h2>Troubleshooting</h2>
+<div class="why"><h4>VM has no IP</h4>
+  The host-only network's DHCP server is probably off. Enable it under
+  <b>Tools → Network → Host-only Networks → (your net) → DHCP Server</b>, then reboot the VM.</div>
+<div class="why"><h4>Can't reach it from the attack box</h4>
+  Make sure the attack VM is on the <b>same host-only adapter</b> (<code>vboxnet0</code>), not NAT.</div>
+<div class="why"><h4>Import warns about MAC / adapter</h4>
+  Safe to accept defaults. Just re-check Adapter 1 = Host-only before booting.</div>
+
+<footer>FlagTrail CTF · Debian 13 · intentionally vulnerable training target — host-only use only.</footer>
+</main>
+
+<script>
+(function(){var t=document.getElementById('themeToggle'),cur=null;
+  t.addEventListener('click',function(){var dark=matchMedia('(prefers-color-scheme:dark)').matches;
+    cur=(cur===null)?(dark?'light':'dark'):(cur==='dark'?'light':'dark');
+    document.documentElement.setAttribute('data-theme',cur);});})();
+</script>
+</body>
+</html>

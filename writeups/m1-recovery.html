@@ -78,6 +78,8 @@ code{font:0.9em ui-monospace,Menlo,Consolas,monospace;background:var(--why);padd
   border:1px solid var(--okline);background:var(--okbg)}
 .flag .lbl{font-weight:800;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--okline)}
 .flag code{background:var(--card);border:1px solid var(--line);color:var(--ink);padding:.15em .5em;border-radius:7px;font-weight:600}
+.flag .fcopy{margin-left:auto;font:inherit;font-size:.72rem;font-weight:600;cursor:pointer;border:1px solid var(--okline);border-radius:8px;padding:2px 9px;background:transparent;color:var(--okline)}
+.flag .fcopy.done{background:var(--okbg)}
 .lesson{margin-top:6px;color:var(--muted)}
 .sig{margin:30px 0 0;text-align:center;font-size:.85rem;color:var(--muted)}
 .sig a{color:var(--accent);text-decoration:none;font-weight:700}
@@ -269,6 +271,19 @@ cat /root/root.txt</code></pre>
       });
     });
     pre.appendChild(b);
+  });
+
+  /* one-click copy on flag callouts */
+  document.querySelectorAll(".flag").forEach(function(fl){
+    var codeEl=fl.querySelector("code");if(!codeEl)return;
+    var b=document.createElement("button");b.className="fcopy";b.type="button";b.textContent="copy";
+    b.addEventListener("click",function(){
+      if(navigator.clipboard) navigator.clipboard.writeText(codeEl.innerText).then(function(){
+        b.textContent="copied";b.classList.add("done");
+        setTimeout(function(){b.textContent="copy";b.classList.remove("done");},1400);
+      });
+    });
+    fl.appendChild(b);
   });
 
   /* step chips + progress */

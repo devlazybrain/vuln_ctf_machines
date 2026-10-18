@@ -166,7 +166,7 @@ code{font:0.9em ui-monospace,Menlo,Consolas,monospace;background:var(--why);padd
   <section class="step" id="sc" data-title="Check your flags">
     <h2><span class="num">✓</span>Check your flags</h2>
     <p>Found a flag? Paste it in to verify. The answers are stored only as <b>hashes</b>, so this page checks your flag without ever revealing it.</p>
-    <div class="fcheck" data-hash="2fa9b3211c219c612427b7bd6cff15c2352f9201ee4cf916ecee4eeee653c69a">
+    <div class="fcheck" data-salt="9e274f4879442b47" data-hash="d355c5a5b2c2adf80145903cd49d6be6b2da3a2d2bafa0ec26cdc19c202fa4c2">
       <label>User flag</label>
       <div class="row">
         <input type="text" placeholder="FLAG{...}" autocomplete="off" spellcheck="false" aria-label="User flag">
@@ -174,7 +174,7 @@ code{font:0.9em ui-monospace,Menlo,Consolas,monospace;background:var(--why);padd
         <span class="res" aria-live="polite"></span>
       </div>
     </div>
-    <div class="fcheck" data-hash="d05db791db4e17c6d85d7512c58c49a15f9a122c5d1217447fbb0a7419331941">
+    <div class="fcheck" data-salt="53b2ca8516bec493" data-hash="e697c06bab16a6e796a362b6bceb1905ca15da50baa37f66d2d95b1cb20474e6">
       <label>Root flag</label>
       <div class="row">
         <input type="text" placeholder="FLAG{...}" autocomplete="off" spellcheck="false" aria-label="Root flag">
@@ -251,13 +251,16 @@ code{font:0.9em ui-monospace,Menlo,Consolas,monospace;background:var(--why);padd
     for(i=0;i<8;i++){for(j=3;j+1;j--){var b=(hash[i]>>(j*8))&255;result+=((b<16)?0:'')+b.toString(16);}}
     return result;
   }
+  /* salted + iterated: slows guessing and defeats rainbow-table / online lookup */
+  var ITER=2000;
+  function kdf(flag,salt){var h=sha256(salt+":"+flag);for(var i=0;i<ITER;i++){h=sha256(h+salt);}return h;}
   document.querySelectorAll(".fcheck").forEach(function(fc){
     var input=fc.querySelector("input"),btn=fc.querySelector(".go"),res=fc.querySelector(".res");
-    var want=fc.getAttribute("data-hash");
+    var want=fc.getAttribute("data-hash"),salt=fc.getAttribute("data-salt");
     function check(){
       var v=input.value.trim();
       if(!v){fc.classList.remove("ok","bad");res.textContent="";return;}
-      var ok=sha256(v)===want;
+      var ok=kdf(v,salt)===want;
       fc.classList.toggle("ok",ok);fc.classList.toggle("bad",!ok);
       res.textContent=ok?"✓ correct":"✗ not correct";
     }
