@@ -1,244 +1,227 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>recovery — Instructions</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>recovery – Instructions</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#e9f7ec; --bg2:#d8f3dc; --card:#fbfffc; --ink:#081c15; --muted:#2d6a4f;
-  --line:#b7e4c7; --accent:#0077b6; --accent2:#00b4d8;
-  --ok:#52b788; --ok2:#40916c;
-  --code-bg:#eaf8ee; --code-ink:#0b3d2e; --code-stripe:#0077b6;
-  --btn1:#1b4332; --btn2:#2d6a4f; --btn3:#0096c7;
-  --banner1:#081c15; --banner2:#1b4332; --banner3:#2d6a4f;
-  --shadow:0 10px 30px rgba(8,28,21,.08); --ring:rgba(0,119,182,.35);
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#e9f7ec; --bg2:#d8f3dc; --card:#fbfffc; --ink:#081c15; --muted:#2d6a4f; --line:#b7e4c7;
+  --accent:#0077b6; --accent2:#00b4d8; --accentink:#ffffff;
+  --ok:#1b4332; --okbg:#d8f3dc; --okline:#40916c;
+  --bad:#a4133c; --badbg:#ffccd5; --badline:#ff4d6d;
+  --code:#e4f3e9; --codeink:#0b2e22; --why:#e3f6fb; --whyline:#00b4d8;
+  --hero1:#081c15; --hero2:#1b4332; --hero3:#2d6a4f; --shadow:0 10px 30px -14px rgba(8,28,21,.45);
 }
-@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
-  --bg:#06140f; --bg2:#081c15; --card:#0e281d; --ink:#d8f3dc; --muted:#74c69d;
-  --line:#1b4332; --accent:#48cae4; --accent2:#90e0ef;
-  --code-bg:#06140f; --code-ink:#b7e4c7; --code-stripe:#48cae4;
-  --banner1:#030a07; --banner2:#06140f; --banner3:#0e281d;
-  --shadow:0 10px 30px rgba(0,0,0,.4); --ring:rgba(72,202,228,.4);
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#06140f; --bg2:#081c15; --card:#0e281d; --ink:#d8f3dc; --muted:#95d5b2; --line:#1f4a38;
+  --accent:#48cae4; --accent2:#90e0ef; --accentink:#03045e;
+  --ok:#b7e4c7; --okbg:#123024; --okline:#52b788;
+  --bad:#ffb3c1; --badbg:#590d22; --badline:#ff4d6d;
+  --code:#030d09; --codeink:#caf0f8; --why:#0b2a36; --whyline:#48cae4;
+  --hero1:#030d09; --hero2:#123024; --hero3:#1b4332; --shadow:0 12px 32px -16px rgba(0,0,0,.8);
 }}
 :root[data-theme="dark"]{
-  --bg:#06140f; --bg2:#081c15; --card:#0e281d; --ink:#d8f3dc; --muted:#74c69d;
-  --line:#1b4332; --accent:#48cae4; --accent2:#90e0ef;
-  --code-bg:#06140f; --code-ink:#b7e4c7; --code-stripe:#48cae4;
-  --banner1:#030a07; --banner2:#06140f; --banner3:#0e281d;
-  --shadow:0 10px 30px rgba(0,0,0,.4); --ring:rgba(72,202,228,.4);
+  --bg:#06140f; --bg2:#081c15; --card:#0e281d; --ink:#d8f3dc; --muted:#95d5b2; --line:#1f4a38;
+  --accent:#48cae4; --accent2:#90e0ef; --accentink:#03045e;
+  --ok:#b7e4c7; --okbg:#123024; --okline:#52b788;
+  --bad:#ffb3c1; --badbg:#590d22; --badline:#ff4d6d;
+  --code:#030d09; --codeink:#caf0f8; --why:#0b2a36; --whyline:#48cae4;
+  --hero1:#030d09; --hero2:#123024; --hero3:#1b4332; --shadow:0 12px 32px -16px rgba(0,0,0,.8);
 }
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-body{margin:0; background:var(--bg); color:var(--ink);
-  font-family:"Figtree",system-ui,-apple-system,Segoe UI,Roboto,sans-serif; line-height:1.6}
-h1,h2,h3,.badge-num{font-family:"Bricolage Grotesque","Figtree",system-ui,sans-serif}
-a{color:var(--accent)}
-code{font-family:"SFMono-Regular",ui-monospace,Menlo,Consolas,monospace}
-header.banner{position:relative; overflow:hidden; color:#eafff2;
-  background:linear-gradient(135deg,var(--banner1),var(--banner2) 55%,var(--banner3));
-  border-radius:0 0 28px 28px; padding:34px 20px 40px}
-header.banner .circle{position:absolute; right:-60px; top:-70px; width:260px; height:260px; border-radius:50%;
-  background:radial-gradient(circle at 35% 35%,var(--accent2),var(--accent)); opacity:.75; filter:blur(1px)}
-header.banner .wrap{max-width:1180px; margin:0 auto; position:relative; z-index:1}
-header.banner .eyebrow{font-size:.8rem; letter-spacing:.14em; text-transform:uppercase; color:#95e8ff; margin:0 0 6px}
-header.banner h1{margin:0; font-size:clamp(1.7rem,4vw,2.6rem); font-weight:800; letter-spacing:-.01em}
-header.banner p{margin:10px 0 0; color:#cdeede; max-width:60ch}
-.topbar{position:sticky; top:0; z-index:40; margin:10px auto 0; max-width:calc(780px + 16px); width:calc(100% - 24px);
-  background:color-mix(in srgb,var(--card) 88%,transparent); backdrop-filter:blur(8px);
-  border:1px solid var(--line); border-radius:16px; box-shadow:var(--shadow);
-  padding:10px 14px; display:flex; align-items:center; gap:12px; flex-wrap:wrap}
-.topbar .status{font-size:.9rem; font-weight:600; color:var(--muted)}
-.topbar .progress{flex:1 1 140px; height:8px; border-radius:99px; background:var(--bg2); overflow:hidden; min-width:120px}
-.topbar .progress>span{display:block; height:100%; width:0;
-  background:linear-gradient(90deg,var(--btn1),var(--btn2),var(--btn3)); transition:width .25s ease}
-.btn{font:inherit; font-weight:600; cursor:pointer; color:#eafff2; border:0; border-radius:12px;
-  padding:8px 13px; background:linear-gradient(135deg,var(--btn1),var(--btn2) 55%,var(--btn3)); box-shadow:var(--shadow)}
-.btn.ghost{background:transparent; color:var(--muted); border:1px solid var(--line); box-shadow:none}
-.btn:focus-visible,a:focus-visible,.nav-step:focus-visible{outline:3px solid var(--ring); outline-offset:2px}
-.shell{max-width:1340px; margin:26px auto 80px; padding:0 16px}
-.content{max-width:780px; margin:0 auto}
+html{min-height:100%;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 76px);scroll-behavior:smooth}
+body{margin:0;color:var(--ink);font:16px/1.6 "Figtree","Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+  background:radial-gradient(1200px 500px at 85% -5%,rgba(0,180,216,.18),transparent 60%),linear-gradient(180deg,var(--bg2),var(--bg) 420px);background-color:var(--bg)}
+main{max-width:780px;margin:0 auto;padding:0 14px 90px}
+header{margin:0 -14px 18px;padding:34px 22px 30px;color:#d8f3dc;border-radius:0 0 28px 28px;position:relative;overflow:hidden;
+  background:linear-gradient(135deg,var(--hero1) 0%,var(--hero2) 55%,var(--hero3) 100%)}
+header::after{content:"";position:absolute;right:-70px;top:-70px;width:240px;height:240px;border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,#90e0ef,#00b4d8 45%,#0077b6 75%,transparent 76%);opacity:.9}
+header::before{content:"";position:absolute;right:60px;bottom:-60px;width:130px;height:130px;border-radius:50%;background:#52b788;opacity:.35}
+.eyebrow{position:relative;z-index:1;margin:0 0 8px;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:#90e0ef;font-weight:700}
+h1{font-family:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;font-size:clamp(1.9rem,6vw,2.7rem);line-height:1.05;margin:0 0 10px;letter-spacing:-.02em;font-weight:800;position:relative;z-index:1;max-width:80%}
+header p{margin:0;max-width:34em;color:#b7e4c7;position:relative;z-index:1}
+header p b{color:#90e0ef}
+.ph{color:var(--accent2);font-weight:700}
+.bar{position:sticky;top:calc(env(safe-area-inset-top,0px) + 8px);z-index:5;margin:0 -8px 18px;padding:10px 14px;border-radius:14px;
+  background:color-mix(in srgb,var(--card) 88%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  border:1px solid var(--line);box-shadow:var(--shadow);display:grid;grid-template-columns:1fr auto auto;gap:6px 12px;align-items:center}
+.score{font-weight:700;font-size:.92rem}
+.track{grid-column:1 / -1;height:8px;border-radius:99px;background:var(--line);overflow:hidden}
+.fill{height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,#40916c,#52b788,#00b4d8);transition:width .4s ease}
+.bar button{font:inherit;font-weight:600;font-size:.88rem;padding:6px 12px;border-radius:10px;border:1px solid var(--line);background:transparent;color:var(--ink);cursor:pointer}
+.bar button:hover{border-color:var(--accent);color:var(--accent)}
+.bar button:focus-visible{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent2) 45%,transparent)}
+section.step{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px 20px 18px;margin:0 0 20px;box-shadow:var(--shadow)}
+section.step h2{font-family:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;font-size:1.25rem;font-weight:700;margin:0 0 10px;display:flex;align-items:center;gap:12px;letter-spacing:-.01em}
+.num{flex:none;display:inline-grid;place-items:center;width:36px;height:36px;border-radius:12px;font-size:1rem;font-weight:800;color:#fff;background:linear-gradient(135deg,#2d6a4f,#0096c7)}
+section.step p{margin:10px 0}
+ul{margin:10px 0;padding-left:1.3em}
+li{margin:6px 0}
+pre{position:relative;background:var(--code);color:var(--codeink);padding:14px 46px 14px 16px;border-radius:14px;overflow-x:auto;margin:12px 0;
+  font:13.5px/1.55 ui-monospace,Menlo,Consolas,monospace;max-width:100%;border:1px solid var(--line);border-left:4px solid #00b4d8}
+pre code{background:none;padding:0;color:inherit;white-space:pre}
+code{font:0.9em ui-monospace,Menlo,Consolas,monospace;background:var(--why);padding:1px 6px;border-radius:6px;color:var(--ink)}
+.copy{position:absolute;top:8px;right:8px;font:inherit;font-size:.72rem;font-weight:600;cursor:pointer;border:1px solid var(--line);
+  border-radius:8px;padding:3px 8px;background:var(--card);color:var(--muted)}
+.copy.done{color:var(--okline);border-color:var(--okline)}
+.note{margin-top:14px;background:var(--why);border:1px solid color-mix(in srgb,var(--whyline) 35%,transparent);border-left:5px solid var(--whyline);padding:12px 16px;border-radius:14px}
+.note h3{margin:0 0 6px;font-family:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;font-size:1.02rem}
+@media (prefers-reduced-motion:reduce){.fill{transition:none}html{scroll-behavior:auto}}
+@media (max-width:520px){section.step{padding:16px 14px}h1{max-width:100%}header::after{opacity:.5}}
 .side{display:none}
-@media (min-width:1340px){
-  .shell{padding:0; display:grid; grid-template-columns:1fr 780px 1fr; align-items:start}
-  .side{display:block; grid-column:1; justify-self:end; width:242px; margin-right:34px; position:sticky; top:96px}
-  .content{grid-column:2; margin:0}
+@media (min-width:1180px){
+  .side{display:block;position:fixed;top:calc(env(safe-area-inset-top,0px) + 96px);left:calc(50% - 390px - 240px);width:216px;
+    box-sizing:border-box;padding:14px;border-radius:20px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);z-index:4}
+  .side h2{font-family:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;font-size:1.05rem;margin:0 0 10px}
+  .chips{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+  .chips a{aspect-ratio:1;display:grid;place-items:center;border-radius:10px;border:1.5px solid var(--line);color:var(--ink);
+    text-decoration:none;font-weight:700;font-size:.9rem;transition:border-color .15s,transform .15s}
+  .chips a:hover{border-color:var(--accent2);transform:translateY(-1px)}
+  .chips a.here{box-shadow:0 0 0 3px color-mix(in srgb,var(--accent2) 55%,transparent);border-color:var(--accent)}
+  .now{margin:12px 0 0;font-size:.82rem;color:var(--muted);line-height:1.35;min-height:2.2em}
+  .metacard{margin-top:12px;padding-top:12px;border-top:1px solid var(--line)}
+  .metarow{display:flex;justify-content:space-between;gap:8px;font-size:.84rem;padding:3px 0}
+  .metarow b{color:var(--muted);font-weight:600}
+  .tag{display:inline-block;font-size:.72rem;font-weight:600;padding:2px 8px;border-radius:99px;background:var(--bg2);border:1px solid var(--line);color:var(--muted);margin:6px 4px 0 0}
 }
-.side .panel{background:var(--card); border:1px solid var(--line); border-radius:18px; box-shadow:var(--shadow); padding:16px; margin-bottom:14px}
-.side h4{margin:0 0 10px; font-size:.78rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted)}
-.steps-grid{display:grid; grid-template-columns:repeat(5,1fr); gap:8px}
-.nav-step{font:inherit; font-weight:700; cursor:pointer; aspect-ratio:1; border-radius:11px;
-  border:1px solid var(--line); background:var(--bg2); color:var(--ink)}
-.nav-step.active{outline:3px solid var(--ring); outline-offset:1px}
-.side .caption{margin-top:10px; font-size:.82rem; color:var(--muted); min-height:2.4em}
-.meta-row{display:flex; justify-content:space-between; gap:8px; font-size:.86rem; padding:5px 0; border-top:1px dashed var(--line)}
-.meta-row:first-of-type{border-top:0}
-.meta-row b{color:var(--muted); font-weight:600}
-.chip{display:inline-block; font-size:.74rem; font-weight:600; padding:2px 9px; border-radius:99px;
-  background:var(--bg2); border:1px solid var(--line); color:var(--muted); margin:2px 3px 0 0}
-.card{background:var(--card); border:1px solid var(--line); border-radius:20px; box-shadow:var(--shadow); padding:22px; margin:18px 0}
-.step-head{display:flex; align-items:center; gap:13px; margin:0 0 4px}
-.badge-num{flex:none; width:38px; height:38px; border-radius:12px; display:grid; place-items:center;
-  font-weight:800; color:#eafff2; background:linear-gradient(135deg,var(--btn1),var(--btn3))}
-.step-head h2{margin:0; font-size:1.22rem}
-pre{position:relative; margin:.6rem 0; padding:14px 42px 14px 16px; overflow:auto;
-  background:var(--code-bg); color:var(--code-ink); border:1px solid var(--line);
-  border-left:4px solid var(--code-stripe); border-radius:12px; font-size:.86rem; line-height:1.5}
-pre code{white-space:pre}
-p code,li code{background:var(--code-bg); color:var(--code-ink); padding:.08em .4em; border-radius:6px; font-size:.86em}
-.copy{position:absolute; top:8px; right:8px; font:inherit; font-size:.72rem; font-weight:600; cursor:pointer;
-  border:1px solid var(--line); border-radius:8px; padding:3px 8px; background:var(--card); color:var(--muted)}
-.copy.done{color:var(--ok2); border-color:var(--ok)}
-.ph{color:var(--accent); font-weight:700}
-.note{margin-top:14px; background:var(--bg2); border:1px solid var(--line); border-radius:14px; padding:14px 16px}
-.note h4{margin:0 0 6px; font-size:.84rem; letter-spacing:.08em; text-transform:uppercase; color:var(--muted)}
-.footer{max-width:780px; margin:30px auto 0; color:var(--muted); font-size:.85rem; text-align:center}
-.skip{position:absolute; left:-999px}
-.skip:focus{left:12px; top:12px; z-index:100}
+.skip{position:absolute;left:-999px}
+.skip:focus{left:14px;top:14px;z-index:40;background:var(--card);color:var(--ink);padding:8px 12px;border-radius:10px;border:1px solid var(--line)}
 </style>
 </head>
-<body>
-<a href="#s1" class="skip btn">Skip to setup</a>
+<body id="top">
+<a href="#s1" class="skip">Skip to setup</a>
 
-<header class="banner">
-  <div class="circle" aria-hidden="true"></div>
-  <div class="wrap">
-    <p class="eyebrow">Practice Lab · Instructions</p>
-    <h1>recovery</h1>
-    <p>How to build, run, and attack this box. No solutions here — the full walkthrough lives in <code>writeups/m1-recovery.html</code>.</p>
+<nav class="side" aria-label="Sections">
+  <h2>Sections</h2>
+  <div class="chips" id="chips"></div>
+  <p class="now" id="now">1 · What this box is</p>
+  <div class="metacard">
+    <div class="metarow"><b>Level</b><span>Easy</span></div>
+    <div class="metarow"><b>OS</b><span>Debian 12</span></div>
+    <div class="metarow"><b>Flags</b><span>user + root</span></div>
+    <div><span class="tag">enumeration</span><span class="tag">forensics</span><span class="tag">privesc</span></div>
   </div>
+</nav>
+
+<main>
+<header>
+  <p class="eyebrow">Practice Lab · Instructions</p>
+  <h1>recovery</h1>
+  <p>How to build, run, and attack this box. No solutions here — the full walkthrough is in <code>writeups/m1-recovery.html</code>.</p>
 </header>
 
-<div class="topbar" role="region" aria-label="Progress">
-  <span class="status" id="status">Section 1 / 5</span>
-  <div class="progress" aria-hidden="true"><span id="bar"></span></div>
-  <button class="btn ghost" id="themeBtn" type="button">Switch to dark</button>
+<div class="bar">
+  <span class="score" id="score">Section 1 / 5</span>
+  <button id="themeBtn" type="button">Theme</button>
+  <button id="topBtn" type="button">Top</button>
+  <div class="track"><div class="fill" id="fill"></div></div>
 </div>
 
-<div class="shell">
-  <aside class="side" aria-label="Section navigation">
-    <div class="panel">
-      <h4>Sections</h4>
-      <div class="steps-grid" id="navGrid"></div>
-      <div class="caption" id="navCaption">1 · What this box is</div>
-    </div>
-    <div class="panel">
-      <h4>At a glance</h4>
-      <div class="meta-row"><b>Level</b><span>Easy</span></div>
-      <div class="meta-row"><b>OS</b><span>Debian 12</span></div>
-      <div class="meta-row"><b>Flags</b><span>user + root</span></div>
-      <div style="margin-top:10px">
-        <span class="chip">enumeration</span><span class="chip">forensics</span><span class="chip">privesc</span>
-      </div>
-    </div>
-  </aside>
+<div id="doc">
 
-  <main class="content">
-    <!-- 1 -->
-    <section class="card step" id="s1" data-title="What this box is">
-      <div class="step-head"><span class="badge-num">1</span><h2>What this box is</h2></div>
-      <p><b>recovery</b> is the easy, first machine in the set. It is a single Debian Linux VM running a few network services. Your job is to enumerate it, find a foothold, and escalate to root — capturing a <b>user</b> flag and a <b>root</b> flag along the way.</p>
-      <p>It is fully self-contained and offline: once built it needs no internet. Safe to run on a laptop or a headless server VM.</p>
-    </section>
+  <section class="step" id="s1" data-title="What this box is">
+    <h2><span class="num">1</span>What this box is</h2>
+    <p><b>recovery</b> is the easy, first machine in the set — a single Debian Linux VM running a few network services. Enumerate it, find a foothold, and escalate to root, capturing a <b>user</b> flag and a <b>root</b> flag.</p>
+    <p>It is fully self-contained and offline once built. Safe to run on a laptop or a headless server VM.</p>
+  </section>
 
-    <!-- 2 -->
-    <section class="card step" id="s2" data-title="Requirements">
-      <div class="step-head"><span class="badge-num">2</span><h2>Requirements</h2></div>
-      <p>On the host that builds the box:</p>
-      <pre><code># Debian / Ubuntu / Kali
+  <section class="step" id="s2" data-title="Requirements">
+    <h2><span class="num">2</span>Requirements</h2>
+    <p>On the host that builds the box:</p>
+    <pre><code># Debian / Ubuntu / Kali
 sudo apt update &amp;&amp; sudo apt install -y virtualbox vagrant</code></pre>
-      <p>Roughly 1&nbsp;GB RAM and ~5&nbsp;GB disk while building. The first build downloads the Debian base box once (~500&nbsp;MB) and reuses it.</p>
-    </section>
+    <p>Roughly 1&nbsp;GB RAM and ~5&nbsp;GB disk while building. The first build downloads the Debian base box once (~500&nbsp;MB) and reuses it.</p>
+  </section>
 
-    <!-- 3 -->
-    <section class="card step" id="s3" data-title="Build the box">
-      <div class="step-head"><span class="badge-num">3</span><h2>Build the box</h2></div>
-      <p>From the repo's <code>machines/</code> folder, build just this box:</p>
-      <pre><code>cd machines/m1-recovery
+  <section class="step" id="s3" data-title="Build the box">
+    <h2><span class="num">3</span>Build the box</h2>
+    <p>From the repo's <code>machines/</code> folder, build just this box:</p>
+    <pre><code>cd machines/m1-recovery
 vagrant up            # builds + provisions the VM</code></pre>
-      <p>To export a portable <span class="ph">.ova</span> you can hand to anyone, use the helper from <code>machines/</code>:</p>
-      <pre><code>cd machines
+    <p>To export a portable <span class="ph">.ova</span> you can hand to anyone, use the helper from <code>machines/</code>:</p>
+    <pre><code>cd machines
 ./build-all.sh m1-recovery      # -&gt; machines/ova/lab-m1-recovery.ova</code></pre>
-      <div class="note">
-        <h4>Note</h4>
-        The build disables the Vagrant provisioning account before export, so the finished machine has no build-time backdoor.
-      </div>
-    </section>
+    <div class="note">
+      <h3>Note</h3>
+      The build disables the Vagrant provisioning account before export, so the finished machine has no build-time backdoor.
+    </div>
+  </section>
 
-    <!-- 4 -->
-    <section class="card step" id="s4" data-title="Run it &amp; get the IP">
-      <div class="step-head"><span class="badge-num">4</span><h2>Run it &amp; get the IP</h2></div>
-      <p>Import the <code>.ova</code> in VirtualBox (or boot the Vagrant VM), set its network adapter to a <b>Host-only</b> network so it is never exposed to the internet, then boot it.</p>
-      <p>Find the box's IP from the host:</p>
-      <pre><code>sudo nmap -sn 192.168.56.0/24     # your host-only subnet</code></pre>
-      <p>That address is your <span class="ph">&lt;target-ip&gt;</span> for the attack.</p>
-      <div class="note">
-        <h4>Headless / server</h4>
-        To run it on a server with no GUI: <code>VBoxManage startvm "lab-m1-recovery" --type headless</code>.
-      </div>
-    </section>
+  <section class="step" id="s4" data-title="Run it &amp; get the IP">
+    <h2><span class="num">4</span>Run it &amp; get the IP</h2>
+    <p>Import the <code>.ova</code> in VirtualBox (or boot the Vagrant VM), set its network adapter to a <b>Host-only</b> network so it is never exposed to the internet, then boot it.</p>
+    <p>Find the box's IP from the host:</p>
+    <pre><code>sudo nmap -sn 192.168.56.0/24     # your host-only subnet</code></pre>
+    <p>That address is your <span class="ph">&lt;target-ip&gt;</span> for the attack.</p>
+    <div class="note">
+      <h3>Headless / server</h3>
+      To run it with no GUI: <code>VBoxManage startvm "lab-m1-recovery" --type headless</code>.
+    </div>
+  </section>
 
-    <!-- 5 -->
-    <section class="card step" id="s5" data-title="Objective &amp; rules">
-      <div class="step-head"><span class="badge-num">5</span><h2>Objective &amp; rules</h2></div>
-      <p><b>Capture two flags:</b></p>
-      <ul>
-        <li>a <b>user</b> flag — standing access as a normal user</li>
-        <li>a <b>root</b> flag — full control of the machine</li>
-      </ul>
-      <p>Flags look like <code>FLAG{...}</code>. Only attack the target IP you were given. Any tools are fair game (nmap, forensic carvers, etc.).</p>
-      <p><b>Hint:</b> think about what a <i>backup</i> really contains — "deleted" is not the same as "gone."</p>
-      <p style="margin-bottom:0">Stuck? The full solution is in <code>writeups/m1-recovery.html</code>.</p>
-    </section>
+  <section class="step" id="s5" data-title="Objective &amp; rules">
+    <h2><span class="num">5</span>Objective &amp; rules</h2>
+    <p><b>Capture two flags:</b></p>
+    <ul>
+      <li>a <b>user</b> flag — standing access as a normal user</li>
+      <li>a <b>root</b> flag — full control of the machine</li>
+    </ul>
+    <p>Flags look like <code>FLAG{...}</code>. Only attack the target IP you were given. Any tools are fair game (nmap, forensic carvers, etc.).</p>
+    <p><b>Hint:</b> think about what a <i>backup</i> really contains — "deleted" is not the same as "gone."</p>
+    <p>Stuck? The full solution is in <code>writeups/m1-recovery.html</code>.</p>
+  </section>
 
-    <p class="footer">recovery &middot; practice lab instructions</p>
-  </main>
 </div>
+</main>
 
 <script>
 (function(){
   "use strict";
   var root=document.documentElement;
-  var btn=document.getElementById("themeBtn");
-  function current(){var s=root.getAttribute("data-theme"); return s?s:(window.matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light");}
-  function sync(){btn.textContent=current()==="dark"?"Switch to light":"Switch to dark";}
-  btn.addEventListener("click",function(){root.setAttribute("data-theme",current()==="dark"?"light":"dark"); sync();});
-  sync();
+  var tBtn=document.getElementById("themeBtn");
+  function cur(){var s=root.getAttribute("data-theme");return s?s:(window.matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light");}
+  tBtn.addEventListener("click",function(){root.setAttribute("data-theme",cur()==="dark"?"light":"dark");});
+  document.getElementById("topBtn").addEventListener("click",function(){
+    window.scrollTo({top:0,behavior:(matchMedia("(prefers-reduced-motion:reduce)").matches?"auto":"smooth")});
+  });
   document.querySelectorAll("pre").forEach(function(pre){
-    var b=document.createElement("button"); b.className="copy"; b.type="button"; b.textContent="copy";
+    var b=document.createElement("button");b.className="copy";b.type="button";b.textContent="copy";
     b.addEventListener("click",function(){
       var t=pre.querySelector("code").innerText;
-      navigator.clipboard && navigator.clipboard.writeText(t).then(function(){
-        b.textContent="copied"; b.classList.add("done");
-        setTimeout(function(){b.textContent="copy"; b.classList.remove("done");},1400);
+      if(navigator.clipboard) navigator.clipboard.writeText(t).then(function(){
+        b.textContent="copied";b.classList.add("done");
+        setTimeout(function(){b.textContent="copy";b.classList.remove("done");},1400);
       });
     });
     pre.appendChild(b);
   });
   var steps=[].slice.call(document.querySelectorAll("section.step"));
-  var grid=document.getElementById("navGrid"), caption=document.getElementById("navCaption");
-  var status=document.getElementById("status"), bar=document.getElementById("bar");
+  var chips=document.getElementById("chips");
+  var now=document.getElementById("now");
+  var score=document.getElementById("score");
+  var fill=document.getElementById("fill");
   steps.forEach(function(s,i){
-    var a=document.createElement("button"); a.className="nav-step"; a.type="button"; a.textContent=(i+1);
-    a.setAttribute("aria-label","Go to section "+(i+1)+": "+s.dataset.title);
-    a.addEventListener("click",function(){s.scrollIntoView({block:"start"});});
-    grid.appendChild(a);
+    var a=document.createElement("a");a.href="#"+s.id;a.textContent=(i+1);
+    a.setAttribute("aria-label","Section "+(i+1)+": "+s.dataset.title);
+    chips.appendChild(a);
   });
-  var navBtns=[].slice.call(grid.children);
+  var links=[].slice.call(chips.children);
   function setActive(i){
-    navBtns.forEach(function(b,j){b.classList.toggle("active",j===i);});
-    caption.textContent=(i+1)+" · "+steps[i].dataset.title;
-    status.textContent="Section "+(i+1)+" / "+steps.length;
-    bar.style.width=(((i+1)/steps.length)*100)+"%";
+    links.forEach(function(a,j){a.classList.toggle("here",j===i);});
+    now.textContent=(i+1)+" · "+steps[i].dataset.title;
+    score.textContent="Section "+(i+1)+" / "+steps.length;
+    fill.style.width=(((i+1)/steps.length)*100)+"%";
   }
   setActive(0);
   if("IntersectionObserver" in window){
     var io=new IntersectionObserver(function(ents){
-      ents.forEach(function(e){ if(e.isIntersecting){var i=steps.indexOf(e.target); if(i>=0) setActive(i);} });
+      ents.forEach(function(e){if(e.isIntersecting){var i=steps.indexOf(e.target);if(i>=0)setActive(i);}});
     },{rootMargin:"-45% 0px -50% 0px",threshold:0});
     steps.forEach(function(s){io.observe(s);});
   }
