@@ -28,3 +28,6 @@ id_ed25519*
 # Editor / OS noise
 *.swp
 .DS_Store
+
+# stray clone from another terminal
+_repo_clone/
