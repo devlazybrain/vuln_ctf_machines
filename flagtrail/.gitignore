@@ -1,0 +1,11 @@
+# --- large binaries: do NOT commit to git (GitHub 100MB limit) ---
+*.ova
+*.iso
+*.vdi
+*.vmdk
+.build/
+.ctf-build/
+
+# os cruft
+.DS_Store
+Thumbs.db
