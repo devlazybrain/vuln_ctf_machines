@@ -1,4 +1,5 @@
 #!/bin/bash
+# Author: devlazybrain — https://github.com/devlazybrain
 # =====================================================================
 # Machine 3 — "gauntlet"  | Level: MEDIUM
 # Theme: web enum -> SQL injection (sqlmap) -> dump+crack hashes (john/hashcat)

@@ -5,9 +5,19 @@
 # then cleans logs/history and zeroes free space to shrink the .ova.
 # This severs Vagrant's own SSH access, which is fine: build-all.sh
 # powers the VM off with VBoxManage and exports it afterwards.
+#
+# Author: devlazybrain — https://github.com/devlazybrain
 # =====================================================================
 set -uo pipefail
 echo "[*] finalize: locking down build account + cleanup"
+
+# Author signature baked into every box (shown on login)
+cat > /etc/motd <<'EOF'
+
+  Practice lab machine — by devlazybrain
+  https://github.com/devlazybrain
+
+EOF
 
 # Neutralise the 'vagrant' provisioning account (insecure key + NOPASSWD sudo)
 if id vagrant &>/dev/null; then

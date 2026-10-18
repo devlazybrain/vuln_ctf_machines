@@ -1,4 +1,5 @@
 #!/bin/bash
+# Author: devlazybrain — https://github.com/devlazybrain
 # =====================================================================
 # Machine 1 — "recovery"  | Level: EASY
 # Theme: enumeration + FORENSIC recovery + simple sudo privesc

@@ -1,4 +1,5 @@
 #!/bin/bash
+# Author: devlazybrain — https://github.com/devlazybrain
 # =====================================================================
 # Machine 2 — "webwork"  | Level: EASY-MEDIUM
 # Theme: web enum -> SQLi login bypass -> upload-filter bypass (webshell)

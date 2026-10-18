@@ -1,4 +1,5 @@
 #!/bin/bash
+# Author: devlazybrain — https://github.com/devlazybrain
 # =====================================================================
 # build-all.sh — builds the 3 lab boxes with Vagrant + VirtualBox and
 # exports portable .ova files into ./ova/
