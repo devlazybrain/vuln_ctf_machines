@@ -14,6 +14,17 @@ ova/
 *.tar.gz
 *.tgz
 
+# Active build workspace from the other terminal (contains a VM disk + a PRIVATE KEY)
+.ctf-build/
+
+# Never commit private keys / secrets
+provkey
+provkey.pub
+*.pem
+id_rsa*
+id_ed25519*
+*.key
+
 # Editor / OS noise
 *.swp
 .DS_Store
