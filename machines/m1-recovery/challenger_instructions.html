@@ -8,30 +8,23 @@
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  box-sizing:border-box;
-  padding-top:env(safe-area-inset-top,0px);
-  padding-bottom:env(safe-area-inset-bottom,0px);
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
   --bg:#e9f7ec; --bg2:#d8f3dc; --card:#fbfffc; --ink:#081c15; --muted:#2d6a4f; --line:#b7e4c7;
   --accent:#0077b6; --accent2:#00b4d8; --accentink:#ffffff;
-  --ok:#1b4332; --okbg:#d8f3dc; --okline:#40916c;
-  --bad:#a4133c; --badbg:#ffccd5; --badline:#ff4d6d;
+  --ok:#1b4332; --okbg:#d8f3dc; --okline:#40916c; --bad:#a4133c; --badbg:#ffccd5; --badline:#ff4d6d;
   --code:#e4f3e9; --codeink:#0b2e22; --why:#e3f6fb; --whyline:#00b4d8;
   --hero1:#081c15; --hero2:#1b4332; --hero3:#2d6a4f; --shadow:0 10px 30px -14px rgba(8,28,21,.45);
 }
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
   --bg:#06140f; --bg2:#081c15; --card:#0e281d; --ink:#d8f3dc; --muted:#95d5b2; --line:#1f4a38;
-  --accent:#48cae4; --accent2:#90e0ef; --accentink:#03045e;
-  --ok:#b7e4c7; --okbg:#123024; --okline:#52b788;
-  --bad:#ffb3c1; --badbg:#590d22; --badline:#ff4d6d;
-  --code:#030d09; --codeink:#caf0f8; --why:#0b2a36; --whyline:#48cae4;
+  --accent:#48cae4; --accent2:#90e0ef; --accentink:#03045e; --ok:#b7e4c7; --okbg:#123024; --okline:#52b788;
+  --bad:#ffb3c1; --badbg:#590d22; --badline:#ff4d6d; --code:#030d09; --codeink:#caf0f8; --why:#0b2a36; --whyline:#48cae4;
   --hero1:#030d09; --hero2:#123024; --hero3:#1b4332; --shadow:0 12px 32px -16px rgba(0,0,0,.8);
 }}
 :root[data-theme="dark"]{
   --bg:#06140f; --bg2:#081c15; --card:#0e281d; --ink:#d8f3dc; --muted:#95d5b2; --line:#1f4a38;
-  --accent:#48cae4; --accent2:#90e0ef; --accentink:#03045e;
-  --ok:#b7e4c7; --okbg:#123024; --okline:#52b788;
-  --bad:#ffb3c1; --badbg:#590d22; --badline:#ff4d6d;
-  --code:#030d09; --codeink:#caf0f8; --why:#0b2a36; --whyline:#48cae4;
+  --accent:#48cae4; --accent2:#90e0ef; --accentink:#03045e; --ok:#b7e4c7; --okbg:#123024; --okline:#52b788;
+  --bad:#ffb3c1; --badbg:#590d22; --badline:#ff4d6d; --code:#030d09; --codeink:#caf0f8; --why:#0b2a36; --whyline:#48cae4;
   --hero1:#030d09; --hero2:#123024; --hero3:#1b4332; --shadow:0 12px 32px -16px rgba(0,0,0,.8);
 }
 html{min-height:100%;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 76px);scroll-behavior:smooth}
@@ -48,7 +41,9 @@ h1{font-family:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;font-size:c
 header p{margin:0;max-width:34em;color:#b7e4c7;position:relative;z-index:1}
 header p b{color:#90e0ef}
 .ph{color:var(--accent2);font-weight:700}
-.bar{position:sticky;top:calc(env(safe-area-inset-top,0px) + 8px);z-index:5;margin:0 -8px 18px;padding:10px 14px;border-radius:14px;
+.ipv{color:var(--accent2);font-weight:700}
+.ipv.set{color:#52b788}
+.bar{position:sticky;top:calc(env(safe-area-inset-top,0px) + 8px);z-index:5;margin:0 -8px 14px;padding:10px 14px;border-radius:14px;
   background:color-mix(in srgb,var(--card) 88%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
   border:1px solid var(--line);box-shadow:var(--shadow);display:grid;grid-template-columns:1fr auto auto;gap:6px 12px;align-items:center}
 .score{font-weight:700;font-size:.92rem}
@@ -57,22 +52,28 @@ header p b{color:#90e0ef}
 .bar button{font:inherit;font-weight:600;font-size:.88rem;padding:6px 12px;border-radius:10px;border:1px solid var(--line);background:transparent;color:var(--ink);cursor:pointer}
 .bar button:hover{border-color:var(--accent);color:var(--accent)}
 .bar button:focus-visible{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent2) 45%,transparent)}
+.ipbox{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 -8px 18px;padding:12px 14px;border-radius:14px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow)}
+.ipbox label{font-weight:700;font-size:.9rem;color:var(--muted);white-space:nowrap}
+.ipbox input{font:inherit;font-size:.95rem;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:8px 12px;flex:1;min-width:min(200px,100%)}
+.ipbox input:focus-visible{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent2) 45%,transparent)}
+.ipbox .hint{font-size:.78rem;color:var(--muted)}
 section.step{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px 20px 18px;margin:0 0 20px;box-shadow:var(--shadow)}
 section.step h2{font-family:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;font-size:1.25rem;font-weight:700;margin:0 0 10px;display:flex;align-items:center;gap:12px;letter-spacing:-.01em}
 .num{flex:none;display:inline-grid;place-items:center;width:36px;height:36px;border-radius:12px;font-size:1rem;font-weight:800;color:#fff;background:linear-gradient(135deg,#2d6a4f,#0096c7)}
 section.step p{margin:10px 0}
 ul{margin:10px 0;padding-left:1.3em}
 li{margin:6px 0}
-pre{position:relative;background:var(--code);color:var(--codeink);padding:14px 46px 14px 16px;border-radius:14px;overflow-x:auto;margin:12px 0;
-  font:13.5px/1.55 ui-monospace,Menlo,Consolas,monospace;max-width:100%;border:1px solid var(--line);border-left:4px solid #00b4d8}
-pre code{background:none;padding:0;color:inherit;white-space:pre}
+pre{background:var(--code);color:var(--codeink);padding:12px 14px;border-radius:14px;overflow-x:auto;margin:12px 0;font:13.5px/1.7 ui-monospace,Menlo,Consolas,monospace;max-width:100%;border:1px solid var(--line);border-left:4px solid #00b4d8}
+pre code{background:none;padding:0;color:inherit}
+pre code .cl{display:flex;align-items:center;gap:10px}
+pre code .cl .t{white-space:pre;flex:1;min-width:0;overflow-x:auto}
+pre code .cl .lc{flex:none;font:inherit;font-size:.66rem;font-weight:600;cursor:pointer;border:1px solid var(--line);border-radius:6px;padding:1px 7px;background:var(--card);color:var(--muted);opacity:.5;transition:opacity .15s}
+pre code .cl:hover .lc{opacity:1}
+pre code .cl .lc:focus-visible{opacity:1;outline:none;border-color:var(--accent)}
+pre code .cl .lc.done{color:var(--okline);border-color:var(--okline);opacity:1}
 code{font:0.9em ui-monospace,Menlo,Consolas,monospace;background:var(--why);padding:1px 6px;border-radius:6px;color:var(--ink)}
-.copy{position:absolute;top:8px;right:8px;font:inherit;font-size:.72rem;font-weight:600;cursor:pointer;border:1px solid var(--line);
-  border-radius:8px;padding:3px 8px;background:var(--card);color:var(--muted)}
-.copy.done{color:var(--okline);border-color:var(--okline)}
 .goal{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:12px 0;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:var(--bg2)}
 .goal .lbl{font-weight:800;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
-.goal code{background:var(--card);border:1px solid var(--line);color:var(--ink);padding:.15em .5em;border-radius:7px}
 .note{margin-top:14px;background:var(--why);border:1px solid color-mix(in srgb,var(--whyline) 35%,transparent);border-left:5px solid var(--whyline);padding:12px 16px;border-radius:14px}
 .note h3{margin:0 0 6px;font-family:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;font-size:1.02rem}
 .diff{display:inline-block;font-weight:700;font-size:.78rem;padding:3px 12px;border-radius:99px;background:var(--okbg);color:var(--okline);border:1px solid var(--okline)}
@@ -95,18 +96,17 @@ code{font:0.9em ui-monospace,Menlo,Consolas,monospace;background:var(--why);padd
 @media (max-width:520px){section.step{padding:16px 14px}h1{max-width:100%}header::after{opacity:.5}}
 .side{display:none}
 @media (min-width:1180px){
-  .side{display:block;position:fixed;top:calc(env(safe-area-inset-top,0px) + 96px);left:calc(50% - 390px - 240px);width:216px;
-    box-sizing:border-box;padding:14px;border-radius:20px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);z-index:4}
+  .side{display:block;position:fixed;top:calc(env(safe-area-inset-top,0px) + 96px);left:calc(50% - 390px - 240px);width:216px;box-sizing:border-box;padding:14px;border-radius:20px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);z-index:4}
   .side h2{font-family:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;font-size:1.05rem;margin:0 0 10px}
   .chips{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
-  .chips a{aspect-ratio:1;display:grid;place-items:center;border-radius:10px;border:1.5px solid var(--line);color:var(--ink);
-    text-decoration:none;font-weight:700;font-size:.9rem;transition:border-color .15s,transform .15s}
+  .chips a{aspect-ratio:1;display:grid;place-items:center;border-radius:10px;border:1.5px solid var(--line);color:var(--ink);text-decoration:none;font-weight:700;font-size:.9rem;transition:border-color .15s,transform .15s}
   .chips a:hover{border-color:var(--accent2);transform:translateY(-1px)}
   .chips a.here{box-shadow:0 0 0 3px color-mix(in srgb,var(--accent2) 55%,transparent);border-color:var(--accent)}
   .now{margin:12px 0 0;font-size:.82rem;color:var(--muted);line-height:1.35;min-height:2.2em}
   .metacard{margin-top:12px;padding-top:12px;border-top:1px solid var(--line)}
   .metarow{display:flex;justify-content:space-between;gap:8px;font-size:.84rem;padding:3px 0}
   .metarow b{color:var(--muted);font-weight:600}
+  .metarow #timer{font-variant-numeric:tabular-nums;font-weight:700;color:var(--accent)}
 }
 .skip{position:absolute;left:-999px}
 .skip:focus{left:14px;top:14px;z-index:40;background:var(--card);color:var(--ink);padding:8px 12px;border-radius:10px;border:1px solid var(--line)}
@@ -122,7 +122,7 @@ code{font:0.9em ui-monospace,Menlo,Consolas,monospace;background:var(--why);padd
   <div class="metacard">
     <div class="metarow"><b>Difficulty</b><span>Easy</span></div>
     <div class="metarow"><b>Flags</b><span>user + root</span></div>
-    <div class="metarow"><b>Time</b><span>~1 hour</span></div>
+    <div class="metarow"><b>Elapsed</b><span id="timer">0:00</span></div>
   </div>
 </nav>
 
@@ -140,6 +140,12 @@ code{font:0.9em ui-monospace,Menlo,Consolas,monospace;background:var(--why);padd
   <div class="track"><div class="fill" id="fill"></div></div>
 </div>
 
+<div class="ipbox">
+  <label for="ipv">Target IP</label>
+  <input id="ipv" type="text" placeholder="e.g. 192.168.56.101" autocomplete="off" spellcheck="false">
+  <span class="hint">set once — it fills into every command below</span>
+</div>
+
 <div id="doc">
 
   <section class="step" id="s1" data-title="The scenario">
@@ -150,9 +156,9 @@ code{font:0.9em ui-monospace,Menlo,Consolas,monospace;background:var(--why);padd
 
   <section class="step" id="s2" data-title="Your target">
     <h2><span class="num">2</span>Your target</h2>
-    <p>You are given the machine's IP address. Throughout this lab it is written as <span class="ph">&lt;target-ip&gt;</span> — use the real address you were handed.</p>
+    <p>You are given the machine's IP address — set it in the <b>Target IP</b> box above and it drops into the commands. Throughout it is written as <span class="ph ipv">&lt;target-ip&gt;</span>.</p>
     <p>Confirm the box is reachable before you start:</p>
-    <pre><code>ping -c2 <span class="ph">&lt;target-ip&gt;</span></code></pre>
+    <pre><code>ping -c2 <span class="ph ipv">&lt;target-ip&gt;</span></code></pre>
   </section>
 
   <section class="step" id="s3" data-title="Your objective">
@@ -165,29 +171,21 @@ code{font:0.9em ui-monospace,Menlo,Consolas,monospace;background:var(--why);padd
 
   <section class="step" id="sc" data-title="Check your flags">
     <h2><span class="num">✓</span>Check your flags</h2>
-    <p>Found a flag? Paste it in to verify. The answers are stored only as <b>hashes</b>, so this page checks your flag without ever revealing it.</p>
+    <p>Found a flag? Paste it in to verify. The answers are stored only as <b>salted hashes</b>, so this page checks your flag without ever revealing it.</p>
     <div class="fcheck" data-salt="9e274f4879442b47" data-hash="d355c5a5b2c2adf80145903cd49d6be6b2da3a2d2bafa0ec26cdc19c202fa4c2">
       <label>User flag</label>
-      <div class="row">
-        <input type="text" placeholder="FLAG{...}" autocomplete="off" spellcheck="false" aria-label="User flag">
-        <button type="button" class="go">Check</button>
-        <span class="res" aria-live="polite"></span>
-      </div>
+      <div class="row"><input type="text" placeholder="FLAG{...}" autocomplete="off" spellcheck="false" aria-label="User flag"><button type="button" class="go">Check</button><span class="res" aria-live="polite"></span></div>
     </div>
     <div class="fcheck" data-salt="53b2ca8516bec493" data-hash="e697c06bab16a6e796a362b6bceb1905ca15da50baa37f66d2d95b1cb20474e6">
       <label>Root flag</label>
-      <div class="row">
-        <input type="text" placeholder="FLAG{...}" autocomplete="off" spellcheck="false" aria-label="Root flag">
-        <button type="button" class="go">Check</button>
-        <span class="res" aria-live="polite"></span>
-      </div>
+      <div class="row"><input type="text" placeholder="FLAG{...}" autocomplete="off" spellcheck="false" aria-label="Root flag"><button type="button" class="go">Check</button><span class="res" aria-live="polite"></span></div>
     </div>
   </section>
 
   <section class="step" id="s4" data-title="Rules">
     <h2><span class="num">4</span>Rules</h2>
     <ul>
-      <li>Attack <b>only</b> the <span class="ph">&lt;target-ip&gt;</span> you were given — nothing else on the network.</li>
+      <li>Attack <b>only</b> the <span class="ph ipv">&lt;target-ip&gt;</span> you were given — nothing else on the network.</li>
       <li>Any tools are allowed: <code>nmap</code>, forensic carvers, password tools, and so on.</li>
       <li>Note down how you got in and how you escalated — being able to explain it matters more than the flag.</li>
     </ul>
@@ -211,86 +209,67 @@ code{font:0.9em ui-monospace,Menlo,Consolas,monospace;background:var(--why);padd
 (function(){
   "use strict";
   var root=document.documentElement;
-  var tBtn=document.getElementById("themeBtn");
-  function cur(){var s=root.getAttribute("data-theme");return s?s:(window.matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light");}
-  tBtn.addEventListener("click",function(){root.setAttribute("data-theme",cur()==="dark"?"light":"dark");});
-  document.getElementById("topBtn").addEventListener("click",function(){
-    window.scrollTo({top:0,behavior:(matchMedia("(prefers-reduced-motion:reduce)").matches?"auto":"smooth")});
-  });
+  document.getElementById("themeBtn").addEventListener("click",function(){var s=root.getAttribute("data-theme");var c=s?s:(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light");root.setAttribute("data-theme",c==="dark"?"light":"dark");});
+  document.getElementById("topBtn").addEventListener("click",function(){window.scrollTo({top:0,behavior:(matchMedia("(prefers-reduced-motion:reduce)").matches?"auto":"smooth")});});
+
+  /* ---- target-IP variable + per-command copy ---- */
+  var IPLABEL="<target-ip>";
+  var ipInput=document.getElementById("ipv");
+  function ipVal(){var v=ipInput&&ipInput.value.trim();return v||IPLABEL;}
+  function sub(s){return s.split(IPLABEL).join(ipVal());}
+  var proseIp=[].slice.call(document.querySelectorAll(".ipv")).filter(function(e){return !e.closest("pre");});
+  function copyText(text,btn){if(navigator.clipboard)navigator.clipboard.writeText(text).then(function(){var o=btn.textContent;btn.textContent="copied";btn.classList.add("done");setTimeout(function(){btn.textContent=o;btn.classList.remove("done");},1200);});}
+  var codeBlocks=[];
   document.querySelectorAll("pre").forEach(function(pre){
-    var b=document.createElement("button");b.className="copy";b.type="button";b.textContent="copy";
-    b.addEventListener("click",function(){
-      var t=pre.querySelector("code").innerText;
-      if(navigator.clipboard) navigator.clipboard.writeText(t).then(function(){
-        b.textContent="copied";b.classList.add("done");
-        setTimeout(function(){b.textContent="copy";b.classList.remove("done");},1400);
-      });
-    });
-    pre.appendChild(b);
-  });
-  /* flag checker — offline SHA-256, compares against stored hashes only */
-  function sha256(ascii){
-    function rr(v,a){return (v>>>a)|(v<<(32-a));}
-    var mp=Math.pow,mw=mp(2,32),result='',words=[],bl=ascii.length*8;
-    var hash=sha256.h=sha256.h||[],k=sha256.k=sha256.k||[],pc=k.length,comp={},i,j;
-    for(var c=2;pc<64;c++){if(!comp[c]){for(i=0;i<313;i+=c){comp[i]=c;}hash[pc]=(mp(c,.5)*mw)|0;k[pc++]=(mp(c,1/3)*mw)|0;}}
-    ascii+='\x80';while(ascii.length%64-56)ascii+='\x00';
-    for(i=0;i<ascii.length;i++){j=ascii.charCodeAt(i);if(j>>8)return;words[i>>2]|=j<<((3-i)%4)*8;}
-    words[words.length]=((bl/mw)|0);words[words.length]=(bl);
-    for(j=0;j<words.length;){
-      var w=words.slice(j,j+=16),oh=hash;hash=hash.slice(0,8);
-      for(i=0;i<64;i++){
-        var w15=w[i-15],w2=w[i-2],a=hash[0],e=hash[4];
-        var t1=hash[7]+(rr(e,6)^rr(e,11)^rr(e,25))+((e&hash[5])^((~e)&hash[6]))+k[i]
-          +(w[i]=(i<16)?w[i]:(w[i-16]+(rr(w15,7)^rr(w15,18)^(w15>>>3))+w[i-7]+(rr(w2,17)^rr(w2,19)^(w2>>>10)))|0);
-        var t2=(rr(a,2)^rr(a,13)^rr(a,22))+((a&hash[1])^(a&hash[2])^(hash[1]&hash[2]));
-        hash=[(t1+t2)|0].concat(hash);hash[4]=(hash[4]+t1)|0;
+    var code=pre.querySelector("code"); if(!code) return;
+    var raw=code.innerText.replace(/\n+$/,"");
+    var lines=raw.split("\n");
+    code.textContent="";
+    var rows=lines.map(function(ln){
+      var row=document.createElement("span");row.className="cl";
+      var t=document.createElement("span");t.className="t";row.appendChild(t);
+      if(ln.trim()!=="" && ln.trim().charAt(0)!=="#"){
+        var lc=document.createElement("button");lc.className="lc";lc.type="button";lc.textContent="copy";lc.setAttribute("aria-label","Copy this command");
+        (function(line){lc.addEventListener("click",function(){copyText(sub(line),lc);});})(ln);
+        row.appendChild(lc);
       }
-      for(i=0;i<8;i++){hash[i]=(hash[i]+oh[i])|0;}
-    }
-    for(i=0;i<8;i++){for(j=3;j+1;j--){var b=(hash[i]>>(j*8))&255;result+=((b<16)?0:'')+b.toString(16);}}
-    return result;
+      code.appendChild(row);code.appendChild(document.createTextNode("\n"));
+      return {raw:ln,t:t};
+    });
+    codeBlocks.push(rows);
+  });
+  function renderIP(){
+    var v=ipVal();
+    proseIp.forEach(function(s){s.textContent=v;s.classList.toggle("set",v!==IPLABEL);});
+    codeBlocks.forEach(function(rows){rows.forEach(function(r){r.t.textContent=sub(r.raw);});});
   }
-  /* salted + iterated: slows guessing and defeats rainbow-table / online lookup */
-  var ITER=2000;
-  function kdf(flag,salt){var h=sha256(salt+":"+flag);for(var i=0;i<ITER;i++){h=sha256(h+salt);}return h;}
+  if(ipInput)ipInput.addEventListener("input",renderIP);
+  renderIP();
+
+  /* ---- count-up timer ---- */
+  var tEl=document.getElementById("timer");
+  if(tEl){var t0=Date.now();setInterval(function(){var s=Math.floor((Date.now()-t0)/1000);tEl.textContent=Math.floor(s/60)+":"+("0"+(s%60)).slice(-2);},1000);}
+
+  /* ---- flag checker (salted, offline) ---- */
+  function sha256(ascii){function rr(v,a){return (v>>>a)|(v<<(32-a));}var mp=Math.pow,mw=mp(2,32),result='',words=[],bl=ascii.length*8;var hash=sha256.h=sha256.h||[],k=sha256.k=sha256.k||[],pc=k.length,comp={},i,j;for(var c=2;pc<64;c++){if(!comp[c]){for(i=0;i<313;i+=c){comp[i]=c;}hash[pc]=(mp(c,.5)*mw)|0;k[pc++]=(mp(c,1/3)*mw)|0;}}ascii+='\x80';while(ascii.length%64-56)ascii+='\x00';for(i=0;i<ascii.length;i++){j=ascii.charCodeAt(i);if(j>>8)return;words[i>>2]|=j<<((3-i)%4)*8;}words[words.length]=((bl/mw)|0);words[words.length]=(bl);for(j=0;j<words.length;){var w=words.slice(j,j+=16),oh=hash;hash=hash.slice(0,8);for(i=0;i<64;i++){var w15=w[i-15],w2=w[i-2],a=hash[0],e=hash[4];var t1=hash[7]+(rr(e,6)^rr(e,11)^rr(e,25))+((e&hash[5])^((~e)&hash[6]))+k[i]+(w[i]=(i<16)?w[i]:(w[i-16]+(rr(w15,7)^rr(w15,18)^(w15>>>3))+w[i-7]+(rr(w2,17)^rr(w2,19)^(w2>>>10)))|0);var t2=(rr(a,2)^rr(a,13)^rr(a,22))+((a&hash[1])^(a&hash[2])^(hash[1]&hash[2]));hash=[(t1+t2)|0].concat(hash);hash[4]=(hash[4]+t1)|0;}for(i=0;i<8;i++){hash[i]=(hash[i]+oh[i])|0;}}for(i=0;i<8;i++){for(j=3;j+1;j--){var b=(hash[i]>>(j*8))&255;result+=((b<16)?0:'')+b.toString(16);}}return result;}
+  var ITER=2000;function kdf(flag,salt){var h=sha256(salt+":"+flag);for(var i=0;i<ITER;i++){h=sha256(h+salt);}return h;}
   document.querySelectorAll(".fcheck").forEach(function(fc){
     var input=fc.querySelector("input"),btn=fc.querySelector(".go"),res=fc.querySelector(".res");
     var want=fc.getAttribute("data-hash"),salt=fc.getAttribute("data-salt");
-    function check(){
-      var v=input.value.trim();
-      if(!v){fc.classList.remove("ok","bad");res.textContent="";return;}
-      var ok=kdf(v,salt)===want;
-      fc.classList.toggle("ok",ok);fc.classList.toggle("bad",!ok);
-      res.textContent=ok?"✓ correct":"✗ not correct";
-    }
+    function check(){var v=input.value.trim();if(!v){fc.classList.remove("ok","bad");res.textContent="";return;}var ok=kdf(v,salt)===want;fc.classList.toggle("ok",ok);fc.classList.toggle("bad",!ok);res.textContent=ok?"✓ correct":"✗ not correct";}
     btn.addEventListener("click",check);
     input.addEventListener("keydown",function(e){if(e.key==="Enter"){e.preventDefault();check();}});
     input.addEventListener("input",function(){if(fc.classList.contains("bad")){fc.classList.remove("bad");res.textContent="";}});
   });
 
+  /* ---- section nav ---- */
   var steps=[].slice.call(document.querySelectorAll("section.step"));
-  var chips=document.getElementById("chips"),now=document.getElementById("now");
-  var score=document.getElementById("score"),fill=document.getElementById("fill");
-  steps.forEach(function(s,i){
-    var a=document.createElement("a");a.href="#"+s.id;a.textContent=(i+1);
-    a.setAttribute("aria-label","Section "+(i+1)+": "+s.dataset.title);
-    chips.appendChild(a);
-  });
+  var chips=document.getElementById("chips"),now=document.getElementById("now"),score=document.getElementById("score"),fill=document.getElementById("fill");
+  steps.forEach(function(s,i){var a=document.createElement("a");a.href="#"+s.id;a.textContent=(i+1);a.setAttribute("aria-label","Section "+(i+1)+": "+s.dataset.title);chips.appendChild(a);});
   var links=[].slice.call(chips.children);
-  function setActive(i){
-    links.forEach(function(a,j){a.classList.toggle("here",j===i);});
-    now.textContent=(i+1)+" · "+steps[i].dataset.title;
-    score.textContent=(i+1)+" / "+steps.length;
-    fill.style.width=(((i+1)/steps.length)*100)+"%";
-  }
+  function setActive(i){links.forEach(function(a,j){a.classList.toggle("here",j===i);});now.textContent=(i+1)+" · "+steps[i].dataset.title;score.textContent=(i+1)+" / "+steps.length;fill.style.width=(((i+1)/steps.length)*100)+"%";}
   setActive(0);
-  if("IntersectionObserver" in window){
-    var io=new IntersectionObserver(function(ents){
-      ents.forEach(function(e){if(e.isIntersecting){var i=steps.indexOf(e.target);if(i>=0)setActive(i);}});
-    },{rootMargin:"-45% 0px -50% 0px",threshold:0});
-    steps.forEach(function(s){io.observe(s);});
-  }
+  if("IntersectionObserver" in window){var io=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting){var i=steps.indexOf(x.target);if(i>=0)setActive(i);}});},{rootMargin:"-45% 0px -50% 0px",threshold:0});steps.forEach(function(s){io.observe(s);});}
 })();
 </script>
 </body>
