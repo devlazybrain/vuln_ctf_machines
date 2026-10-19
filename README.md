@@ -1,87 +1,76 @@
-# Candidate Assessment Lab — 3 vulnerable Linux boxes
+# Vulnerable Linux Boxes — practice lab
 
-A small CTF-style assessment lab for screening new team members. Three
-**independent** boxes, rising in difficulty. Each has a **user** flag and a
-**root** flag (6 flags total). Everything is custom, so candidates can't find a
-VulnHub/HTB walkthrough.
+Three self-contained, intentionally vulnerable **Debian 12** machines (easy →
+medium) for hands-on security practice, exams, or self-training. Each box has a
+**user** flag and a **root** flag, a built-in **flag checker**, and a full
+HTML **write-up**.
 
-| Box | Level | Core skills | Foothold | Root |
-|-----|-------|-------------|----------|------|
-| **m1-recovery** | easy | enumeration, **forensics** | recover a deleted file from a disk image | `sudo find` (GTFOBins) |
-| **m2-webwork** | easy-medium | web enum, SQLi, file upload, creds reuse | SQLi login bypass → `.phtml` webshell | world-writable root cron |
-| **m3-gauntlet** | medium | web enum, SQLi (sqlmap), hash cracking, privesc | SQL injection → crack MD5 → SSH | `sudo -u` pivot → Linux capability |
+Open **[`index.html`](index.html)** in a browser for the styled front page, or
+browse the pages directly.
 
-> On m1 the flags come from **forensic recovery** (your spec). On m2 and m3 the
-> flags are plain `user.txt` / `root.txt` in the user and root home dirs.
+| Box | Level | Skills | Challenge | Host guide | Write-up |
+|-----|-------|--------|-----------|-----------|----------|
+| **recovery** | easy | enumeration, forensics, privesc | [challenge](machines/m1-recovery/challenger_instructions.html) | [host](machines/m1-recovery/instructions.html) | [solution](writeups/m1-recovery.html) |
+| **webwork** | easy–medium | web, SQLi, file upload, privesc | [challenge](machines/m2-webwork/challenger_instructions.html) | [host](machines/m2-webwork/instructions.html) | [solution](writeups/m2-webwork.html) |
+| **gauntlet** | medium | SQLi, hash cracking, sudo, capabilities | [challenge](machines/m3-gauntlet/challenger_instructions.html) | [host](machines/m3-gauntlet/instructions.html) | [solution](writeups/m3-gauntlet.html) |
 
-- `BRIEFING.md` — give this to candidates.
-- `EXAMINER-GUIDE.md` — **examiner only**: flags, rubric, quick answers.
-- `mN-*/SOLUTION.md` — full walkthrough per box (examiner only).
+Each box ships three HTML docs:
 
----
+- **`instructions.html`** — *host*: how to build, run, and reset the box.
+- **`challenger_instructions.html`** — *player*: scenario, objective, rules, and
+  a flag checker (answers stored only as salted hashes — the flag is never in
+  the page source).
+- **`writeups/<box>.html`** — the full walkthrough (**spoilers**).
 
-## 1. Requirements (on your Kali laptop)
+## Build the machines
+
+Requires **VirtualBox** and **Vagrant** on the host:
 
 ```bash
 sudo apt update && sudo apt install -y virtualbox vagrant
-```
 
-Disk/RAM while building: ~1 GB RAM and ~5 GB disk per box (built one at a time).
-Each finished `.ova` is roughly 0.7–1.2 GB.
-
-## 2. Build the `.ova` files
-
-```bash
-cd ~/machines
-./build-all.sh            # builds all three
+cd machines
+./build-all.sh            # build all three -> machines/ova/*.ova
 # or one at a time:
 ./build-all.sh m2-webwork
 ```
 
-The script runs Vagrant (it auto-downloads the `debian/bookworm64` base box the
-first time), provisions each box, powers it off, and exports it to
-`ova/lab-mN-*.ova`. The build also **disables the Vagrant build account** so
-candidates can't use it as a backdoor.
+The first build downloads the `debian/bookworm64` base box once (~500 MB) and
+reuses it. Each finished `.ova` is ~0.7–1.2 GB. The build also disables the
+Vagrant provisioning account, so the shipped machine has no build-time backdoor.
 
-## 3. Run a box for an assessment
+## Run a box
 
-Import the `.ova` in VirtualBox (GUI: *File → Import Appliance*, or CLI):
+Import the `.ova` in VirtualBox, set its network adapter to a **Host-only**
+network, and boot. Find its IP from the host with `sudo nmap -sn 192.168.56.0/24`
+and give that to the player as the target.
 
-```bash
-VBoxManage import ova/lab-m2-webwork.ova
+> ⚠️ These machines are intentionally vulnerable. **Never** attach them to a
+> bridged/public network or expose them to the internet — keep them on an
+> isolated host-only (or internal) network.
+
+Reset between players with a VirtualBox snapshot (instant, no rebuild) — see any
+box's host guide. For headless/server use:
+`VBoxManage startvm "lab-m1-recovery" --type headless`.
+
+## Repository layout
+
+```
+index.html                     front page
+machines/
+  build-all.sh                 build + export all .ova files
+  common/finalize.sh           lockdown + cleanup run on every box
+  m1-recovery/   provision.sh  Vagrantfile  instructions.html  challenger_instructions.html
+  m2-webwork/    ...
+  m3-gauntlet/   ...
+writeups/
+  m1-recovery.html  m2-webwork.html  m3-gauntlet.html
 ```
 
-**Networking — give the box an IP the candidate can reach:**
+Build artifacts (`ova/`, the Debian ISO, VM disks, keys) are git-ignored and
+never committed.
 
-- Create a host-only network once:
-  *VirtualBox → Tools → Network → Host-only Networks → Create* (e.g. `vboxnet0`,
-  DHCP enabled). 
-- Set the imported VM's adapter to **Host-only Adapter → vboxnet0**, then boot.
-- Find its IP from your Kali host: `nmap -sn 192.168.56.0/24` (or whatever the
-  host-only subnet is). Tell the candidate that IP (your spec: IP is given).
+## Credits
 
-> Prefer host-only over bridged so the vulnerable box is never exposed to your
-> real LAN/internet. One box at a time is cleanest for scoring.
-
-## 4. Reset between candidates
-
-Take a snapshot right after import/boot, and *Restore* it after each candidate —
-instant reset, no rebuild:
-
-```bash
-VBoxManage snapshot "lab-m2-webwork" take clean
-# after a candidate:
-VBoxManage controlvm "lab-m2-webwork" poweroff
-VBoxManage snapshot "lab-m2-webwork" restore clean
-```
-
-## 5. Notes / assumptions
-
-- Candidates are **told the target IP** and **may use tools** (nmap, gobuster,
-  sqlmap, Metasploit, hashcat/john). Pass bar: **user + root on all three**.
-- Linux only. No kernel-exploit dependence (vulns are misconfigurations and
-  custom web code), so the boxes stay stable and fully offline.
-- Password-cracking on m3 expects the standard `rockyou.txt` wordlist (ships on
-  Kali at `/usr/share/wordlists/rockyou.txt.gz` — `gunzip` it once).
-- The flags and credentials are fixed in each `provision.sh`; change them there
-  and rebuild if you want fresh values per hiring round.
+Built by **[devlazybrain](https://github.com/devlazybrain)**. Free to use for
+learning, teaching, and self-practice.

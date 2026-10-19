@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Practice Lab – Vulnerable Linux Boxes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#e9f7ec; --bg2:#d8f3dc; --card:#fbfffc; --ink:#081c15; --muted:#2d6a4f; --line:#b7e4c7;
+  --accent:#0077b6; --accent2:#00b4d8;
+  --ok:#1b4332; --okbg:#d8f3dc; --okline:#40916c;
+  --code:#e4f3e9; --codeink:#0b2e22; --why:#e3f6fb; --whyline:#00b4d8;
+  --hero1:#081c15; --hero2:#1b4332; --hero3:#2d6a4f; --shadow:0 10px 30px -14px rgba(8,28,21,.45);
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#06140f; --bg2:#081c15; --card:#0e281d; --ink:#d8f3dc; --muted:#95d5b2; --line:#1f4a38;
+  --accent:#48cae4; --accent2:#90e0ef; --ok:#b7e4c7; --okbg:#123024; --okline:#52b788;
+  --code:#030d09; --codeink:#caf0f8; --why:#0b2a36; --whyline:#48cae4;
+  --hero1:#030d09; --hero2:#123024; --hero3:#1b4332; --shadow:0 12px 32px -16px rgba(0,0,0,.8);
+}}
+:root[data-theme="dark"]{
+  --bg:#06140f; --bg2:#081c15; --card:#0e281d; --ink:#d8f3dc; --muted:#95d5b2; --line:#1f4a38;
+  --accent:#48cae4; --accent2:#90e0ef; --ok:#b7e4c7; --okbg:#123024; --okline:#52b788;
+  --code:#030d09; --codeink:#caf0f8; --why:#0b2a36; --whyline:#48cae4;
+  --hero1:#030d09; --hero2:#123024; --hero3:#1b4332; --shadow:0 12px 32px -16px rgba(0,0,0,.8);
+}
+html{min-height:100%;scroll-behavior:smooth}
+body{margin:0;color:var(--ink);font:16px/1.6 "Figtree","Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+  background:radial-gradient(1200px 500px at 85% -5%,rgba(0,180,216,.18),transparent 60%),linear-gradient(180deg,var(--bg2),var(--bg) 420px);background-color:var(--bg)}
+main{max-width:860px;margin:0 auto;padding:0 14px 90px}
+header{margin:0 -14px 22px;padding:40px 22px 44px;color:#d8f3dc;border-radius:0 0 28px 28px;position:relative;overflow:hidden;
+  background:linear-gradient(135deg,var(--hero1) 0%,var(--hero2) 55%,var(--hero3) 100%)}
+header::after{content:"";position:absolute;right:-70px;top:-70px;width:260px;height:260px;border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,#90e0ef,#00b4d8 45%,#0077b6 75%,transparent 76%);opacity:.9}
+header::before{content:"";position:absolute;right:70px;bottom:-60px;width:140px;height:140px;border-radius:50%;background:#52b788;opacity:.35}
+.eyebrow{position:relative;z-index:1;margin:0 0 8px;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:#90e0ef;font-weight:700}
+h1{font-family:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;font-size:clamp(2rem,6vw,3rem);line-height:1.05;margin:0 0 12px;letter-spacing:-.02em;font-weight:800;position:relative;z-index:1;max-width:80%}
+header p{margin:0;max-width:40em;color:#b7e4c7;position:relative;z-index:1}
+.toolbar{display:flex;justify-content:flex-end;margin:0 0 18px}
+.toolbar button{font:inherit;font-weight:600;font-size:.88rem;padding:7px 14px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+.toolbar button:hover{border-color:var(--accent);color:var(--accent)}
+.lead{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px 20px;margin:0 0 22px;box-shadow:var(--shadow)}
+.lead p{margin:.4rem 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px;margin:0 0 18px;box-shadow:var(--shadow)}
+.card .top{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+.card h2{font-family:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;font-size:1.4rem;margin:0;letter-spacing:-.01em}
+.diff{font-weight:700;font-size:.74rem;padding:3px 11px;border-radius:99px;background:var(--okbg);color:var(--okline);border:1px solid var(--okline)}
+.card p{margin:8px 0 12px;color:var(--muted)}
+.tags{margin:0 0 14px}
+.tag{display:inline-block;font-size:.72rem;font-weight:600;padding:2px 9px;border-radius:99px;background:var(--bg2);border:1px solid var(--line);color:var(--muted);margin:0 4px 4px 0}
+.links{display:flex;gap:10px;flex-wrap:wrap}
+.links a{text-decoration:none;font-weight:700;font-size:.9rem;padding:9px 15px;border-radius:11px;border:1px solid var(--line);color:var(--ink);background:var(--bg2);transition:border-color .15s,transform .15s}
+.links a:hover{border-color:var(--accent2);transform:translateY(-1px)}
+.links a.solve{color:#fff;border-color:transparent;background:linear-gradient(135deg,#1b4332,#2d6a4f 55%,#0096c7)}
+.links a.spoiler{color:var(--muted);background:transparent}
+.sig{margin:30px 0 0;text-align:center;font-size:.85rem;color:var(--muted)}
+.sig a{color:var(--accent);text-decoration:none;font-weight:700}
+.sig a:hover{text-decoration:underline}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media (max-width:520px){header::after{opacity:.5}h1{max-width:100%}}
+</style>
+</head>
+<body>
+<header>
+  <p class="eyebrow">Open-source practice lab</p>
+  <h1>Vulnerable Linux Boxes</h1>
+  <p>Three self-contained, intentionally vulnerable Debian machines — easy to medium — for hands-on practice, exams, or self-training. Each has a user flag and a root flag, a built-in flag checker, and a full write-up.</p>
+</header>
+
+<main>
+<div class="toolbar"><button id="themeBtn" type="button">Switch theme</button></div>
+
+<div class="lead">
+  <p><b>How it works.</b> Build a box with Vagrant (or import its <code>.ova</code>), set it to a host-only network, and attack the IP. Read the <b>host</b> page to build and run it, hand a player the <b>challenge</b> page, and open the <b>write-up</b> only when you want the solution.</p>
+  <p><b>Build everything:</b> <code>cd machines &amp;&amp; ./build-all.sh</code> — needs VirtualBox + Vagrant.</p>
+</div>
+
+<section class="card">
+  <div class="top"><h2>recovery</h2><span class="diff">Easy</span></div>
+  <p>Service enumeration and forensic recovery of a deleted file, then a <code>sudo</code> misconfiguration for root.</p>
+  <div class="tags"><span class="tag">enumeration</span><span class="tag">forensics</span><span class="tag">privesc</span></div>
+  <div class="links">
+    <a class="solve" href="machines/m1-recovery/challenger_instructions.html">Challenge</a>
+    <a href="machines/m1-recovery/instructions.html">Host guide</a>
+    <a class="spoiler" href="writeups/m1-recovery.html">Write-up (spoilers)</a>
+  </div>
+</section>
+
+<section class="card">
+  <div class="top"><h2>webwork</h2><span class="diff">Easy–Medium</span></div>
+  <p>Web enumeration, SQL-injection login bypass, an upload-filter bypass for a webshell, credential reuse, then a world-writable root cron.</p>
+  <div class="tags"><span class="tag">web</span><span class="tag">SQLi</span><span class="tag">file upload</span><span class="tag">privesc</span></div>
+  <div class="links">
+    <a class="solve" href="machines/m2-webwork/challenger_instructions.html">Challenge</a>
+    <a href="machines/m2-webwork/instructions.html">Host guide</a>
+    <a class="spoiler" href="writeups/m2-webwork.html">Write-up (spoilers)</a>
+  </div>
+</section>
+
+<section class="card">
+  <div class="top"><h2>gauntlet</h2><span class="diff">Medium</span></div>
+  <p>SQL injection to dump and crack password hashes, SSH in, then a two-step escalation: a <code>sudo -u</code> pivot and a Linux capability on an interpreter.</p>
+  <div class="tags"><span class="tag">SQLi</span><span class="tag">hash cracking</span><span class="tag">sudo</span><span class="tag">capabilities</span></div>
+  <div class="links">
+    <a class="solve" href="machines/m3-gauntlet/challenger_instructions.html">Challenge</a>
+    <a href="machines/m3-gauntlet/instructions.html">Host guide</a>
+    <a class="spoiler" href="writeups/m3-gauntlet.html">Write-up (spoilers)</a>
+  </div>
+</section>
+
+<footer class="sig">Open-source practice lab by <a href="https://github.com/devlazybrain" target="_blank" rel="noopener">devlazybrain</a></footer>
+</main>
+
+<script>
+(function(){
+  "use strict";
+  var root=document.documentElement;
+  document.getElementById("themeBtn").addEventListener("click",function(){
+    var s=root.getAttribute("data-theme");var cur=s?s:(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light");
+    root.setAttribute("data-theme",cur==="dark"?"light":"dark");
+  });
+})();
+</script>
+</body>
+</html>
