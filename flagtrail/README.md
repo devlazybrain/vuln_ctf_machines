@@ -23,8 +23,13 @@ The VM image itself (`FlagTrail-Linux-CTF.ova`) is distributed under
 
 ## Quick start
 
-1. Download `FlagTrail-Linux-CTF.ova` from **Releases** and import it in
-   VirtualBox (**File → Import Appliance**). Full steps: `launch_instructions.html`.
+1. Get the image from **Releases**. It ships as two parts (GitHub caps assets
+   at 2 GB) — download both and reassemble:
+   ```bash
+   cat FlagTrail-Linux-CTF.part00.ova FlagTrail-Linux-CTF.part01.ova > FlagTrail-Linux-CTF.ova
+   sha256sum -c FlagTrail-Linux-CTF.ova.sha256   # should print: OK
+   ```
+   Then import it in VirtualBox (**File → Import Appliance**). Full steps: `launch_instructions.html`.
 2. Set **Adapter 1 = Host-only** before first boot. Do not use bridged.
 3. Boot it, then find its IP from an attacker box on the same host-only net:
    ```bash
