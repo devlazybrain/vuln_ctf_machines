@@ -15,7 +15,7 @@
   --code:#e4f3e9; --codeink:#0b2e22; --why:#e3f6fb; --whyline:#00b4d8;
   --hero1:#081c15; --hero2:#1b4332; --hero3:#2d6a4f; --shadow:0 10px 30px -14px rgba(8,28,21,.45);
 }
-@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
   --bg:#06140f; --bg2:#081c15; --card:#0e281d; --ink:#d8f3dc; --muted:#95d5b2; --line:#1f4a38;
   --accent:#48cae4; --accent2:#90e0ef; --accentink:#03045e; --ok:#b7e4c7; --okbg:#123024; --okline:#52b788;
   --bad:#ffb3c1; --badbg:#590d22; --badline:#ff4d6d; --code:#030d09; --codeink:#caf0f8; --why:#0b2a36; --whyline:#48cae4;
@@ -37,164 +37,147 @@ header::after{content:"";position:absolute;right:-70px;top:-70px;width:240px;hei
   background:radial-gradient(circle at 35% 35%,#90e0ef,#00b4d8 45%,#0077b6 75%,transparent 76%);opacity:.9}
 header::before{content:"";position:absolute;right:60px;bottom:-60px;width:130px;height:130px;border-radius:50%;background:#52b788;opacity:.35}
 .eyebrow{position:relative;z-index:1;margin:0 0 8px;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:#90e0ef;font-weight:700}
-h1{font-family:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;font-size:clamp(1.9rem,6vw,2.7rem);line-height:1.05;margin:0 0 10px;letter-spacing:-.02em;font-weight:800;position:relative;z-index:1;max-width:80%}
+h1{font-family:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;font-size:clamp(1.9rem,6vw,2.7rem);line-height:1.05;margin:0 0 10px;letter-spacing:-.02em;font-weight:800;position:relative;z-index:1;max-width:82%}
 header p{margin:0;max-width:34em;color:#b7e4c7;position:relative;z-index:1}
 header p b{color:#90e0ef}
-.ph{color:var(--accent2);font-weight:700}
-.bar{position:sticky;top:calc(env(safe-area-inset-top,0px) + 8px);z-index:5;margin:0 -8px 18px;padding:10px 14px;border-radius:14px;
+.toggle{position:absolute;top:18px;right:18px;z-index:2;font:inherit;font-weight:600;font-size:.82rem;padding:6px 12px;border-radius:10px;cursor:pointer;
+  color:#d8f3dc;background:rgba(0,0,0,.25);border:1px solid rgba(144,224,239,.4)}
+.toggle:hover{border-color:#90e0ef}
+.bar{position:sticky;top:calc(env(safe-area-inset-top,0px) + 8px);z-index:5;margin:0 -8px 14px;padding:10px 14px;border-radius:14px;
   background:color-mix(in srgb,var(--card) 88%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
-  border:1px solid var(--line);box-shadow:var(--shadow);display:grid;grid-template-columns:1fr auto auto;gap:6px 12px;align-items:center}
+  border:1px solid var(--line);box-shadow:var(--shadow);display:grid;grid-template-columns:1fr auto;gap:6px 12px;align-items:center}
 .score{font-weight:700;font-size:.92rem}
 .track{grid-column:1 / -1;height:8px;border-radius:99px;background:var(--line);overflow:hidden}
 .fill{height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,#40916c,#52b788,#00b4d8);transition:width .4s ease}
 .bar button{font:inherit;font-weight:600;font-size:.88rem;padding:6px 12px;border-radius:10px;border:1px solid var(--line);background:transparent;color:var(--ink);cursor:pointer}
 .bar button:hover{border-color:var(--accent);color:var(--accent)}
-.bar button:focus-visible{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent2) 45%,transparent)}
-section.step{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px 20px 18px;margin:0 0 20px;box-shadow:var(--shadow)}
-section.step h2{font-family:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;font-size:1.25rem;font-weight:700;margin:0 0 10px;display:flex;align-items:center;gap:12px;letter-spacing:-.01em}
-.num{flex:none;display:inline-grid;place-items:center;width:36px;height:36px;border-radius:12px;font-size:1rem;font-weight:800;color:#fff;background:linear-gradient(135deg,#2d6a4f,#0096c7)}
-section.step p{margin:10px 0}
+.warn{background:var(--badbg);border:1px solid var(--badline);color:var(--bad);padding:12px 16px;border-radius:14px;margin:0 -8px 20px;font-size:.94rem;font-weight:500}
+.warn b{color:var(--bad)}
+h2{font-family:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;font-size:1.4rem;font-weight:800;letter-spacing:-.01em;margin:30px 4px 12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px 22px 18px;margin:0 0 20px;box-shadow:var(--shadow)}
+.chead{display:flex;align-items:center;gap:13px;margin:0 0 6px}
+.chead h3{font-family:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;font-size:1.2rem;font-weight:700;margin:0;letter-spacing:-.01em}
+.num{flex:none;display:inline-grid;place-items:center;width:38px;height:38px;border-radius:12px;font-size:1.05rem;font-weight:800;color:#fff;background:linear-gradient(135deg,#2d6a4f,#0096c7)}
+p{margin:10px 0}
+a{color:var(--accent);font-weight:600}
 ul{margin:10px 0;padding-left:1.3em}
 li{margin:6px 0}
-pre{position:relative;background:var(--code);color:var(--codeink);padding:12px 14px;border-radius:14px;overflow-x:auto;margin:12px 0;font:13.5px/1.7 ui-monospace,Menlo,Consolas,monospace;max-width:100%;border:1px solid var(--line);border-left:4px solid #00b4d8}
-pre code{background:none;padding:0;color:inherit;white-space:pre}
+pre{position:relative;background:var(--code);color:var(--codeink);padding:14px 16px;border-radius:14px;overflow-x:auto;margin:12px 0;
+  font:13.5px/1.6 ui-monospace,Menlo,Consolas,monospace;max-width:100%;border:1px solid var(--line);border-left:4px solid var(--accent2);cursor:copy}
+pre code{background:none;padding:0;color:inherit}
 code{font:0.9em ui-monospace,Menlo,Consolas,monospace;background:var(--why);padding:1px 6px;border-radius:6px;color:var(--ink)}
-.copy{position:absolute;top:8px;right:8px;font:inherit;font-size:.72rem;font-weight:600;cursor:pointer;border:1px solid var(--line);border-radius:8px;padding:3px 8px;background:var(--card);color:var(--muted)}
-.copy.done{color:var(--okline);border-color:var(--okline)}
-.note{margin-top:14px;background:var(--why);border:1px solid color-mix(in srgb,var(--whyline) 35%,transparent);border-left:5px solid var(--whyline);padding:12px 16px;border-radius:14px}
-.note h3{margin:0 0 6px;font-family:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;font-size:1.02rem}
-.sig{margin:30px 0 0;text-align:center;font-size:.85rem;color:var(--muted)}
-.sig a{color:var(--accent);text-decoration:none;font-weight:700}
-.sig a:hover{text-decoration:underline}
-@media (prefers-reduced-motion:reduce){.fill{transition:none}html{scroll-behavior:auto}}
-@media (max-width:520px){section.step{padding:16px 14px}h1{max-width:100%}header::after{opacity:.5}}
+pre .c{color:var(--muted)}
+.copy{position:absolute;top:8px;right:8px;font:600 .72rem "Figtree",system-ui,sans-serif;padding:4px 10px;border-radius:8px;
+  border:1px solid var(--line);background:var(--card);color:var(--muted);cursor:pointer;opacity:0;transition:opacity .15s,color .15s,border-color .15s}
+pre:hover .copy,.copy:focus-visible{opacity:.9}
+.copy:hover{opacity:1;border-color:var(--accent);color:var(--accent)}
+.copy.done{opacity:1;color:var(--okline);border-color:var(--okline)}
+.note{margin-top:4px;background:var(--why);border:1px solid color-mix(in srgb,var(--whyline) 35%,transparent);border-left:5px solid var(--whyline);padding:12px 16px;border-radius:14px;font-size:.95rem}
+.note h4{margin:0 0 6px;font-family:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;font-size:1rem}
 .side{display:none}
 @media (min-width:1180px){
-  .side{display:block;position:fixed;top:calc(env(safe-area-inset-top,0px) + 96px);left:calc(50% - 390px - 240px);width:216px;box-sizing:border-box;padding:14px;border-radius:20px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);z-index:4}
-  .side h2{font-family:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;font-size:1.05rem;margin:0 0 10px}
-  .chips{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
-  .chips a{aspect-ratio:1;display:grid;place-items:center;border-radius:10px;border:1.5px solid var(--line);color:var(--ink);text-decoration:none;font-weight:700;font-size:.9rem;transition:border-color .15s,transform .15s}
-  .chips a:hover{border-color:var(--accent2);transform:translateY(-1px)}
-  .chips a.here{box-shadow:0 0 0 3px color-mix(in srgb,var(--accent2) 55%,transparent);border-color:var(--accent)}
-  .now{margin:12px 0 0;font-size:.82rem;color:var(--muted);line-height:1.35;min-height:2.2em}
-  .metacard{margin-top:12px;padding-top:12px;border-top:1px solid var(--line)}
-  .metarow{display:flex;justify-content:space-between;gap:8px;font-size:.84rem;padding:3px 0}
-  .metarow b{color:var(--muted);font-weight:600}
-  .tag{display:inline-block;font-size:.72rem;font-weight:600;padding:2px 8px;border-radius:99px;background:var(--bg2);border:1px solid var(--line);color:var(--muted);margin:6px 4px 0 0}
+  .side{display:block;position:fixed;top:calc(env(safe-area-inset-top,0px) + 96px);left:calc(50% - 390px - 212px);width:190px;box-sizing:border-box;padding:15px;border-radius:18px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);z-index:4}
+  .side h2{font-family:"Bricolage Grotesque",system-ui,sans-serif;font-size:1.02rem;margin:0 0 10px}
+  .side .chips{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+  .side .chips a{aspect-ratio:1;display:grid;place-items:center;border-radius:10px;border:1.5px solid var(--line);color:var(--ink);text-decoration:none;font-weight:700;font-size:.88rem;transition:.15s}
+  .side .chips a:hover{border-color:var(--accent2);transform:translateY(-1px)}
+  .side .chips a.cur{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent2) 55%,transparent)}
+  .side .now{margin:10px 0 0;font-size:.82rem;color:var(--muted);line-height:1.35;min-height:2.2em}
+  .side .meta{margin-top:12px;padding-top:12px;border-top:1px solid var(--line)}
+  .side .mrow{display:flex;justify-content:space-between;gap:8px;font-size:.84rem;padding:3px 0}
+  .side .mrow b{color:var(--muted);font-weight:600}
+  .side .tg{display:inline-block;font-size:.72rem;font-weight:600;padding:2px 8px;border-radius:99px;background:var(--bg2);border:1px solid var(--line);color:var(--muted);margin:6px 4px 0 0}
 }
-.ipv{color:var(--accent2);font-weight:700}
-.ipv.set{color:#52b788}
-.ipbox{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 -8px 18px;padding:12px 14px;border-radius:14px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow)}
-.ipbox label{font-weight:700;font-size:.9rem;color:var(--muted);white-space:nowrap}
-.ipbox input{font:inherit;font-size:.95rem;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:8px 12px;flex:1;min-width:min(200px,100%)}
-.ipbox input:focus-visible{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent2) 45%,transparent)}
-.ipbox .hint{font-size:.78rem;color:var(--muted)}
-pre code .cl{display:flex;align-items:center;gap:10px}
-pre code .cl .t{white-space:pre;flex:1;min-width:0;overflow-x:auto}
-pre code .cl .lc{flex:none;font:inherit;font-size:.66rem;font-weight:600;cursor:pointer;border:1px solid var(--line);border-radius:6px;padding:1px 7px;background:var(--card);color:var(--muted);opacity:.5;transition:opacity .15s}
-pre code .cl:hover .lc{opacity:1}
-pre code .cl .lc:focus-visible{opacity:1;outline:none;border-color:var(--accent)}
-pre code .cl .lc.done{color:var(--okline);border-color:var(--okline);opacity:1}
-.skip{position:absolute;left:-999px}
-.skip:focus{left:14px;top:14px;z-index:40;background:var(--card);color:var(--ink);padding:8px 12px;border-radius:10px;border:1px solid var(--line)}
+footer{margin-top:40px;padding:16px 4px 0;border-top:1px solid var(--line);color:var(--muted);font-size:.88rem;text-align:center}
+footer a{color:var(--accent);text-decoration:none;font-weight:700}
+footer a:hover{text-decoration:underline}
+@media (max-width:520px){h1{max-width:100%}header::after{opacity:.5}.card{padding:17px 15px}}
 </style>
 </head>
-<body id="top">
-<a href="#s1" class="skip">Skip to setup</a>
-
-<nav class="side" aria-label="Sections">
+<body>
+<aside class="side">
   <h2>Sections</h2>
-  <div class="chips" id="chips"></div>
+  <div class="chips" id="sideChips"></div>
   <p class="now" id="now">1 · What this box is</p>
-  <div class="metacard">
-    <div class="metarow"><b>Level</b><span>Medium</span></div>
-    <div class="metarow"><b>OS</b><span>Debian 12</span></div>
-    <div class="metarow"><b>Flags</b><span>user + root</span></div>
-    <div><span class="tag">SQLi</span><span class="tag">cracking</span><span class="tag">privesc</span></div>
+  <div class="meta">
+    <div class="mrow"><b>Level</b><span>Medium</span></div>
+    <div class="mrow"><b>OS</b><span>Debian 12</span></div>
+    <div class="mrow"><b>Flags</b><span>user + root</span></div>
+    <div><span class="tg">SQLi</span><span class="tg">cracking</span><span class="tg">privesc</span></div>
   </div>
-</nav>
+</aside>
 
 <main>
 <header>
+  <button class="toggle" id="themeToggle" type="button">◐ Theme</button>
   <p class="eyebrow">Practice Lab · Instructions</p>
   <h1>gauntlet</h1>
   <p>How to build, run, and host this box. No solutions here — the full walkthrough is in <code>writeup.html</code>.</p>
 </header>
 
 <div class="bar">
-  <span class="score" id="score">Section 1 / 5</span>
-  <button id="themeBtn" type="button">Theme</button>
+  <span class="score" id="score">1 / 5</span>
   <button id="topBtn" type="button">Top</button>
   <div class="track"><div class="fill" id="fill"></div></div>
 </div>
 
-<div class="ipbox">
-  <label for="ipv">Target IP</label>
-  <input id="ipv" type="text" placeholder="e.g. 192.168.56.101" autocomplete="off" spellcheck="false">
-  <span class="hint">set once — it fills into every command below</span>
+<div class="warn">⚠️ <b>Training target.</b> Run it host-only. Never bridge it to a real network or expose it to the internet — the weaknesses are intentional.</div>
+
+<div class="card sec" id="s1">
+  <div class="chead"><span class="num">1</span><h3>What this box is</h3></div>
+  <p><b>gauntlet</b> is the medium machine — a Debian VM with a PHP + MariaDB web app. The chain is SQL injection into credential cracking, then a two-step privilege escalation. Players want <code>rockyou.txt</code> for the cracking step.</p>
+  <p>Self-contained and offline once built. Runs on a laptop or a headless server VM.</p>
 </div>
 
-<div id="doc">
-
-  <section class="step" id="s1" data-title="What this box is">
-    <h2><span class="num">1</span>What this box is</h2>
-    <p><b>gauntlet</b> is the medium machine in the set — a Debian VM with a PHP + MariaDB web app. The chain is SQL injection into credential cracking, then a two-step privilege escalation. The best test of methodology in the set.</p>
-    <p>Self-contained and offline once built. Runs on a laptop or a headless server VM.</p>
-  </section>
-
-  <section class="step" id="s2" data-title="Requirements">
-    <h2><span class="num">2</span>Requirements</h2>
-    <pre><code># Debian / Ubuntu / Kali
-sudo apt update &amp;&amp; sudo apt install -y virtualbox vagrant</code></pre>
-    <p>About 1&nbsp;GB RAM and ~5&nbsp;GB disk while building. Players will want <code>rockyou.txt</code> for the cracking step (ships with Kali).</p>
-  </section>
-
-  <section class="step" id="s3" data-title="Build the box">
-    <h2><span class="num">3</span>Build the box</h2>
-    <pre><code>cd m3-gauntlet
-vagrant up</code></pre>
-    <p>Export a portable <span class="ph">.ova</span> with the build script from the repo root:</p>
-    <pre><code>./build-all.sh m3-gauntlet      # -&gt; m3-gauntlet/lab-m3-gauntlet.ova</code></pre>
-    <div class="note"><h3>Note</h3>The build disables the Vagrant provisioning account before export, so there is no build-time backdoor.</div>
-  </section>
-
-  <section class="step" id="s4" data-title="Run it &amp; get the IP">
-    <h2><span class="num">4</span>Run it &amp; get the IP</h2>
-    <p>Import the <code>.ova</code>, set the adapter to a <b>Host-only</b> network (never expose it to the internet), and boot. Find the IP from the host:</p>
-    <pre><code>sudo nmap -sn 192.168.56.0/24</code></pre>
-    <p>That address is the challenger's <span class="ph ipv">&lt;target-ip&gt;</span>.</p>
-    <div class="note"><h3>Headless / server</h3><code>VBoxManage startvm "lab-m3-gauntlet" --type headless</code></div>
-  </section>
-
-  <section class="step" id="s5" data-title="Run an assessment">
-    <h2><span class="num">5</span>Run an assessment</h2>
-    <p>Give the player the <span class="ph ipv">&lt;target-ip&gt;</span> and the challenger brief — <code>challenger_instructions.html</code> — which has the scenario, objective, rules, and a built-in flag checker. The solution is <code>writeup.html</code> (spoilers).</p>
-    <p><b>Reset between players</b> with a snapshot:</p>
-    <pre><code>VBoxManage snapshot "lab-m3-gauntlet" take clean
-VBoxManage controlvm "lab-m3-gauntlet" poweroff
-VBoxManage snapshot "lab-m3-gauntlet" restore clean</code></pre>
-    <div class="note"><h3>Document set for this box</h3><p><code>instructions.html</code> (host) · <code>challenger_instructions.html</code> (player) · <code>writeup.html</code> (solution)</p></div>
-  </section>
-
+<div class="card sec" id="s2">
+  <div class="chead"><span class="num">2</span><h3>Requirements</h3></div>
+  <p>On the host that builds the box:</p>
+<pre>$ sudo apt update &amp;&amp; sudo apt install -y virtualbox vagrant</pre>
+  <p>About 1&nbsp;GB RAM and ~5&nbsp;GB disk while building. The Debian base box downloads once and is reused across all boxes.</p>
 </div>
 
-<footer class="sig">Practice lab by <a href="https://github.com/devlazybrain" target="_blank" rel="noopener">devlazybrain</a></footer>
+<div class="card sec" id="s3">
+  <div class="chead"><span class="num">3</span><h3>Build the box</h3></div>
+  <p>From the repo root, build and export this box's <code>.ova</code>:</p>
+<pre>$ ./build-all.sh m3-gauntlet      <span class="c"># -> m3-gauntlet/lab-m3-gauntlet.ova</span></pre>
+  <p>Or build it by hand without exporting:</p>
+<pre>$ cd m3-gauntlet
+$ vagrant up</pre>
+  <div class="note"><h4>Note</h4>The build disables the Vagrant provisioning account before export, so the finished machine has no build-time backdoor.</div>
+</div>
+
+<div class="card sec" id="s4">
+  <div class="chead"><span class="num">4</span><h3>Run it &amp; get the IP</h3></div>
+  <p>Import the <code>.ova</code> in VirtualBox, set its network adapter to a <b>Host-only</b> network, and boot. Find its IP from the host:</p>
+<pre>$ sudo nmap -sn 192.168.56.0/24</pre>
+  <p>Give that address to the player as their target.</p>
+  <div class="note"><h4>Headless / server</h4>Run with no GUI: <code>VBoxManage startvm "lab-m3-gauntlet" --type headless</code>.</div>
+</div>
+
+<div class="card sec" id="s5">
+  <div class="chead"><span class="num">5</span><h3>Run an assessment</h3></div>
+  <p>Give the player the target IP and the challenger brief — <code>challenger_instructions.html</code> — which has the scenario, objective, rules, and a built-in flag checker. The solution is <code>writeup.html</code> (spoilers).</p>
+  <p>Reset between players with a snapshot — instant, no rebuild:</p>
+<pre>$ VBoxManage snapshot "lab-m3-gauntlet" take clean
+$ VBoxManage controlvm "lab-m3-gauntlet" poweroff
+$ VBoxManage snapshot "lab-m3-gauntlet" restore clean</pre>
+  <div class="note"><h4>Document set for this box</h4><code>instructions.html</code> (host) · <code>challenger_instructions.html</code> (player) · <code>writeup.html</code> (solution)</div>
+</div>
+
+<footer>Practice lab by <a href="https://github.com/devlazybrain" target="_blank" rel="noopener">devlazybrain</a></footer>
 </main>
 
 <script>
 (function(){
   "use strict";
-  var root=document.documentElement;
-  document.getElementById("themeBtn").addEventListener("click",function(){var s=root.getAttribute("data-theme");var cur=s?s:(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light");root.setAttribute("data-theme",cur==="dark"?"light":"dark");});
-  document.getElementById("topBtn").addEventListener("click",function(){window.scrollTo({top:0,behavior:(matchMedia("(prefers-reduced-motion:reduce)").matches?"auto":"smooth")});});
-  var IPLABEL="<target-ip>";var ipInput=document.getElementById("ipv");function ipVal(){var v=ipInput&&ipInput.value.trim();return v||IPLABEL;}function subIP(s){return s.split(IPLABEL).join(ipVal());}var proseIp=[].slice.call(document.querySelectorAll(".ipv")).filter(function(e){return !e.closest("pre");});function copyText(text,btn){if(navigator.clipboard)navigator.clipboard.writeText(text).then(function(){var o=btn.textContent;btn.textContent="copied";btn.classList.add("done");setTimeout(function(){btn.textContent=o;btn.classList.remove("done");},1200);});}var NL=String.fromCharCode(10);var codeBlocks=[];document.querySelectorAll("pre").forEach(function(pre){var code=pre.querySelector("code");if(!code)return;var lines=code.innerText.split(NL);while(lines.length&&lines[lines.length-1].trim()==="")lines.pop();code.textContent="";var rows=lines.map(function(ln){var row=document.createElement("span");row.className="cl";var t=document.createElement("span");t.className="t";row.appendChild(t);if(ln.trim()!==""&&ln.trim().charAt(0)!=="#"){var lc=document.createElement("button");lc.className="lc";lc.type="button";lc.textContent="copy";lc.setAttribute("aria-label","Copy this command");(function(line){lc.addEventListener("click",function(){copyText(subIP(line),lc);});})(ln);row.appendChild(lc);}code.appendChild(row);code.appendChild(document.createTextNode(NL));return {raw:ln,t:t};});codeBlocks.push(rows);});function renderIP(){var v=ipVal();proseIp.forEach(function(s){s.textContent=v;s.classList.toggle("set",v!==IPLABEL);});codeBlocks.forEach(function(rows){rows.forEach(function(r){r.t.textContent=subIP(r.raw);});});}if(ipInput)ipInput.addEventListener("input",renderIP);renderIP();
-  var steps=[].slice.call(document.querySelectorAll("section.step"));
-  var chips=document.getElementById("chips"),now=document.getElementById("now"),score=document.getElementById("score"),fill=document.getElementById("fill");
-  steps.forEach(function(s,i){var a=document.createElement("a");a.href="#"+s.id;a.textContent=(i+1);a.setAttribute("aria-label","Section "+(i+1)+": "+s.dataset.title);chips.appendChild(a);});
-  var links=[].slice.call(chips.children);
-  function setActive(i){links.forEach(function(a,j){a.classList.toggle("here",j===i);});now.textContent=(i+1)+" · "+steps[i].dataset.title;score.textContent="Section "+(i+1)+" / "+steps.length;fill.style.width=(((i+1)/steps.length)*100)+"%";}
-  setActive(0);
-  if("IntersectionObserver" in window){var io=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting){var i=steps.indexOf(x.target);if(i>=0)setActive(i);}});},{rootMargin:"-45% 0px -50% 0px",threshold:0});steps.forEach(function(s){io.observe(s);});}
+  var cur=null;
+  document.getElementById('themeToggle').addEventListener('click',function(){var dark=matchMedia('(prefers-color-scheme:dark)').matches;cur=cur===null?(dark?'light':'dark'):(cur==='dark'?'light':'dark');document.documentElement.setAttribute('data-theme',cur);});
+  document.getElementById('topBtn').addEventListener('click',function(){window.scrollTo({top:0,behavior:(matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth')});});
+  function copyText(txt,el){function flash(){if(!el)return;el.classList.add('done','copied');setTimeout(function(){el.classList.remove('done','copied');},1200);}if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(flash,function(){fb(txt);flash();});}else{fb(txt);flash();}}
+  function fb(txt){try{var ta=document.createElement('textarea');ta.value=txt;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);}catch(e){}}
+  function cmdsOnly(pre){var c=pre.cloneNode(true);var b=c.querySelector('.copy');if(b)b.remove();c.querySelectorAll('.c,.f').forEach(function(s){s.parentNode.removeChild(s);});var lines=c.innerText.replace(/\s+$/,'').split('\n');var hasPrompt=lines.some(function(l){return /^\s*\$\s/.test(l);});if(hasPrompt){lines=lines.filter(function(l){return /^\s*\$\s/.test(l);}).map(function(l){return l.replace(/^\s*\$\s/,'');});}lines=lines.map(function(l){return l.replace(/\s+$/,'');}).filter(function(l){return l.length;});return lines.join('\n');}
+  document.querySelectorAll('pre').forEach(function(pre){var b=document.createElement('button');b.className='copy';b.type='button';b.textContent='Copy';b.addEventListener('click',function(e){e.stopPropagation();copyText(cmdsOnly(pre),b);});pre.appendChild(b);pre.addEventListener('click',function(){var sel=window.getSelection&&String(window.getSelection());if(sel&&sel.length)return;copyText(cmdsOnly(pre),b);});});
+  (function(){var secs=[].slice.call(document.querySelectorAll('.sec'));var chipsBox=document.getElementById('sideChips');var now=document.getElementById('now'),score=document.getElementById('score'),fill=document.getElementById('fill');var titleOf=function(el){var h=el.querySelector('h3');return h?h.textContent:'';};secs.forEach(function(el,i){var a=document.createElement('a');a.href='#'+el.id;a.textContent=(i+1);chipsBox.appendChild(a);});var chips=[].slice.call(chipsBox.children);function set(i){chips.forEach(function(c,j){c.classList.toggle('cur',j===i);});now.textContent=(i+1)+' · '+titleOf(secs[i]);score.textContent=(i+1)+' / '+secs.length;fill.style.width=(((i+1)/secs.length)*100)+'%';}set(0);if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){var i=secs.indexOf(e.target);if(i>=0)set(i);}});},{rootMargin:'-45% 0px -50% 0px',threshold:0});secs.forEach(function(t){io.observe(t);});}})();
 })();
 </script>
 </body>
