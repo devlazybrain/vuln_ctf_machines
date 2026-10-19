@@ -62,10 +62,35 @@ li{margin:5px 0}
 .kv .v{font-family:ui-monospace,monospace;text-align:right}
 .muted{color:var(--muted)}
 footer{margin-top:36px;padding:16px 4px 0;border-top:1px solid var(--line);color:var(--muted);font-size:.86rem}
+pre{position:relative}
+.copy{position:absolute;top:8px;right:8px;font:600 .72rem "Figtree",system-ui,sans-serif;padding:4px 10px;border-radius:8px;
+  border:1px solid var(--line);background:var(--card);color:var(--muted);cursor:pointer;opacity:.8;transition:.15s}
+.copy:hover{opacity:1;border-color:var(--accent);color:var(--accent)}
+.copy.done{color:var(--okline);border-color:var(--okline)}
+.side{display:none}
+@media (min-width:1200px){
+  .side{display:block;position:fixed;top:calc(env(safe-area-inset-top,0px) + 96px);left:calc(50% - 400px - 236px);width:214px;box-sizing:border-box;padding:16px;border-radius:20px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);z-index:4}
+  .side h2{font-family:"Bricolage Grotesque",system-ui,sans-serif;font-size:1.02rem;margin:0 0 10px}
+  .side .lnk{display:flex;flex-direction:column;gap:8px}
+  .side .lnk a{color:var(--muted);text-decoration:none;font-size:.88rem;display:flex;gap:9px;align-items:center}
+  .side .lnk a:hover{color:var(--accent)}
+  .side .lnk a b{flex:none;display:inline-grid;place-items:center;width:24px;height:24px;border-radius:8px;font-size:.8rem;color:#fff;background:linear-gradient(135deg,#2d6a4f,#0096c7)}
+}
 @media (max-width:520px){h1{max-width:100%}header::after{opacity:.5}}
 </style>
 </head>
 <body>
+<aside class="side">
+  <h2>Steps</h2>
+  <div class="lnk">
+    <a href="#s1"><b>1</b> Import</a>
+    <a href="#s2"><b>2</b> Networking</a>
+    <a href="#s3"><b>3</b> Boot</a>
+    <a href="#s4"><b>4</b> Find IP</a>
+    <a href="#s5"><b>5</b> Candidate</a>
+    <a href="#s6"><b>6</b> Reset</a>
+  </div>
+</aside>
 <header>
   <button class="toggle" id="themeToggle" type="button">◐ Theme</button>
   <h1>FlagTrail — Launch Instructions</h1>
@@ -89,7 +114,7 @@ or expose it to the internet, and never reuse its credentials anywhere.</div>
 
 <h2>Setup</h2>
 
-<div class="step"><span class="num">1</span><div class="body">
+<div class="step" id="s1"><span class="num">1</span><div class="body">
   <h3>Import the appliance</h3>
   <p>VirtualBox → <b>File → Import Appliance…</b> → select <code>FlagTrail-Linux-CTF.ova</code> → <b>Next → Finish</b>.
      Wait for it to unpack (a minute or two).</p>
@@ -97,7 +122,7 @@ or expose it to the internet, and never reuse its credentials anywhere.</div>
   <pre>VBoxManage import FlagTrail-Linux-CTF.ova</pre>
 </div></div>
 
-<div class="step"><span class="num">2</span><div class="body">
+<div class="step" id="s2"><span class="num">2</span><div class="body">
   <h3>Confirm Host-only networking</h3>
   <p>Select the VM → <b>Settings → Network → Adapter 1</b>. It should be <b>Host-only Adapter</b>
      (e.g. <code>vboxnet0</code>). If you have no host-only network yet, create one in
@@ -109,13 +134,13 @@ or expose it to the internet, and never reuse its credentials anywhere.</div>
   <pre>VBoxManage modifyvm "FlagTrail-CTF" --nic1 hostonly --hostonlyadapter1 vboxnet0</pre>
 </div></div>
 
-<div class="step"><span class="num">3</span><div class="body">
+<div class="step" id="s3"><span class="num">3</span><div class="body">
   <h3>Boot it</h3>
   <p>Start the VM. It boots headless to a login prompt — you do <b>not</b> log in at the console; everything is
      done over the network by the candidate. Give it ~30 seconds to get a DHCP lease.</p>
 </div></div>
 
-<div class="step"><span class="num">4</span><div class="body">
+<div class="step" id="s4"><span class="num">4</span><div class="body">
   <h3>Find its IP (and give it to the candidate)</h3>
   <p>From your host or the candidate's attack box on the same host-only net:</p>
   <pre><span class="c"># sweep the host-only subnet (adjust if yours differs)</span>
@@ -127,7 +152,7 @@ nmap -p 22,80,445 192.168.56.0/24 --open</pre>
 </div></div>
 
 <h2>Running the challenge</h2>
-<div class="step"><span class="num">5</span><div class="body">
+<div class="step" id="s5"><span class="num">5</span><div class="body">
   <h3>What the candidate does</h3>
   <ul>
     <li>Points a browser / <code>curl</code> at <code>http://&lt;IP&gt;/</code> and enumerates.</li>
@@ -138,7 +163,7 @@ nmap -p 22,80,445 192.168.56.0/24 --open</pre>
 </div></div>
 
 <h2>Reset between candidates</h2>
-<div class="step"><span class="num">6</span><div class="body">
+<div class="step" id="s6"><span class="num">6</span><div class="body">
   <h3>Snapshot &amp; roll back</h3>
   <p>Before the first run, take a snapshot. After each candidate, roll back so everyone gets an identical box.</p>
   <pre><span class="c"># once, before the first candidate:</span>
@@ -166,6 +191,23 @@ VBoxManage snapshot "FlagTrail-CTF" restore clean</pre>
   t.addEventListener('click',function(){var dark=matchMedia('(prefers-color-scheme:dark)').matches;
     cur=(cur===null)?(dark?'light':'dark'):(cur==='dark'?'light':'dark');
     document.documentElement.setAttribute('data-theme',cur);});})();
+
+function copyText(txt,el){
+  function flash(){var o=el.textContent;el.textContent='Copied ✓';el.classList.add('done');
+    setTimeout(function(){el.textContent=o;el.classList.remove('done');},1200);}
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(txt).then(flash,function(){fb(txt);flash();});
+  }else{fb(txt);flash();}
+}
+function fb(txt){try{var ta=document.createElement('textarea');ta.value=txt;ta.style.position='fixed';
+  ta.style.opacity='0';document.body.appendChild(ta);ta.select();document.execCommand('copy');
+  document.body.removeChild(ta);}catch(e){}}
+document.querySelectorAll('pre').forEach(function(pre){
+  var b=document.createElement('button');b.className='copy';b.type='button';b.textContent='Copy';
+  b.addEventListener('click',function(){var c=pre.cloneNode(true);var bb=c.querySelector('.copy');
+    if(bb)bb.remove();copyText(c.innerText.replace(/\s+$/,''),b);});
+  pre.appendChild(b);
+});
 </script>
 </body>
 </html>

@@ -86,10 +86,41 @@ td .fv{font:600 .86rem ui-monospace,monospace;color:var(--muted)}
 .muted{color:var(--muted)}
 .creds{font:600 .95rem ui-monospace,monospace;color:var(--accent)}
 footer{margin-top:40px;padding:16px 4px 0;border-top:1px solid var(--line);color:var(--muted);font-size:.88rem}
+/* copy buttons on code blocks */
+pre{position:relative}
+.copy{position:absolute;top:8px;right:8px;font:600 .72rem "Figtree",system-ui,sans-serif;padding:4px 10px;border-radius:8px;
+  border:1px solid var(--line);background:var(--card);color:var(--muted);cursor:pointer;opacity:.8;transition:.15s}
+.copy:hover{opacity:1;border-color:var(--accent);color:var(--accent)}
+.copy.done{color:var(--okline);border-color:var(--okline)}
+/* click-to-copy flag pills */
+.flag{cursor:pointer}
+.flag:hover{border-color:var(--accent)}
+.flag.copied{border-color:var(--accent);color:var(--accent)}
+/* left side nav panel */
+.side{display:none}
+@media (min-width:1200px){
+  .side{display:block;position:fixed;top:calc(env(safe-area-inset-top,0px) + 96px);left:calc(50% - 410px - 236px);width:214px;box-sizing:border-box;padding:16px;border-radius:20px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);z-index:4}
+  .side h2{font-family:"Bricolage Grotesque",system-ui,sans-serif;font-size:1.02rem;margin:0 0 10px}
+  .side .chips{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .side .chips a{aspect-ratio:1;display:grid;place-items:center;border-radius:12px;border:1.5px solid var(--line);color:var(--ink);text-decoration:none;font-weight:800;transition:.15s}
+  .side .chips a:hover{border-color:var(--accent2);transform:translateY(-1px)}
+  .side .lnk{margin-top:12px;padding-top:12px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:7px}
+  .side .lnk a{color:var(--muted);text-decoration:none;font-size:.86rem}
+  .side .lnk a:hover{color:var(--accent)}
+}
 @media (max-width:520px){h1{max-width:100%}header::after{opacity:.5}.card{padding:17px 15px}}
 </style>
 </head>
 <body>
+<aside class="side">
+  <h2>Flags</h2>
+  <div class="chips" id="sideChips"></div>
+  <div class="lnk">
+    <a href="#smap">Service map</a>
+    <a href="#minimal">Minimal / no extra vulns</a>
+    <a href="#rubric">Recruiting rubric</a>
+  </div>
+</aside>
 <header>
   <button class="toggle" id="themeToggle" type="button">◐ Theme</button>
   <div class="tag"><span>DEBIAN 13</span><span>6 FLAGS</span><span>WEB → ROOT</span><span>HOST-ONLY</span></div>
@@ -119,7 +150,7 @@ linear — each flag feeds the next.</p>
 </table>
 </div>
 
-<h2>Service map</h2>
+<h2 id="smap">Service map</h2>
 <div class="card">
 <pre><span class="c"># nmap -sV -p- $T</span>
 22/tcp   open  ssh           OpenSSH (Debian)
@@ -219,7 +250,7 @@ uid=0(root) gid=0(root) groups=0(root)
   <span class="flag">FLAG{sudo_find_is_a_classic_gtfobin}</span>
 </div>
 
-<h2>Why this box is "minimal"</h2>
+<h2 id="minimal">Why this box is "minimal"</h2>
 <div class="card">
 <div class="why"><h4>No unintended vulns</h4>
 <ul>
@@ -232,7 +263,7 @@ uid=0(root) gid=0(root) groups=0(root)
 </ul></div>
 </div>
 
-<h2>Recruiting rubric</h2>
+<h2 id="rubric">Recruiting rubric</h2>
 <div class="card">
 <table>
 <tr><th>Reached</th><th>Signal</th></tr>
@@ -259,6 +290,44 @@ enumerate before guessing, and document their path? The SMB brief explicitly ask
     if(cur===null) cur=dark?'light':'dark';
     else cur=(cur==='dark')?'light':'dark';
     document.documentElement.setAttribute('data-theme',cur);
+  });
+})();
+
+/* ---- copy to clipboard (works on file:// via fallback) ---- */
+function copyText(txt,el,okLabel){
+  function flash(){ if(!el)return; var o=el.textContent, c=el.className;
+    el.textContent=okLabel||'Copied ✓'; el.classList.add('done','copied');
+    setTimeout(function(){el.textContent=o;el.className=c;},1200); }
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(txt).then(flash,function(){fallback(txt);flash();});
+  }else{fallback(txt);flash();}
+}
+function fallback(txt){try{var ta=document.createElement('textarea');ta.value=txt;
+  ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);
+  ta.select();document.execCommand('copy');document.body.removeChild(ta);}catch(e){}}
+
+/* copy button on every <pre> */
+document.querySelectorAll('pre').forEach(function(pre){
+  var b=document.createElement('button');b.className='copy';b.type='button';b.textContent='Copy';
+  b.addEventListener('click',function(){
+    var txt=pre.cloneNode(true);var bb=txt.querySelector('.copy');if(bb)bb.remove();
+    copyText(txt.innerText.replace(/\s+$/,''),b,'Copied ✓');
+  });
+  pre.appendChild(b);
+});
+
+/* click-to-copy flag pills */
+document.querySelectorAll('.flag').forEach(function(f){
+  f.title='Click to copy';
+  f.addEventListener('click',function(){copyText(f.textContent.trim(),f,f.textContent.trim());});
+});
+
+/* build side-panel flag chips from the flag cards */
+(function(){
+  var chips=document.getElementById('sideChips');if(!chips)return;
+  document.querySelectorAll('.flagcard').forEach(function(card,i){
+    if(!card.id)card.id='flag'+(i+1);
+    var a=document.createElement('a');a.href='#'+card.id;a.textContent=(i+1);chips.appendChild(a);
   });
 })();
 </script>
