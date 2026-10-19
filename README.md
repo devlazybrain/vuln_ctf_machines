@@ -64,10 +64,7 @@ flagtrail/                     flagtrail (hard, 6 flags)
   instructions.html  challenger_instructions.html  writeup.html
 ```
 
-The `.ova` images live under **Releases**, not in the repo. Build scripts for
-each box are included (`build-all.sh`, `common/`, each box's `provision.sh` /
-`Vagrantfile`, and `flagtrail/provision/`) for anyone who wants to rebuild from
-source, but they are not needed to run the boxes.
+The `.ova` images live under **Releases**, not in the repo.
 
 ## Credits
 

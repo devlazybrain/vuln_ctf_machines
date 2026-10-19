@@ -1,6 +1,0 @@
-User-agent: *
-Disallow: /api/
-Disallow: /config
-
-# Note to crawlers: the storefront is static. Keep bots out of the API.
-# FLAG{robots_txt_is_not_a_secret}
