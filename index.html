@@ -43,7 +43,8 @@ header p{margin:0;max-width:40em;color:#b7e4c7;position:relative;z-index:1}
 .toggle:hover{border-color:#90e0ef}
 .lead{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px 20px;margin:0 0 22px;box-shadow:var(--shadow)}
 .lead p{margin:.4rem 0}
-.card{position:relative;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px;margin:0 0 18px;box-shadow:var(--shadow);transition:border-color .15s,box-shadow .15s,transform .15s}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;align-items:start}
+.card{position:relative;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px;margin:0;box-shadow:var(--shadow);transition:border-color .15s,box-shadow .15s,transform .15s}
 .card:hover{border-color:var(--accent2);box-shadow:0 16px 34px -18px rgba(0,119,182,.55);transform:translateY(-2px)}
 .cardlink{position:absolute;inset:0;border-radius:20px;z-index:0}
 .cardlink:focus-visible{outline:none;box-shadow:0 0 0 3px color-mix(in srgb,var(--accent2) 50%,transparent)}
@@ -81,6 +82,7 @@ header p{margin:0;max-width:40em;color:#b7e4c7;position:relative;z-index:1}
   <p><b>Get the images</b> from <a href="https://github.com/devlazybrain/vuln_ctf_machines/releases">Releases</a> (too large for the repo), import with <code>VBoxManage import &lt;box&gt;.ova</code>, and run. No build step needed.</p>
 </div>
 
+<div class="cards">
 <section class="card">
   <a class="cardlink" href="m1-recovery/challenger_instructions.html" aria-label="recovery — open challenge"></a>
   <div class="top"><h2>recovery</h2><span class="diff">Easy</span></div>
@@ -128,6 +130,7 @@ header p{margin:0;max-width:40em;color:#b7e4c7;position:relative;z-index:1}
     <a class="spoiler" href="flagtrail/writeup.html">Write-up (spoilers)</a>
   </div>
 </section>
+</div>
 
 <footer class="sig">Open-source practice lab by <a href="https://github.com/devlazybrain" target="_blank" rel="noopener">devlazybrain</a></footer>
 </main>
