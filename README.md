@@ -4,7 +4,8 @@ Four self-contained, intentionally vulnerable **Debian** machines (easy → hard
 for hands-on security practice, exams, or self-training. Each box has flags, a
 built-in **flag checker**, and a full HTML **write-up**.
 
-Open **[`index.html`](index.html)** in a browser for the styled front page.
+> **▶ [Open the lab front page](index.html)** — styled gallery of all four boxes.
+> With GitHub Pages enabled it is live at `https://devlazybrain.github.io/vuln_ctf_machines/`.
 
 | Box | Level | Skills | Challenge | Host guide | Write-up |
 |-----|-------|--------|-----------|-----------|----------|
