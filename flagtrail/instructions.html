@@ -135,7 +135,6 @@ footer a:hover{text-decoration:underline}
   <p>The built appliance ships as <code>FlagTrail-Linux-CTF.ova</code> in this folder. If you downloaded it from GitHub <b>Releases</b> (split to fit the 2&nbsp;GB asset cap), reassemble and verify first:</p>
 <pre>$ cat FlagTrail-Linux-CTF.part00.ova FlagTrail-Linux-CTF.part01.ova &gt; FlagTrail-Linux-CTF.ova</pre>
 <pre>$ sha256sum -c FlagTrail-Linux-CTF.ova.sha256     <span class="c"># should print: OK</span></pre>
-  <div class="note"><h4>Rebuild from source (optional)</h4>The box is also reproducible from <code>provision/</code> (an unattended Debian install via <code>build_ova.sh</code>). You don't need this unless you want to change it.</div>
 </div>
 
 <div class="card sec" id="s3">
@@ -150,7 +149,11 @@ footer a:hover{text-decoration:underline}
   <p>Boot it, then find its IP from an attacker box on the same host-only network:</p>
 <pre>$ sudo nmap -sn 192.168.56.0/24</pre>
   <p>Give the player only that IP (and that an SMB share exists).</p>
-  <div class="note"><h4>Headless / server</h4>Run with no GUI: <code>VBoxManage startvm "FlagTrail-CTF" --type headless</code>.</div>
+  <p><b>Headless</b> (no GUI): <code>VBoxManage startvm "FlagTrail-CTF" --type headless</code>.</p>
+  <p><b>Other hypervisors</b> (KVM/QEMU, Proxmox, VMware) — an <code>.ova</code> is a tar of a disk + config; extract and convert:</p>
+<pre>$ tar -xvf FlagTrail-Linux-CTF.ova</pre>
+<pre>$ qemu-img convert -O qcow2 *.vmdk disk.qcow2</pre>
+  <div class="note"><h4>Server must virtualize</h4>Needs hardware virtualization (bare-metal or nested-virt). Check: <code>egrep -c '(vmx|svm)' /proc/cpuinfo</code> (0 = no). Keep it on an isolated network, never public.</div>
 </div>
 
 <div class="card sec" id="s5">

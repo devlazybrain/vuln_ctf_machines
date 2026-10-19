@@ -126,39 +126,40 @@ footer a:hover{text-decoration:underline}
 
 <div class="card sec" id="s1">
   <div class="chead"><span class="num">1</span><h3>What this box is</h3></div>
-  <p><b>webwork</b> is the easy–medium machine — a Debian VM running a small PHP web app (Apache + MariaDB). The path is a classic web chain into a shell, then a privilege escalation via a scheduled job.</p>
-  <p>Self-contained and offline once built. Runs on a laptop or a headless server VM.</p>
+  <p><b>webwork</b> is the easy–medium machine — a Debian VM running a small PHP web app (Apache + MariaDB): a classic web chain into a shell, then a privilege escalation via a scheduled job.</p>
+  <p>Ships as a portable <code>lab-m2-webwork.ova</code> — <b>import and run, no build needed</b>. Self-contained and offline.</p>
 </div>
 
 <div class="card sec" id="s2">
-  <div class="chead"><span class="num">2</span><h3>Requirements</h3></div>
-  <p>On the host that builds the box:</p>
-<pre>$ sudo apt update &amp;&amp; sudo apt install -y virtualbox vagrant</pre>
-  <p>About 1&nbsp;GB RAM and ~5&nbsp;GB disk while building. The Debian base box downloads once and is reused across all boxes.</p>
+  <div class="chead"><span class="num">2</span><h3>Import the appliance</h3></div>
+  <p>You need <b>VirtualBox</b> on the host. Import the <code>.ova</code> (GUI: <i>File → Import Appliance</i>, or CLI):</p>
+<pre>$ VBoxManage import lab-m2-webwork.ova</pre>
+  <p>~1&nbsp;GB RAM and a few GB disk per running box.</p>
 </div>
 
 <div class="card sec" id="s3">
-  <div class="chead"><span class="num">3</span><h3>Build the box</h3></div>
-  <p>From the repo root, build and export this box's <code>.ova</code>:</p>
-<pre>$ ./build-all.sh m2-webwork      <span class="c"># -> m2-webwork/lab-m2-webwork.ova</span></pre>
-  <p>Or build it by hand without exporting:</p>
-<pre>$ cd m2-webwork</pre>
-<pre>$ vagrant up</pre>
-  <div class="note"><h4>Note</h4>The build disables the Vagrant provisioning account before export, so the finished machine has no build-time backdoor.</div>
+  <div class="chead"><span class="num">3</span><h3>Network &amp; boot</h3></div>
+  <p>Set the VM's adapter to a <b>Host-only</b> network (GUI: <i>Settings → Network → Host-only Adapter</i>), then boot. Find its IP from the host:</p>
+<pre>$ sudo nmap -sn 192.168.56.0/24</pre>
+  <p>Give that address to the player as their target.</p>
 </div>
 
 <div class="card sec" id="s4">
-  <div class="chead"><span class="num">4</span><h3>Run it &amp; get the IP</h3></div>
-  <p>Import the <code>.ova</code> in VirtualBox, set its network adapter to a <b>Host-only</b> network, and boot. Find its IP from the host:</p>
-<pre>$ sudo nmap -sn 192.168.56.0/24</pre>
-  <p>Give that address to the player as their target.</p>
-  <div class="note"><h4>Headless / server</h4>Run with no GUI: <code>VBoxManage startvm "lab-m2-webwork" --type headless</code>.</div>
+  <div class="chead"><span class="num">4</span><h3>Run it on a server</h3></div>
+  <p><b>VirtualBox, headless</b> (no GUI) — import, attach a host-only net, boot:</p>
+<pre>$ VBoxManage modifyvm "lab-m2-webwork" --nic1 hostonly --hostonlyadapter1 vboxnet0</pre>
+<pre>$ VBoxManage startvm "lab-m2-webwork" --type headless</pre>
+  <p><b>Other hypervisors</b> (KVM/QEMU, Proxmox, VMware) — an <code>.ova</code> is a tar of a disk + config; extract and convert the disk:</p>
+<pre>$ tar -xvf lab-m2-webwork.ova</pre>
+<pre>$ qemu-img convert -O qcow2 *.vmdk disk.qcow2     <span class="c"># for KVM / Proxmox</span></pre>
+  <p>Proxmox and VMware can also import the <code>.ova</code> directly. Keep it on an <b>isolated</b> (internal / host-only) network — never public.</p>
+  <div class="note"><h4>Server must virtualize</h4>Needs hardware virtualization (bare-metal or nested-virt). Most cheap VPSs can't. Check: <code>egrep -c '(vmx|svm)' /proc/cpuinfo</code> (0 = no).</div>
 </div>
 
 <div class="card sec" id="s5">
   <div class="chead"><span class="num">5</span><h3>Run an assessment</h3></div>
-  <p>Give the player the target IP and the challenger brief — <code>challenger_instructions.html</code> — which has the scenario, objective, rules, and a built-in flag checker. The solution is <code>writeup.html</code> (spoilers).</p>
-  <p>Reset between players with a snapshot — instant, no rebuild:</p>
+  <p>Give the player the target IP and the challenger brief — <code>challenger_instructions.html</code> — scenario, objective, rules, and a built-in flag checker. The solution is <code>writeup.html</code> (spoilers).</p>
+  <p>Reset between players with a snapshot — instant, no re-import:</p>
 <pre>$ VBoxManage snapshot "lab-m2-webwork" take clean</pre>
 <pre>$ VBoxManage controlvm "lab-m2-webwork" poweroff</pre>
 <pre>$ VBoxManage snapshot "lab-m2-webwork" restore clean</pre>
