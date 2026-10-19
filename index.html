@@ -43,8 +43,8 @@ header p{margin:0;max-width:40em;color:#b7e4c7;position:relative;z-index:1}
 .toggle:hover{border-color:#90e0ef}
 .lead{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px 20px;margin:0 0 22px;box-shadow:var(--shadow)}
 .lead p{margin:.4rem 0}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;align-items:start}
-.card{position:relative;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px;margin:0;box-shadow:var(--shadow);transition:border-color .15s,box-shadow .15s,transform .15s}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;align-items:stretch}
+.card{position:relative;display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px;margin:0;box-shadow:var(--shadow);transition:border-color .15s,box-shadow .15s,transform .15s}
 .card:hover{border-color:var(--accent2);box-shadow:0 16px 34px -18px rgba(0,119,182,.55);transform:translateY(-2px)}
 .cardlink{position:absolute;inset:0;border-radius:20px;z-index:0}
 .cardlink:focus-visible{outline:none;box-shadow:0 0 0 3px color-mix(in srgb,var(--accent2) 50%,transparent)}
@@ -55,7 +55,7 @@ header p{margin:0;max-width:40em;color:#b7e4c7;position:relative;z-index:1}
 .card p{margin:8px 0 12px;color:var(--muted)}
 .tags{margin:0 0 14px}
 .tag{display:inline-block;font-size:.72rem;font-weight:600;padding:2px 9px;border-radius:99px;background:var(--bg2);border:1px solid var(--line);color:var(--muted);margin:0 4px 4px 0}
-.links{display:flex;gap:10px;flex-wrap:wrap;position:relative;z-index:1}
+.links{display:flex;gap:10px;flex-wrap:wrap;position:relative;z-index:1;margin-top:auto}
 .links a{text-decoration:none;font-weight:700;font-size:.9rem;padding:9px 15px;border-radius:11px;border:0;flex:1;text-align:center;color:var(--ink);background:var(--bg2);box-shadow:inset 0 0 0 1px var(--line);transition:box-shadow .15s,transform .15s}
 .links a:hover{box-shadow:inset 0 0 0 1px var(--accent2);transform:translateY(-1px)}
 .links a.solve{color:#fff;background:linear-gradient(135deg,#2d6a4f,#0096c7);box-shadow:0 8px 18px -10px #0077b6}
@@ -88,8 +88,8 @@ header p{margin:0;max-width:40em;color:#b7e4c7;position:relative;z-index:1}
   <div class="top"><h2>recovery</h2><span class="diff">Easy</span></div>
   <p>Service enumeration and forensic recovery of a deleted file, then a <code>sudo</code> misconfiguration for root.</p>
   <div class="tags"><span class="tag">enumeration</span><span class="tag">forensics</span><span class="tag">privesc</span></div>
-  <p class="cta">▶ Click the card to start the challenge</p>
   <div class="links">
+    <a class="solve" href="m1-recovery/challenger_instructions.html">Challenge</a>
     <a href="m1-recovery/instructions.html">Host guide</a>
     <a class="spoiler" href="m1-recovery/writeup.html">Write-up (spoilers)</a>
   </div>
@@ -100,8 +100,8 @@ header p{margin:0;max-width:40em;color:#b7e4c7;position:relative;z-index:1}
   <div class="top"><h2>webwork</h2><span class="diff">Easy–Medium</span></div>
   <p>Web enumeration, SQL-injection login bypass, an upload-filter bypass for a webshell, credential reuse, then a world-writable root cron.</p>
   <div class="tags"><span class="tag">web</span><span class="tag">SQLi</span><span class="tag">file upload</span><span class="tag">privesc</span></div>
-  <p class="cta">▶ Click the card to start the challenge</p>
   <div class="links">
+    <a class="solve" href="m2-webwork/challenger_instructions.html">Challenge</a>
     <a href="m2-webwork/instructions.html">Host guide</a>
     <a class="spoiler" href="m2-webwork/writeup.html">Write-up (spoilers)</a>
   </div>
@@ -112,8 +112,8 @@ header p{margin:0;max-width:40em;color:#b7e4c7;position:relative;z-index:1}
   <div class="top"><h2>gauntlet</h2><span class="diff">Medium</span></div>
   <p>SQL injection to dump and crack password hashes, SSH in, then a two-step escalation: a <code>sudo -u</code> pivot and a Linux capability on an interpreter.</p>
   <div class="tags"><span class="tag">SQLi</span><span class="tag">hash cracking</span><span class="tag">sudo</span><span class="tag">capabilities</span></div>
-  <p class="cta">▶ Click the card to start the challenge</p>
   <div class="links">
+    <a class="solve" href="m3-gauntlet/challenger_instructions.html">Challenge</a>
     <a href="m3-gauntlet/instructions.html">Host guide</a>
     <a class="spoiler" href="m3-gauntlet/writeup.html">Write-up (spoilers)</a>
   </div>
@@ -124,8 +124,8 @@ header p{margin:0;max-width:40em;color:#b7e4c7;position:relative;z-index:1}
   <div class="top"><h2>flagtrail</h2><span class="diff">Hard</span></div>
   <p>A six-flag chain on Debian 13: anonymous web recon &rarr; SMB enumeration &rarr; an SSH foothold &rarr; a localhost-only service reached by tunnelling &rarr; root. Minimal by design — only the intended vulnerabilities.</p>
   <div class="tags"><span class="tag">web recon</span><span class="tag">SMB</span><span class="tag">SSH</span><span class="tag">pivoting</span><span class="tag">privesc</span></div>
-  <p class="cta">▶ Click the card to start the challenge</p>
   <div class="links">
+    <a class="solve" href="flagtrail/challenger_instructions.html">Challenge</a>
     <a href="flagtrail/instructions.html">Host guide</a>
     <a class="spoiler" href="flagtrail/writeup.html">Write-up (spoilers)</a>
   </div>
