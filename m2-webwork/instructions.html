@@ -63,7 +63,8 @@ a{color:var(--accent);font-weight:600}
 ul{margin:10px 0;padding-left:1.3em}
 li{margin:6px 0}
 pre{position:relative;background:var(--code);color:var(--codeink);padding:14px 16px;border-radius:14px;overflow-x:auto;margin:12px 0;
-  font:13.5px/1.6 ui-monospace,Menlo,Consolas,monospace;max-width:100%;border:1px solid var(--line);border-left:4px solid var(--accent2);cursor:copy}
+  font:13.5px/1.6 ui-monospace,Menlo,Consolas,monospace;max-width:100%;border:1px solid var(--line);border-left:4px solid var(--accent2);cursor:copy;scrollbar-width:none}
+pre::-webkit-scrollbar{display:none}
 pre code{background:none;padding:0;color:inherit}
 code{font:0.9em ui-monospace,Menlo,Consolas,monospace;background:var(--why);padding:1px 6px;border-radius:6px;color:var(--ink)}
 pre .c{color:var(--muted)}
@@ -75,7 +76,7 @@ pre:hover .copy,.copy:focus-visible{opacity:.9}
 .note{margin-top:4px;background:var(--why);border:1px solid color-mix(in srgb,var(--whyline) 35%,transparent);border-left:5px solid var(--whyline);padding:12px 16px;border-radius:14px;font-size:.95rem}
 .note h4{margin:0 0 6px;font-family:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;font-size:1rem}
 .side{display:none}
-@media (min-width:1180px){
+@media (min-width:1240px){
   .side{display:block;position:fixed;top:calc(env(safe-area-inset-top,0px) + 96px);left:calc(50% - 390px - 212px);width:190px;box-sizing:border-box;padding:15px;border-radius:18px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);z-index:4}
   .side h2{font-family:"Bricolage Grotesque",system-ui,sans-serif;font-size:1.02rem;margin:0 0 10px}
   .side .chips{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
@@ -141,8 +142,8 @@ footer a:hover{text-decoration:underline}
   <p>From the repo root, build and export this box's <code>.ova</code>:</p>
 <pre>$ ./build-all.sh m2-webwork      <span class="c"># -> m2-webwork/lab-m2-webwork.ova</span></pre>
   <p>Or build it by hand without exporting:</p>
-<pre>$ cd m2-webwork
-$ vagrant up</pre>
+<pre>$ cd m2-webwork</pre>
+<pre>$ vagrant up</pre>
   <div class="note"><h4>Note</h4>The build disables the Vagrant provisioning account before export, so the finished machine has no build-time backdoor.</div>
 </div>
 
@@ -158,9 +159,9 @@ $ vagrant up</pre>
   <div class="chead"><span class="num">5</span><h3>Run an assessment</h3></div>
   <p>Give the player the target IP and the challenger brief — <code>challenger_instructions.html</code> — which has the scenario, objective, rules, and a built-in flag checker. The solution is <code>writeup.html</code> (spoilers).</p>
   <p>Reset between players with a snapshot — instant, no rebuild:</p>
-<pre>$ VBoxManage snapshot "lab-m2-webwork" take clean
-$ VBoxManage controlvm "lab-m2-webwork" poweroff
-$ VBoxManage snapshot "lab-m2-webwork" restore clean</pre>
+<pre>$ VBoxManage snapshot "lab-m2-webwork" take clean</pre>
+<pre>$ VBoxManage controlvm "lab-m2-webwork" poweroff</pre>
+<pre>$ VBoxManage snapshot "lab-m2-webwork" restore clean</pre>
   <div class="note"><h4>Document set for this box</h4><code>instructions.html</code> (host) · <code>challenger_instructions.html</code> (player) · <code>writeup.html</code> (solution)</div>
 </div>
 
