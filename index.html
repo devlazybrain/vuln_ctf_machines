@@ -67,7 +67,7 @@ header p{margin:0;max-width:40em;color:#b7e4c7;position:relative;z-index:1}
 <header>
   <p class="eyebrow">Open-source practice lab</p>
   <h1>Vulnerable Linux Boxes</h1>
-  <p>Three self-contained, intentionally vulnerable Debian machines — easy to medium — for hands-on practice, exams, or self-training. Each has a user flag and a root flag, a built-in flag checker, and a full write-up.</p>
+  <p>Four self-contained, intentionally vulnerable Debian machines — easy to hard — for hands-on practice, exams, or self-training. Each has flags, a built-in flag checker, and a full write-up.</p>
 </header>
 
 <main>
@@ -108,6 +108,17 @@ header p{margin:0;max-width:40em;color:#b7e4c7;position:relative;z-index:1}
     <a class="solve" href="m3-gauntlet/challenger_instructions.html">Challenge</a>
     <a href="m3-gauntlet/instructions.html">Host guide</a>
     <a class="spoiler" href="m3-gauntlet/writeup.html">Write-up (spoilers)</a>
+  </div>
+</section>
+
+<section class="card">
+  <div class="top"><h2>flagtrail</h2><span class="diff">Hard</span></div>
+  <p>A six-flag chain on Debian 13: anonymous web recon &rarr; SMB enumeration &rarr; an SSH foothold &rarr; a localhost-only service reached by tunnelling &rarr; root. Minimal by design — only the intended vulnerabilities.</p>
+  <div class="tags"><span class="tag">web recon</span><span class="tag">SMB</span><span class="tag">SSH</span><span class="tag">pivoting</span><span class="tag">privesc</span></div>
+  <div class="links">
+    <a class="solve" href="flagtrail/challenger_instructions.html">Challenge</a>
+    <a href="flagtrail/instructions.html">Host guide</a>
+    <a class="spoiler" href="flagtrail/writeup.html">Write-up (spoilers)</a>
   </div>
 </section>
 

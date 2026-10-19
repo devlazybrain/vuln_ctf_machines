@@ -1,9 +1,8 @@
 # Vulnerable Linux Boxes — practice lab
 
-Three self-contained, intentionally vulnerable **Debian 12** machines (easy →
-medium) for hands-on security practice, exams, or self-training. Each box has a
-**user** flag and a **root** flag, a built-in **flag checker**, and a full
-HTML **write-up**.
+Four self-contained, intentionally vulnerable **Debian** machines (easy → hard)
+for hands-on security practice, exams, or self-training. Each box has flags, a
+built-in **flag checker**, and a full HTML **write-up**.
 
 Open **[`index.html`](index.html)** in a browser for the styled front page.
 
@@ -12,6 +11,7 @@ Open **[`index.html`](index.html)** in a browser for the styled front page.
 | **recovery** | easy | enumeration, forensics, privesc | [challenge](m1-recovery/challenger_instructions.html) | [host](m1-recovery/instructions.html) | [solution](m1-recovery/writeup.html) |
 | **webwork** | easy–medium | web, SQLi, file upload, privesc | [challenge](m2-webwork/challenger_instructions.html) | [host](m2-webwork/instructions.html) | [solution](m2-webwork/writeup.html) |
 | **gauntlet** | medium | SQLi, hash cracking, sudo, capabilities | [challenge](m3-gauntlet/challenger_instructions.html) | [host](m3-gauntlet/instructions.html) | [solution](m3-gauntlet/writeup.html) |
+| **flagtrail** | hard | web recon, SMB, SSH, pivoting, privesc (6 flags) | [challenge](flagtrail/challenger_instructions.html) | [host](flagtrail/instructions.html) | [solution](flagtrail/writeup.html) |
 
 Each machine folder holds everything for that box:
 
@@ -67,7 +67,15 @@ m1-recovery/                   recovery (easy)
   lab-m1-recovery.ova          (after build; git-ignored)
 m2-webwork/                    webwork (easy–medium)
 m3-gauntlet/                   gauntlet (medium)
+flagtrail/                     flagtrail (hard, 6 flags) — its own build scripts
+  instructions.html  challenger_instructions.html  writeup.html
+  provision/  smb/  web/       build source (build_ova.sh, not Vagrant)
+  FlagTrail-Linux-CTF.ova       (git-ignored)
 ```
+
+> **Note:** `m1`–`m3` build with `build-all.sh` (Vagrant). **flagtrail** uses its
+> own `provision/build_ova.sh` (an unattended Debian install); it is already
+> built as `flagtrail/FlagTrail-Linux-CTF.ova`.
 
 Build artifacts (`*.ova`, the Debian ISO, VM disks, keys) are git-ignored and
 never committed.
