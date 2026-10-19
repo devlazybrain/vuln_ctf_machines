@@ -84,17 +84,17 @@ footer{margin-top:30px;padding:16px 4px 0;border-top:1px solid var(--line);color
 /* left side nav panel (appears on wide screens) */
 .side{display:none}
 @media (min-width:1180px){
-  .side{display:block;position:fixed;top:calc(env(safe-area-inset-top,0px) + 96px);left:calc(50% - 390px - 240px);width:216px;box-sizing:border-box;padding:16px;border-radius:20px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);z-index:4}
-  .side h2{font-family:"Bricolage Grotesque",system-ui,sans-serif;font-size:1.05rem;margin:0 0 12px}
-  .chips{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-  .chips a{aspect-ratio:1;display:grid;place-items:center;border-radius:12px;border:1.5px solid var(--line);color:var(--ink);text-decoration:none;font-weight:800;font-size:1rem;transition:border-color .15s,transform .15s,background .2s}
+  .side{display:block;position:fixed;top:calc(env(safe-area-inset-top,0px) + 96px);left:calc(50% - 390px - 212px);width:188px;box-sizing:border-box;padding:15px;border-radius:18px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);z-index:4}
+  .side h2{font-family:"Bricolage Grotesque",system-ui,sans-serif;font-size:.98rem;margin:0 0 10px}
+  .chips{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+  .chips a{height:40px;display:grid;place-items:center;border-radius:10px;border:1.5px solid var(--line);color:var(--ink);text-decoration:none;font-weight:700;font-size:.92rem;transition:border-color .15s,transform .15s,background .2s}
   .chips a:hover{border-color:var(--accent2);transform:translateY(-1px)}
   .chips a.good{background:var(--okbg);border-color:var(--okline);color:var(--ok)}
-  .sdonut{display:flex;align-items:center;gap:12px;margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
-  .sdonut .d{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:.82rem;color:var(--ink);
+  .sdonut{display:flex;align-items:center;gap:11px;margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+  .sdonut .d{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:.72rem;color:var(--ink);
     background:conic-gradient(var(--okline) calc(var(--p,0)*1%),var(--line) 0)}
-  .sdonut .d i{width:40px;height:40px;border-radius:50%;background:var(--card);display:grid;place-items:center;font-style:normal}
-  .sdonut .lab{font-size:.82rem;color:var(--muted);line-height:1.4}
+  .sdonut .d i{width:34px;height:34px;border-radius:50%;background:var(--card);display:grid;place-items:center;font-style:normal}
+  .sdonut .lab{font-size:.78rem;color:var(--muted);line-height:1.4}
   .sdonut .lab b{color:var(--ink)}
 }
 @media (max-width:520px){h1{max-width:100%}header::after{opacity:.5}}
@@ -225,7 +225,7 @@ FLAGS.forEach(function(F,i){
       var ok=(verify(v)===F.h);
       btn.disabled=false;
       if(ok){
-        solved[i]=1;try{localStorage.setItem(KEY,JSON.stringify(solved));}catch(e){}
+        solved[i]=v;try{localStorage.setItem(KEY,JSON.stringify(solved));}catch(e){}
         res.style.display='none';markSolved(v);update();
       }else{
         res.className='res bad';res.textContent='Not it — try again';
@@ -234,7 +234,7 @@ FLAGS.forEach(function(F,i){
   }
   btn.addEventListener('click',tryCheck);
   inp.addEventListener('keydown',function(e){if(e.key==='Enter')tryCheck();});
-  if(solved[i]){markSolved(null);}
+  if(solved[i]){markSolved(typeof solved[i]==='string'?solved[i]:null);}
 });
 
 // build side-panel chips

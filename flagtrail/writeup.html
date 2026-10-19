@@ -99,10 +99,10 @@ pre{position:relative}
 /* left side nav panel */
 .side{display:none}
 @media (min-width:1200px){
-  .side{display:block;position:fixed;top:calc(env(safe-area-inset-top,0px) + 96px);left:calc(50% - 410px - 236px);width:214px;box-sizing:border-box;padding:16px;border-radius:20px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);z-index:4}
+  .side{display:block;position:fixed;top:calc(env(safe-area-inset-top,0px) + 96px);left:calc(50% - 410px - 212px);width:188px;box-sizing:border-box;padding:15px;border-radius:18px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);z-index:4}
   .side h2{font-family:"Bricolage Grotesque",system-ui,sans-serif;font-size:1.02rem;margin:0 0 10px}
-  .side .chips{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-  .side .chips a{aspect-ratio:1;display:grid;place-items:center;border-radius:12px;border:1.5px solid var(--line);color:var(--ink);text-decoration:none;font-weight:800;transition:.15s}
+  .side .chips{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+  .side .chips a{height:40px;display:grid;place-items:center;border-radius:10px;border:1.5px solid var(--line);color:var(--ink);text-decoration:none;font-weight:700;font-size:.92rem;transition:.15s}
   .side .chips a:hover{border-color:var(--accent2);transform:translateY(-1px)}
   .side .lnk{margin-top:12px;padding-top:12px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:7px}
   .side .lnk a{color:var(--muted);text-decoration:none;font-size:.86rem}
@@ -152,7 +152,7 @@ linear — each flag feeds the next.</p>
 
 <h2 id="smap">Service map</h2>
 <div class="card">
-<pre><span class="c"># nmap -sV -p- $T</span>
+<pre>$ nmap -sV -p- $T
 22/tcp   open  ssh           OpenSSH (Debian)
 80/tcp   open  http          Apache httpd
 139/tcp  open  netbios-ssn   Samba
@@ -326,8 +326,8 @@ document.querySelectorAll('pre').forEach(function(pre){
 
 /* click-to-copy flag pills */
 document.querySelectorAll('.flag').forEach(function(f){
-  f.title='Click to copy';
-  f.addEventListener('click',function(){copyText(f.textContent.trim(),f,f.textContent.trim());});
+  f.setAttribute('aria-label','Click to copy');
+  f.addEventListener('click',function(){copyText(f.textContent.trim(),f,'Copied ✓');});
 });
 
 /* build side-panel flag chips from the flag cards */
