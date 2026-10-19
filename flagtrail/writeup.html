@@ -121,6 +121,7 @@ pre{position:relative}
     <a href="#rubric">Recruiting rubric</a>
   </div>
 </aside>
+<main>
 <header>
   <button class="toggle" id="themeToggle" type="button">◐ Theme</button>
   <div class="tag"><span>DEBIAN 13</span><span>6 FLAGS</span><span>WEB → ROOT</span><span>HOST-ONLY</span></div>
@@ -129,7 +130,6 @@ pre{position:relative}
      Creator &amp; grader document — <b>contains spoilers</b>. Keep it away from candidates.</p>
 </header>
 
-<main>
 
 <div class="warn">⚠️ <b>Training target.</b> Run host-only. Never bridge it to a real network or the internet.
 Every weakness below is intentional and scoped to exactly these six flags — nothing else is exploitable.</div>
@@ -306,13 +306,21 @@ function fallback(txt){try{var ta=document.createElement('textarea');ta.value=tx
   ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);
   ta.select();document.execCommand('copy');document.body.removeChild(ta);}catch(e){}}
 
+/* extract only the commands (lines with a `$ ` prompt), stripped; if a block
+   has no prompt it's a pure command block, so copy it whole. Output/flag lines
+   are dropped. */
+function cmdsOnly(pre){
+  var c=pre.cloneNode(true);var bb=c.querySelector('.copy');if(bb)bb.remove();
+  var lines=c.innerText.replace(/\s+$/,'').split('\n');
+  var hasPrompt=lines.some(function(l){return /^\s*\$\s/.test(l);});
+  if(hasPrompt){lines=lines.filter(function(l){return /^\s*\$\s/.test(l);})
+                           .map(function(l){return l.replace(/^\s*\$\s/,'');});}
+  return lines.join('\n');
+}
 /* copy button on every <pre> */
 document.querySelectorAll('pre').forEach(function(pre){
   var b=document.createElement('button');b.className='copy';b.type='button';b.textContent='Copy';
-  b.addEventListener('click',function(){
-    var txt=pre.cloneNode(true);var bb=txt.querySelector('.copy');if(bb)bb.remove();
-    copyText(txt.innerText.replace(/\s+$/,''),b,'Copied ✓');
-  });
+  b.addEventListener('click',function(){ copyText(cmdsOnly(pre),b,'Copied ✓'); });
   pre.appendChild(b);
 });
 

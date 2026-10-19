@@ -91,6 +91,7 @@ pre{position:relative}
     <a href="#s6"><b>6</b> Reset</a>
   </div>
 </aside>
+<main>
 <header>
   <button class="toggle" id="themeToggle" type="button">◐ Theme</button>
   <h1>FlagTrail — Launch Instructions</h1>
@@ -98,7 +99,6 @@ pre{position:relative}
      then hand it to candidates.</p>
 </header>
 
-<main>
 
 <div class="warn">⚠️ <b>Host-only use only.</b> This VM is intentionally vulnerable. Never attach a bridged adapter
 or expose it to the internet, and never reuse its credentials anywhere.</div>
@@ -202,10 +202,17 @@ function copyText(txt,el){
 function fb(txt){try{var ta=document.createElement('textarea');ta.value=txt;ta.style.position='fixed';
   ta.style.opacity='0';document.body.appendChild(ta);ta.select();document.execCommand('copy');
   document.body.removeChild(ta);}catch(e){}}
+function cmdsOnly(pre){
+  var c=pre.cloneNode(true);var bb=c.querySelector('.copy');if(bb)bb.remove();
+  var lines=c.innerText.replace(/\s+$/,'').split('\n');
+  var hasPrompt=lines.some(function(l){return /^\s*\$\s/.test(l);});
+  if(hasPrompt){lines=lines.filter(function(l){return /^\s*\$\s/.test(l);})
+                           .map(function(l){return l.replace(/^\s*\$\s/,'');});}
+  return lines.join('\n');
+}
 document.querySelectorAll('pre').forEach(function(pre){
   var b=document.createElement('button');b.className='copy';b.type='button';b.textContent='Copy';
-  b.addEventListener('click',function(){var c=pre.cloneNode(true);var bb=c.querySelector('.copy');
-    if(bb)bb.remove();copyText(c.innerText.replace(/\s+$/,''),b);});
+  b.addEventListener('click',function(){copyText(cmdsOnly(pre),b);});
   pre.appendChild(b);
 });
 </script>
