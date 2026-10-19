@@ -13,72 +13,61 @@ Open **[`index.html`](index.html)** in a browser for the styled front page.
 | **gauntlet** | medium | SQLi, hash cracking, sudo, capabilities | [challenge](m3-gauntlet/challenger_instructions.html) | [host](m3-gauntlet/instructions.html) | [solution](m3-gauntlet/writeup.html) |
 | **flagtrail** | hard | web recon, SMB, SSH, pivoting, privesc (6 flags) | [challenge](flagtrail/challenger_instructions.html) | [host](flagtrail/instructions.html) | [solution](flagtrail/writeup.html) |
 
-Each machine folder holds everything for that box:
+Each machine folder holds its three docs:
 
-- **`instructions.html`** — *host*: how to build, run, and reset the box.
+- **`instructions.html`** — *host*: import, network, run (incl. on a server), reset.
 - **`challenger_instructions.html`** — *player*: scenario, objective, rules, and
   a flag checker (answers stored only as salted hashes — the flag is never in
   the page source). The player sets the **Target IP** once and it fills into
   every command; each command has its own copy button.
 - **`writeup.html`** — the full walkthrough (**spoilers**).
-- **`provision.sh` + `Vagrantfile`** — build definition.
-- **`lab-<box>.ova`** — the built image (appears after you build; git-ignored).
 
-## Build the machines
+## Get the machines
 
-Requires **VirtualBox** and **Vagrant** on the host:
+The VM images (`*.ova`) are too large for the repo, so they are published under
+**[Releases](https://github.com/devlazybrain/vuln_ctf_machines/releases)**. Download the box's `.ova` (a large one may be
+split into parts — `cat part00 part01 > box.ova`), then import it:
 
 ```bash
-sudo apt update && sudo apt install -y virtualbox vagrant
-
-./build-all.sh            # build all three
-# or one at a time:
-./build-all.sh m2-webwork
+VBoxManage import <box>.ova
 ```
 
-The first build downloads the `debian/bookworm64` base box once (~500 MB) and
-reuses it. Each finished `.ova` (~0.4–1 GB) is written into that box's own
-folder, e.g. `m1-recovery/lab-m1-recovery.ova`. The build also disables the
-Vagrant provisioning account, so the shipped machine has no build-time backdoor.
+You need **VirtualBox** (or any hypervisor — the host guide shows how to convert
+the `.ova` for KVM/Proxmox/VMware). No build step is needed to *use* a box.
 
 ## Run a box
 
-Import the `.ova` in VirtualBox, set its network adapter to a **Host-only**
-network, and boot. Find its IP from the host with `sudo nmap -sn 192.168.56.0/24`
-and give that to the player as the target.
+Set the VM's network adapter to a **Host-only** network and boot. Find its IP
+from the host and give that to the player as the target:
+
+```bash
+sudo nmap -sn 192.168.56.0/24
+```
 
 > ⚠️ These machines are intentionally vulnerable. **Never** attach them to a
 > bridged/public network or expose them to the internet — keep them on an
 > isolated host-only (or internal) network.
 
-Reset between players with a VirtualBox snapshot (instant, no rebuild) — see any
-box's host guide. For headless/server use:
-`VBoxManage startvm "lab-m1-recovery" --type headless`.
+Run headless on a server with `VBoxManage startvm "<vm>" --type headless`, and
+reset between players with a VirtualBox snapshot (instant). Full steps — including
+other hypervisors — are in each box's **host guide** (`instructions.html`).
 
 ## Repository layout
 
 ```
 index.html                     front page
-build-all.sh                   build + export every box's .ova
-common/finalize.sh             lockdown + cleanup run on every box
 m1-recovery/                   recovery (easy)
-  provision.sh  Vagrantfile
   instructions.html  challenger_instructions.html  writeup.html
-  lab-m1-recovery.ova          (after build; git-ignored)
 m2-webwork/                    webwork (easy–medium)
 m3-gauntlet/                   gauntlet (medium)
-flagtrail/                     flagtrail (hard, 6 flags) — its own build scripts
+flagtrail/                     flagtrail (hard, 6 flags)
   instructions.html  challenger_instructions.html  writeup.html
-  provision/  smb/  web/       build source (build_ova.sh, not Vagrant)
-  FlagTrail-Linux-CTF.ova       (git-ignored)
 ```
 
-> **Note:** `m1`–`m3` build with `build-all.sh` (Vagrant). **flagtrail** uses its
-> own `provision/build_ova.sh` (an unattended Debian install); it is already
-> built as `flagtrail/FlagTrail-Linux-CTF.ova`.
-
-Build artifacts (`*.ova`, the Debian ISO, VM disks, keys) are git-ignored and
-never committed.
+The `.ova` images live under **Releases**, not in the repo. Build scripts for
+each box are included (`build-all.sh`, `common/`, each box's `provision.sh` /
+`Vagrantfile`, and `flagtrail/provision/`) for anyone who wants to rebuild from
+source, but they are not needed to run the boxes.
 
 ## Credits
 

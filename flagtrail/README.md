@@ -14,12 +14,12 @@ those six flags are present — nothing extra.
 
 | File | For | Contents |
 |------|-----|----------|
-| `launch_instructions.html` | you (admin) | import, network, boot & reset the VM |
-| `challenger_instruction.html` | candidates | brief + self-check flag submitter (validates by hash) |
+| `instructions.html` | you (admin) | import, network, boot & reset the VM |
+| `challenger_instructions.html` | candidates | brief + self-check flag submitter (validates by hash) |
 | `writeup.html` | you (grader) | **full walkthrough + rubric — SPOILERS** |
 
 The VM image itself (`FlagTrail-Linux-CTF.ova`) is distributed under
-[**Releases**](../../releases) — it is too large to live in the repo.
+[**Releases**](https://github.com/devlazybrain/vuln_ctf_machines/releases) — it is too large to live in the repo.
 
 ## Quick start
 
@@ -29,14 +29,14 @@ The VM image itself (`FlagTrail-Linux-CTF.ova`) is distributed under
    cat FlagTrail-Linux-CTF.part00.ova FlagTrail-Linux-CTF.part01.ova > FlagTrail-Linux-CTF.ova
    sha256sum -c FlagTrail-Linux-CTF.ova.sha256   # should print: OK
    ```
-   Then import it in VirtualBox (**File → Import Appliance**). Full steps: `launch_instructions.html`.
+   Then import it in VirtualBox (**File → Import Appliance**). Full steps: `instructions.html`.
 2. Set **Adapter 1 = Host-only** before first boot. Do not use bridged.
 3. Boot it, then find its IP from an attacker box on the same host-only net:
    ```bash
    nmap -sn 192.168.56.0/24
    ```
 4. Hand the candidate only the IP (and maybe "there's an SMB share"). Give them
-   `challenger_instruction.html` to submit flags. Watch how far they get.
+   `challenger_instructions.html` to submit flags. Watch how far they get.
 
 ## The challenge (no spoilers)
 
