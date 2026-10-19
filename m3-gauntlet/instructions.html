@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>webwork – Instructions</title>
+<title>gauntlet – Instructions</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -56,7 +56,7 @@ section.step h2{font-family:"Bricolage Grotesque","Segoe UI",system-ui,sans-seri
 section.step p{margin:10px 0}
 ul{margin:10px 0;padding-left:1.3em}
 li{margin:6px 0}
-pre{position:relative;background:var(--code);color:var(--codeink);padding:14px 46px 14px 16px;border-radius:14px;overflow-x:auto;margin:12px 0;font:13.5px/1.55 ui-monospace,Menlo,Consolas,monospace;max-width:100%;border:1px solid var(--line);border-left:4px solid #00b4d8}
+pre{position:relative;background:var(--code);color:var(--codeink);padding:12px 14px;border-radius:14px;overflow-x:auto;margin:12px 0;font:13.5px/1.7 ui-monospace,Menlo,Consolas,monospace;max-width:100%;border:1px solid var(--line);border-left:4px solid #00b4d8}
 pre code{background:none;padding:0;color:inherit;white-space:pre}
 code{font:0.9em ui-monospace,Menlo,Consolas,monospace;background:var(--why);padding:1px 6px;border-radius:6px;color:var(--ink)}
 .copy{position:absolute;top:8px;right:8px;font:inherit;font-size:.72rem;font-weight:600;cursor:pointer;border:1px solid var(--line);border-radius:8px;padding:3px 8px;background:var(--card);color:var(--muted)}
@@ -82,6 +82,19 @@ code{font:0.9em ui-monospace,Menlo,Consolas,monospace;background:var(--why);padd
   .metarow b{color:var(--muted);font-weight:600}
   .tag{display:inline-block;font-size:.72rem;font-weight:600;padding:2px 8px;border-radius:99px;background:var(--bg2);border:1px solid var(--line);color:var(--muted);margin:6px 4px 0 0}
 }
+.ipv{color:var(--accent2);font-weight:700}
+.ipv.set{color:#52b788}
+.ipbox{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 -8px 18px;padding:12px 14px;border-radius:14px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow)}
+.ipbox label{font-weight:700;font-size:.9rem;color:var(--muted);white-space:nowrap}
+.ipbox input{font:inherit;font-size:.95rem;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:8px 12px;flex:1;min-width:min(200px,100%)}
+.ipbox input:focus-visible{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent2) 45%,transparent)}
+.ipbox .hint{font-size:.78rem;color:var(--muted)}
+pre code .cl{display:flex;align-items:center;gap:10px}
+pre code .cl .t{white-space:pre;flex:1;min-width:0;overflow-x:auto}
+pre code .cl .lc{flex:none;font:inherit;font-size:.66rem;font-weight:600;cursor:pointer;border:1px solid var(--line);border-radius:6px;padding:1px 7px;background:var(--card);color:var(--muted);opacity:.5;transition:opacity .15s}
+pre code .cl:hover .lc{opacity:1}
+pre code .cl .lc:focus-visible{opacity:1;outline:none;border-color:var(--accent)}
+pre code .cl .lc.done{color:var(--okline);border-color:var(--okline);opacity:1}
 .skip{position:absolute;left:-999px}
 .skip:focus{left:14px;top:14px;z-index:40;background:var(--card);color:var(--ink);padding:8px 12px;border-radius:10px;border:1px solid var(--line)}
 </style>
@@ -94,18 +107,18 @@ code{font:0.9em ui-monospace,Menlo,Consolas,monospace;background:var(--why);padd
   <div class="chips" id="chips"></div>
   <p class="now" id="now">1 · What this box is</p>
   <div class="metacard">
-    <div class="metarow"><b>Level</b><span>Easy–Medium</span></div>
+    <div class="metarow"><b>Level</b><span>Medium</span></div>
     <div class="metarow"><b>OS</b><span>Debian 12</span></div>
     <div class="metarow"><b>Flags</b><span>user + root</span></div>
-    <div><span class="tag">web</span><span class="tag">SQLi</span><span class="tag">privesc</span></div>
+    <div><span class="tag">SQLi</span><span class="tag">cracking</span><span class="tag">privesc</span></div>
   </div>
 </nav>
 
 <main>
 <header>
   <p class="eyebrow">Practice Lab · Instructions</p>
-  <h1>webwork</h1>
-  <p>How to build, run, and host this box. No solutions here — the full walkthrough is in <code>writeups/m2-webwork.html</code>.</p>
+  <h1>gauntlet</h1>
+  <p>How to build, run, and host this box. No solutions here — the full walkthrough is in <code>writeup.html</code>.</p>
 </header>
 
 <div class="bar">
@@ -115,11 +128,17 @@ code{font:0.9em ui-monospace,Menlo,Consolas,monospace;background:var(--why);padd
   <div class="track"><div class="fill" id="fill"></div></div>
 </div>
 
+<div class="ipbox">
+  <label for="ipv">Target IP</label>
+  <input id="ipv" type="text" placeholder="e.g. 192.168.56.101" autocomplete="off" spellcheck="false">
+  <span class="hint">set once — it fills into every command below</span>
+</div>
+
 <div id="doc">
 
   <section class="step" id="s1" data-title="What this box is">
     <h2><span class="num">1</span>What this box is</h2>
-    <p><b>webwork</b> is the easy–medium machine in the set — a Debian VM running a small PHP web app (Apache + MariaDB). The path is a classic web chain into a shell, then a privilege-escalation via a scheduled job.</p>
+    <p><b>gauntlet</b> is the medium machine in the set — a Debian VM with a PHP + MariaDB web app. The chain is SQL injection into credential cracking, then a two-step privilege escalation. The best test of methodology in the set.</p>
     <p>Self-contained and offline once built. Runs on a laptop or a headless server VM.</p>
   </section>
 
@@ -127,16 +146,15 @@ code{font:0.9em ui-monospace,Menlo,Consolas,monospace;background:var(--why);padd
     <h2><span class="num">2</span>Requirements</h2>
     <pre><code># Debian / Ubuntu / Kali
 sudo apt update &amp;&amp; sudo apt install -y virtualbox vagrant</code></pre>
-    <p>About 1&nbsp;GB RAM and ~5&nbsp;GB disk while building. The Debian base box downloads once and is reused across all boxes.</p>
+    <p>About 1&nbsp;GB RAM and ~5&nbsp;GB disk while building. Players will want <code>rockyou.txt</code> for the cracking step (ships with Kali).</p>
   </section>
 
   <section class="step" id="s3" data-title="Build the box">
     <h2><span class="num">3</span>Build the box</h2>
-    <pre><code>cd machines/m2-webwork
+    <pre><code>cd m3-gauntlet
 vagrant up</code></pre>
-    <p>Export a portable <span class="ph">.ova</span> with the helper from <code>machines/</code>:</p>
-    <pre><code>cd machines
-./build-all.sh m2-webwork      # -&gt; machines/ova/lab-m2-webwork.ova</code></pre>
+    <p>Export a portable <span class="ph">.ova</span> with the build script from the repo root:</p>
+    <pre><code>./build-all.sh m3-gauntlet      # -&gt; m3-gauntlet/lab-m3-gauntlet.ova</code></pre>
     <div class="note"><h3>Note</h3>The build disables the Vagrant provisioning account before export, so there is no build-time backdoor.</div>
   </section>
 
@@ -144,18 +162,18 @@ vagrant up</code></pre>
     <h2><span class="num">4</span>Run it &amp; get the IP</h2>
     <p>Import the <code>.ova</code>, set the adapter to a <b>Host-only</b> network (never expose it to the internet), and boot. Find the IP from the host:</p>
     <pre><code>sudo nmap -sn 192.168.56.0/24</code></pre>
-    <p>That address is the challenger's <span class="ph">&lt;target-ip&gt;</span>.</p>
-    <div class="note"><h3>Headless / server</h3><code>VBoxManage startvm "lab-m2-webwork" --type headless</code></div>
+    <p>That address is the challenger's <span class="ph ipv">&lt;target-ip&gt;</span>.</p>
+    <div class="note"><h3>Headless / server</h3><code>VBoxManage startvm "lab-m3-gauntlet" --type headless</code></div>
   </section>
 
   <section class="step" id="s5" data-title="Run an assessment">
     <h2><span class="num">5</span>Run an assessment</h2>
-    <p>Give the player the <span class="ph">&lt;target-ip&gt;</span> and the challenger brief — <code>challenger_instructions.html</code> — which has the scenario, objective, rules, and a built-in flag checker. The solution is <code>writeups/m2-webwork.html</code> (spoilers).</p>
+    <p>Give the player the <span class="ph ipv">&lt;target-ip&gt;</span> and the challenger brief — <code>challenger_instructions.html</code> — which has the scenario, objective, rules, and a built-in flag checker. The solution is <code>writeup.html</code> (spoilers).</p>
     <p><b>Reset between players</b> with a snapshot:</p>
-    <pre><code>VBoxManage snapshot "lab-m2-webwork" take clean
-VBoxManage controlvm "lab-m2-webwork" poweroff
-VBoxManage snapshot "lab-m2-webwork" restore clean</code></pre>
-    <div class="note"><h3>Document set for this box</h3><p><code>instructions.html</code> (host) · <code>challenger_instructions.html</code> (player) · <code>writeups/m2-webwork.html</code> (solution)</p></div>
+    <pre><code>VBoxManage snapshot "lab-m3-gauntlet" take clean
+VBoxManage controlvm "lab-m3-gauntlet" poweroff
+VBoxManage snapshot "lab-m3-gauntlet" restore clean</code></pre>
+    <div class="note"><h3>Document set for this box</h3><p><code>instructions.html</code> (host) · <code>challenger_instructions.html</code> (player) · <code>writeup.html</code> (solution)</p></div>
   </section>
 
 </div>
@@ -169,7 +187,7 @@ VBoxManage snapshot "lab-m2-webwork" restore clean</code></pre>
   var root=document.documentElement;
   document.getElementById("themeBtn").addEventListener("click",function(){var s=root.getAttribute("data-theme");var cur=s?s:(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light");root.setAttribute("data-theme",cur==="dark"?"light":"dark");});
   document.getElementById("topBtn").addEventListener("click",function(){window.scrollTo({top:0,behavior:(matchMedia("(prefers-reduced-motion:reduce)").matches?"auto":"smooth")});});
-  document.querySelectorAll("pre").forEach(function(pre){var b=document.createElement("button");b.className="copy";b.type="button";b.textContent="copy";b.addEventListener("click",function(){var t=pre.querySelector("code").innerText;if(navigator.clipboard)navigator.clipboard.writeText(t).then(function(){b.textContent="copied";b.classList.add("done");setTimeout(function(){b.textContent="copy";b.classList.remove("done");},1400);});});pre.appendChild(b);});
+  var IPLABEL="<target-ip>";var ipInput=document.getElementById("ipv");function ipVal(){var v=ipInput&&ipInput.value.trim();return v||IPLABEL;}function subIP(s){return s.split(IPLABEL).join(ipVal());}var proseIp=[].slice.call(document.querySelectorAll(".ipv")).filter(function(e){return !e.closest("pre");});function copyText(text,btn){if(navigator.clipboard)navigator.clipboard.writeText(text).then(function(){var o=btn.textContent;btn.textContent="copied";btn.classList.add("done");setTimeout(function(){btn.textContent=o;btn.classList.remove("done");},1200);});}var NL=String.fromCharCode(10);var codeBlocks=[];document.querySelectorAll("pre").forEach(function(pre){var code=pre.querySelector("code");if(!code)return;var lines=code.innerText.split(NL);while(lines.length&&lines[lines.length-1].trim()==="")lines.pop();code.textContent="";var rows=lines.map(function(ln){var row=document.createElement("span");row.className="cl";var t=document.createElement("span");t.className="t";row.appendChild(t);if(ln.trim()!==""&&ln.trim().charAt(0)!=="#"){var lc=document.createElement("button");lc.className="lc";lc.type="button";lc.textContent="copy";lc.setAttribute("aria-label","Copy this command");(function(line){lc.addEventListener("click",function(){copyText(subIP(line),lc);});})(ln);row.appendChild(lc);}code.appendChild(row);code.appendChild(document.createTextNode(NL));return {raw:ln,t:t};});codeBlocks.push(rows);});function renderIP(){var v=ipVal();proseIp.forEach(function(s){s.textContent=v;s.classList.toggle("set",v!==IPLABEL);});codeBlocks.forEach(function(rows){rows.forEach(function(r){r.t.textContent=subIP(r.raw);});});}if(ipInput)ipInput.addEventListener("input",renderIP);renderIP();
   var steps=[].slice.call(document.querySelectorAll("section.step"));
   var chips=document.getElementById("chips"),now=document.getElementById("now"),score=document.getElementById("score"),fill=document.getElementById("fill");
   steps.forEach(function(s,i){var a=document.createElement("a");a.href="#"+s.id;a.textContent=(i+1);a.setAttribute("aria-label","Section "+(i+1)+": "+s.dataset.title);chips.appendChild(a);});

@@ -63,8 +63,8 @@ section.step h2{font-family:"Bricolage Grotesque","Segoe UI",system-ui,sans-seri
 section.step p{margin:10px 0}
 ul{margin:10px 0;padding-left:1.3em}
 li{margin:6px 0}
-pre{position:relative;background:var(--code);color:var(--codeink);padding:14px 46px 14px 16px;border-radius:14px;overflow-x:auto;margin:12px 0;
-  font:13.5px/1.55 ui-monospace,Menlo,Consolas,monospace;max-width:100%;border:1px solid var(--line);border-left:4px solid #00b4d8}
+pre{position:relative;background:var(--code);color:var(--codeink);padding:12px 14px;border-radius:14px;overflow-x:auto;margin:12px 0;
+  font:13.5px/1.7 ui-monospace,Menlo,Consolas,monospace;max-width:100%;border:1px solid var(--line);border-left:4px solid #00b4d8}
 pre code{background:none;padding:0;color:inherit;white-space:pre}
 code{font:0.9em ui-monospace,Menlo,Consolas,monospace;background:var(--why);padding:1px 6px;border-radius:6px;color:var(--ink)}
 .copy{position:absolute;top:8px;right:8px;font:inherit;font-size:.72rem;font-weight:600;cursor:pointer;border:1px solid var(--line);
@@ -93,6 +93,19 @@ code{font:0.9em ui-monospace,Menlo,Consolas,monospace;background:var(--why);padd
   .metarow b{color:var(--muted);font-weight:600}
   .tag{display:inline-block;font-size:.72rem;font-weight:600;padding:2px 8px;border-radius:99px;background:var(--bg2);border:1px solid var(--line);color:var(--muted);margin:6px 4px 0 0}
 }
+.ipv{color:var(--accent2);font-weight:700}
+.ipv.set{color:#52b788}
+.ipbox{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 -8px 18px;padding:12px 14px;border-radius:14px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow)}
+.ipbox label{font-weight:700;font-size:.9rem;color:var(--muted);white-space:nowrap}
+.ipbox input{font:inherit;font-size:.95rem;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:8px 12px;flex:1;min-width:min(200px,100%)}
+.ipbox input:focus-visible{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent2) 45%,transparent)}
+.ipbox .hint{font-size:.78rem;color:var(--muted)}
+pre code .cl{display:flex;align-items:center;gap:10px}
+pre code .cl .t{white-space:pre;flex:1;min-width:0;overflow-x:auto}
+pre code .cl .lc{flex:none;font:inherit;font-size:.66rem;font-weight:600;cursor:pointer;border:1px solid var(--line);border-radius:6px;padding:1px 7px;background:var(--card);color:var(--muted);opacity:.5;transition:opacity .15s}
+pre code .cl:hover .lc{opacity:1}
+pre code .cl .lc:focus-visible{opacity:1;outline:none;border-color:var(--accent)}
+pre code .cl .lc.done{color:var(--okline);border-color:var(--okline);opacity:1}
 .skip{position:absolute;left:-999px}
 .skip:focus{left:14px;top:14px;z-index:40;background:var(--card);color:var(--ink);padding:8px 12px;border-radius:10px;border:1px solid var(--line)}
 </style>
@@ -116,7 +129,7 @@ code{font:0.9em ui-monospace,Menlo,Consolas,monospace;background:var(--why);padd
 <header>
   <p class="eyebrow">Practice Lab · Instructions</p>
   <h1>recovery</h1>
-  <p>How to build, run, and attack this box. No solutions here — the full walkthrough is in <code>writeups/m1-recovery.html</code>.</p>
+  <p>How to build, run, and attack this box. No solutions here — the full walkthrough is in <code>writeup.html</code>.</p>
 </header>
 
 <div class="bar">
@@ -124,6 +137,12 @@ code{font:0.9em ui-monospace,Menlo,Consolas,monospace;background:var(--why);padd
   <button id="themeBtn" type="button">Theme</button>
   <button id="topBtn" type="button">Top</button>
   <div class="track"><div class="fill" id="fill"></div></div>
+</div>
+
+<div class="ipbox">
+  <label for="ipv">Target IP</label>
+  <input id="ipv" type="text" placeholder="e.g. 192.168.56.101" autocomplete="off" spellcheck="false">
+  <span class="hint">set once — it fills into every command below</span>
 </div>
 
 <div id="doc">
@@ -144,12 +163,11 @@ sudo apt update &amp;&amp; sudo apt install -y virtualbox vagrant</code></pre>
 
   <section class="step" id="s3" data-title="Build the box">
     <h2><span class="num">3</span>Build the box</h2>
-    <p>From the repo's <code>machines/</code> folder, build just this box:</p>
-    <pre><code>cd machines/m1-recovery
+    <p>From the repo root, build just this box:</p>
+    <pre><code>cd m1-recovery
 vagrant up            # builds + provisions the VM</code></pre>
-    <p>To export a portable <span class="ph">.ova</span> you can hand to anyone, use the helper from <code>machines/</code>:</p>
-    <pre><code>cd machines
-./build-all.sh m1-recovery      # -&gt; machines/ova/lab-m1-recovery.ova</code></pre>
+    <p>To export a portable <span class="ph">.ova</span> you can hand to anyone, use the build script from the repo root:</p>
+    <pre><code>./build-all.sh m1-recovery      # -&gt; m1-recovery/lab-m1-recovery.ova</code></pre>
     <div class="note">
       <h3>Note</h3>
       The build disables the Vagrant provisioning account before export, so the finished machine has no build-time backdoor.
@@ -161,7 +179,7 @@ vagrant up            # builds + provisions the VM</code></pre>
     <p>Import the <code>.ova</code> in VirtualBox (or boot the Vagrant VM), set its network adapter to a <b>Host-only</b> network so it is never exposed to the internet, then boot it.</p>
     <p>Find the box's IP from the host:</p>
     <pre><code>sudo nmap -sn 192.168.56.0/24     # your host-only subnet</code></pre>
-    <p>That address is your <span class="ph">&lt;target-ip&gt;</span> for the attack.</p>
+    <p>That address is your <span class="ph ipv">&lt;target-ip&gt;</span> for the attack.</p>
     <div class="note">
       <h3>Headless / server</h3>
       To run it with no GUI: <code>VBoxManage startvm "lab-m1-recovery" --type headless</code>.
@@ -170,7 +188,7 @@ vagrant up            # builds + provisions the VM</code></pre>
 
   <section class="step" id="s5" data-title="Run an assessment">
     <h2><span class="num">5</span>Run an assessment</h2>
-    <p>Give the player the box's <span class="ph">&lt;target-ip&gt;</span> and the challenger brief — <code>challenger_instructions.html</code> — which holds the scenario, objective, rules, and a built-in flag checker. The full solution lives in <code>writeups/m1-recovery.html</code> (spoilers).</p>
+    <p>Give the player the box's <span class="ph ipv">&lt;target-ip&gt;</span> and the challenger brief — <code>challenger_instructions.html</code> — which holds the scenario, objective, rules, and a built-in flag checker. The full solution lives in <code>writeup.html</code> (spoilers).</p>
     <p><b>Reset between players</b> with a VirtualBox snapshot — instant, no rebuild:</p>
     <pre><code>VBoxManage snapshot "lab-m1-recovery" take clean
 # after a player:
@@ -178,7 +196,7 @@ VBoxManage controlvm "lab-m1-recovery" poweroff
 VBoxManage snapshot "lab-m1-recovery" restore clean</code></pre>
     <div class="note">
       <h3>Document set for this box</h3>
-      <p><code>instructions.html</code> (this page — host) · <code>challenger_instructions.html</code> (player brief) · <code>writeups/m1-recovery.html</code> (solution)</p>
+      <p><code>instructions.html</code> (this page — host) · <code>challenger_instructions.html</code> (player brief) · <code>writeup.html</code> (solution)</p>
     </div>
   </section>
 
@@ -197,17 +215,7 @@ VBoxManage snapshot "lab-m1-recovery" restore clean</code></pre>
   document.getElementById("topBtn").addEventListener("click",function(){
     window.scrollTo({top:0,behavior:(matchMedia("(prefers-reduced-motion:reduce)").matches?"auto":"smooth")});
   });
-  document.querySelectorAll("pre").forEach(function(pre){
-    var b=document.createElement("button");b.className="copy";b.type="button";b.textContent="copy";
-    b.addEventListener("click",function(){
-      var t=pre.querySelector("code").innerText;
-      if(navigator.clipboard) navigator.clipboard.writeText(t).then(function(){
-        b.textContent="copied";b.classList.add("done");
-        setTimeout(function(){b.textContent="copy";b.classList.remove("done");},1400);
-      });
-    });
-    pre.appendChild(b);
-  });
+  var IPLABEL="<target-ip>";var ipInput=document.getElementById("ipv");function ipVal(){var v=ipInput&&ipInput.value.trim();return v||IPLABEL;}function subIP(s){return s.split(IPLABEL).join(ipVal());}var proseIp=[].slice.call(document.querySelectorAll(".ipv")).filter(function(e){return !e.closest("pre");});function copyText(text,btn){if(navigator.clipboard)navigator.clipboard.writeText(text).then(function(){var o=btn.textContent;btn.textContent="copied";btn.classList.add("done");setTimeout(function(){btn.textContent=o;btn.classList.remove("done");},1200);});}var NL=String.fromCharCode(10);var codeBlocks=[];document.querySelectorAll("pre").forEach(function(pre){var code=pre.querySelector("code");if(!code)return;var lines=code.innerText.split(NL);while(lines.length&&lines[lines.length-1].trim()==="")lines.pop();code.textContent="";var rows=lines.map(function(ln){var row=document.createElement("span");row.className="cl";var t=document.createElement("span");t.className="t";row.appendChild(t);if(ln.trim()!==""&&ln.trim().charAt(0)!=="#"){var lc=document.createElement("button");lc.className="lc";lc.type="button";lc.textContent="copy";lc.setAttribute("aria-label","Copy this command");(function(line){lc.addEventListener("click",function(){copyText(subIP(line),lc);});})(ln);row.appendChild(lc);}code.appendChild(row);code.appendChild(document.createTextNode(NL));return {raw:ln,t:t};});codeBlocks.push(rows);});function renderIP(){var v=ipVal();proseIp.forEach(function(s){s.textContent=v;s.classList.toggle("set",v!==IPLABEL);});codeBlocks.forEach(function(rows){rows.forEach(function(r){r.t.textContent=subIP(r.raw);});});}if(ipInput)ipInput.addEventListener("input",renderIP);renderIP();
   var steps=[].slice.call(document.querySelectorAll("section.step"));
   var chips=document.getElementById("chips");
   var now=document.getElementById("now");

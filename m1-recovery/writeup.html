@@ -63,8 +63,8 @@ section.step{background:var(--card);border:1px solid var(--line);border-radius:2
 section.step h2{font-family:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;font-size:1.25rem;font-weight:700;margin:0 0 10px;display:flex;align-items:center;gap:12px;letter-spacing:-.01em}
 .num{flex:none;display:inline-grid;place-items:center;width:36px;height:36px;border-radius:12px;font-size:1rem;font-weight:800;color:#fff;background:linear-gradient(135deg,#2d6a4f,#0096c7)}
 section.step p{margin:10px 0}
-pre{position:relative;background:var(--code);color:var(--codeink);padding:14px 46px 14px 16px;border-radius:14px;overflow-x:auto;margin:12px 0;
-  font:13.5px/1.55 ui-monospace,Menlo,Consolas,monospace;max-width:100%;border:1px solid var(--line);border-left:4px solid #00b4d8}
+pre{position:relative;background:var(--code);color:var(--codeink);padding:12px 14px;border-radius:14px;overflow-x:auto;margin:12px 0;
+  font:13.5px/1.7 ui-monospace,Menlo,Consolas,monospace;max-width:100%;border:1px solid var(--line);border-left:4px solid #00b4d8}
 pre code{background:none;padding:0;color:inherit;white-space:pre}
 code{font:0.9em ui-monospace,Menlo,Consolas,monospace;background:var(--why);padding:1px 6px;border-radius:6px;color:var(--ink)}
 .copy{position:absolute;top:8px;right:8px;font:inherit;font-size:.72rem;font-weight:600;cursor:pointer;border:1px solid var(--line);
@@ -103,6 +103,19 @@ code{font:0.9em ui-monospace,Menlo,Consolas,monospace;background:var(--why);padd
   .metarow b{color:var(--muted);font-weight:600}
   .tag{display:inline-block;font-size:.72rem;font-weight:600;padding:2px 8px;border-radius:99px;background:var(--bg2);border:1px solid var(--line);color:var(--muted);margin:6px 4px 0 0}
 }
+.ipv{color:var(--accent2);font-weight:700}
+.ipv.set{color:#52b788}
+.ipbox{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 -8px 18px;padding:12px 14px;border-radius:14px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow)}
+.ipbox label{font-weight:700;font-size:.9rem;color:var(--muted);white-space:nowrap}
+.ipbox input{font:inherit;font-size:.95rem;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:8px 12px;flex:1;min-width:min(200px,100%)}
+.ipbox input:focus-visible{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent2) 45%,transparent)}
+.ipbox .hint{font-size:.78rem;color:var(--muted)}
+pre code .cl{display:flex;align-items:center;gap:10px}
+pre code .cl .t{white-space:pre;flex:1;min-width:0;overflow-x:auto}
+pre code .cl .lc{flex:none;font:inherit;font-size:.66rem;font-weight:600;cursor:pointer;border:1px solid var(--line);border-radius:6px;padding:1px 7px;background:var(--card);color:var(--muted);opacity:.5;transition:opacity .15s}
+pre code .cl:hover .lc{opacity:1}
+pre code .cl .lc:focus-visible{opacity:1;outline:none;border-color:var(--accent)}
+pre code .cl .lc.done{color:var(--okline);border-color:var(--okline);opacity:1}
 .skip{position:absolute;left:-999px}
 .skip:focus{left:14px;top:14px;z-index:40;background:var(--card);color:var(--ink);padding:8px 12px;border-radius:10px;border:1px solid var(--line)}
 </style>
@@ -126,7 +139,7 @@ code{font:0.9em ui-monospace,Menlo,Consolas,monospace;background:var(--why);padd
 <header>
   <p class="eyebrow">Practice Lab · Write-up</p>
   <h1>recovery</h1>
-  <p>Easy Linux box: service enumeration &rarr; <b>forensic recovery</b> of a deleted file &rarr; a <code>sudo</code> misconfiguration for root. Commands use <span class="ph">&lt;target-ip&gt;</span> — substitute your box's IP.</p>
+  <p>Easy Linux box: service enumeration &rarr; <b>forensic recovery</b> of a deleted file &rarr; a <code>sudo</code> misconfiguration for root. Commands use <span class="ph ipv">&lt;target-ip&gt;</span> — substitute your box's IP.</p>
 </header>
 
 <div class="bar">
@@ -136,9 +149,15 @@ code{font:0.9em ui-monospace,Menlo,Consolas,monospace;background:var(--why);padd
   <div class="track"><div class="fill" id="fill"></div></div>
 </div>
 
+<div class="ipbox">
+  <label for="ipv">Target IP</label>
+  <input id="ipv" type="text" placeholder="e.g. 192.168.56.101" autocomplete="off" spellcheck="false">
+  <span class="hint">set once — it fills into every command below</span>
+</div>
+
 <div class="intro">
   <p><b>Goal.</b> Capture two flags — a <b>user</b> flag and a <b>root</b> flag. Here the user flag is not a plain file: it is recovered through <b>disk forensics</b>, which is the whole point of the first machine.</p>
-  <p><b>Scope.</b> Only attack the single IP you were given. Replace <span class="ph">&lt;target-ip&gt;</span> everywhere below.</p>
+  <p><b>Scope.</b> Only attack the single IP you were given. Replace <span class="ph ipv">&lt;target-ip&gt;</span> everywhere below.</p>
 </div>
 
 <div id="doc">
@@ -146,7 +165,7 @@ code{font:0.9em ui-monospace,Menlo,Consolas,monospace;background:var(--why);padd
   <section class="step" id="s1" data-title="Enumerate the services">
     <h2><span class="num">1</span>Enumerate the services</h2>
     <p>Start with a full port scan and service/version detection.</p>
-    <pre><code>nmap -sC -sV -p- <span class="ph">&lt;target-ip&gt;</span></code></pre>
+    <pre><code>nmap -sC -sV -p- <span class="ph ipv">&lt;target-ip&gt;</span></code></pre>
     <p>Three services answer:</p>
     <pre><code>21/tcp  ftp     vsftpd     (anonymous login allowed)
 22/tcp  ssh     OpenSSH
@@ -163,9 +182,9 @@ code{font:0.9em ui-monospace,Menlo,Consolas,monospace;background:var(--why);padd
   <section class="step" id="s2" data-title="Pull the disk image">
     <h2><span class="num">2</span>Pull the disk image</h2>
     <p>The web root advertises a decommissioned workstation backup. Grab it over HTTP (the same file is on anonymous FTP):</p>
-    <pre><code>wget http://<span class="ph">&lt;target-ip&gt;</span>/disk_backup.img</code></pre>
+    <pre><code>wget http://<span class="ph ipv">&lt;target-ip&gt;</span>/disk_backup.img</code></pre>
     <p>Or via FTP:</p>
-    <pre><code>ftp <span class="ph">&lt;target-ip&gt;</span>
+    <pre><code>ftp <span class="ph ipv">&lt;target-ip&gt;</span>
 # user: anonymous   (press Enter for password)
 ftp&gt; get pub/disk_backup.img</code></pre>
     <div class="why">
@@ -204,7 +223,7 @@ user flag: FLAG{f0r3ns1c_c4rv1ng_r3c0v3ry}</code></pre>
   <section class="step" id="s4" data-title="Get a shell">
     <h2><span class="num">4</span>Get a shell</h2>
     <p>Log in over SSH with the recovered credentials:</p>
-    <pre><code>ssh jdoe@<span class="ph">&lt;target-ip&gt;</span>
+    <pre><code>ssh jdoe@<span class="ph ipv">&lt;target-ip&gt;</span>
 # password: sunshine2019</code></pre>
     <div class="why">
       <h3>Why it works</h3>
@@ -261,17 +280,7 @@ cat /root/root.txt</code></pre>
   });
 
   /* copy buttons */
-  document.querySelectorAll("pre").forEach(function(pre){
-    var b=document.createElement("button");b.className="copy";b.type="button";b.textContent="copy";
-    b.addEventListener("click",function(){
-      var t=pre.querySelector("code").innerText;
-      if(navigator.clipboard) navigator.clipboard.writeText(t).then(function(){
-        b.textContent="copied";b.classList.add("done");
-        setTimeout(function(){b.textContent="copy";b.classList.remove("done");},1400);
-      });
-    });
-    pre.appendChild(b);
-  });
+  var IPLABEL="<target-ip>";var ipInput=document.getElementById("ipv");function ipVal(){var v=ipInput&&ipInput.value.trim();return v||IPLABEL;}function subIP(s){return s.split(IPLABEL).join(ipVal());}var proseIp=[].slice.call(document.querySelectorAll(".ipv")).filter(function(e){return !e.closest("pre");});function copyText(text,btn){if(navigator.clipboard)navigator.clipboard.writeText(text).then(function(){var o=btn.textContent;btn.textContent="copied";btn.classList.add("done");setTimeout(function(){btn.textContent=o;btn.classList.remove("done");},1200);});}var NL=String.fromCharCode(10);var codeBlocks=[];document.querySelectorAll("pre").forEach(function(pre){var code=pre.querySelector("code");if(!code)return;var lines=code.innerText.split(NL);while(lines.length&&lines[lines.length-1].trim()==="")lines.pop();code.textContent="";var rows=lines.map(function(ln){var row=document.createElement("span");row.className="cl";var t=document.createElement("span");t.className="t";row.appendChild(t);if(ln.trim()!==""&&ln.trim().charAt(0)!=="#"){var lc=document.createElement("button");lc.className="lc";lc.type="button";lc.textContent="copy";lc.setAttribute("aria-label","Copy this command");(function(line){lc.addEventListener("click",function(){copyText(subIP(line),lc);});})(ln);row.appendChild(lc);}code.appendChild(row);code.appendChild(document.createTextNode(NL));return {raw:ln,t:t};});codeBlocks.push(rows);});function renderIP(){var v=ipVal();proseIp.forEach(function(s){s.textContent=v;s.classList.toggle("set",v!==IPLABEL);});codeBlocks.forEach(function(rows){rows.forEach(function(r){r.t.textContent=subIP(r.raw);});});}if(ipInput)ipInput.addEventListener("input",renderIP);renderIP();
 
   /* one-click copy on flag callouts */
   document.querySelectorAll(".flag").forEach(function(fl){

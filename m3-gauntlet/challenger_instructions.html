@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>recovery – Challenge</title>
+<title>gauntlet – Challenge</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -120,7 +120,7 @@ code{font:0.9em ui-monospace,Menlo,Consolas,monospace;background:var(--why);padd
   <div class="chips" id="chips"></div>
   <p class="now" id="now">1 · The scenario</p>
   <div class="metacard">
-    <div class="metarow"><b>Difficulty</b><span>Easy</span></div>
+    <div class="metarow"><b>Difficulty</b><span>Medium</span></div>
     <div class="metarow"><b>Flags</b><span>user + root</span></div>
     <div class="metarow"><b>Elapsed</b><span id="timer">0:00</span></div>
   </div>
@@ -129,8 +129,8 @@ code{font:0.9em ui-monospace,Menlo,Consolas,monospace;background:var(--why);padd
 <main>
 <header>
   <p class="eyebrow">Practice Lab · Challenge</p>
-  <h1>recovery</h1>
-  <p>Your brief for this box. <b>No build steps and no spoilers here</b> — just what you need to start. <span class="diff">Easy</span></p>
+  <h1>gauntlet</h1>
+  <p>Your brief for this box. <b>No build steps and no spoilers here</b> — just what you need to start. <span class="diff">Medium</span></p>
 </header>
 
 <div class="bar">
@@ -150,33 +150,32 @@ code{font:0.9em ui-monospace,Menlo,Consolas,monospace;background:var(--why);padd
 
   <section class="step" id="s1" data-title="The scenario">
     <h2><span class="num">1</span>The scenario</h2>
-    <p>Recovery Corp has decommissioned an old workstation and staged a disk backup on one of its servers "for the IT audit." Nobody checked what that backup still contains.</p>
-    <p>You have been pointed at a single machine on the network. Get in, take control, and prove it by capturing the flags.</p>
+    <p>"DevHub" is a catalogue of developer tools. The search box talks to a database, the developers took shortcuts, and the box's internal accounts were not locked down as tightly as they should be.</p>
+    <p>One machine, two flags. Getting root will take more than one step.</p>
   </section>
 
   <section class="step" id="s2" data-title="Your target">
     <h2><span class="num">2</span>Your target</h2>
-    <p>You are given the machine's IP address — set it in the <b>Target IP</b> box above and it drops into the commands. Throughout it is written as <span class="ph ipv">&lt;target-ip&gt;</span>.</p>
-    <p>Confirm the box is reachable before you start:</p>
-    <pre><code>ping -c2 <span class="ph ipv">&lt;target-ip&gt;</span></code></pre>
+    <p>You are given the machine's IP — set it in the <b>Target IP</b> box above. Throughout it is written as <span class="ph ipv">&lt;target-ip&gt;</span>. Map it and find the dynamic pages:</p>
+    <pre><code>nmap -sC -sV <span class="ph ipv">&lt;target-ip&gt;</span></code></pre>
   </section>
 
   <section class="step" id="s3" data-title="Your objective">
     <h2><span class="num">3</span>Your objective</h2>
     <p>Capture <b>two flags</b> and submit each exact string:</p>
-    <div class="goal"><span class="lbl">user flag</span><span>stand on the box as a normal user</span></div>
-    <div class="goal"><span class="lbl">root flag</span><span>take full control of the machine</span></div>
-    <p>Flags look like <code>FLAG{...}</code>. On this box one of them is not just sitting in a file — you will have to <i>work</i> to recover it.</p>
+    <div class="goal"><span class="lbl">user flag</span><span>a login on the box</span></div>
+    <div class="goal"><span class="lbl">root flag</span><span>full control of the machine</span></div>
+    <p>Flags look like <code>FLAG{...}</code>.</p>
   </section>
 
   <section class="step" id="sc" data-title="Check your flags">
     <h2><span class="num">✓</span>Check your flags</h2>
-    <p>Found a flag? Paste it in to verify. The answers are stored only as <b>salted hashes</b>, so this page checks your flag without ever revealing it.</p>
-    <div class="fcheck" data-salt="9e274f4879442b47" data-hash="d355c5a5b2c2adf80145903cd49d6be6b2da3a2d2bafa0ec26cdc19c202fa4c2">
+    <p>Found a flag? Paste it in to verify. Answers are stored only as <b>salted hashes</b>, so this page checks your flag without ever revealing it.</p>
+    <div class="fcheck" data-salt="b6b265a780378f1e" data-hash="353008a0915cf9c2b9fe1ca3ff0438bc5f8114a551c20e8f1db97353c1116433">
       <label>User flag</label>
       <div class="row"><input type="text" placeholder="FLAG{...}" autocomplete="off" spellcheck="false" aria-label="User flag"><button type="button" class="go">Check</button><span class="res" aria-live="polite"></span></div>
     </div>
-    <div class="fcheck" data-salt="53b2ca8516bec493" data-hash="e697c06bab16a6e796a362b6bceb1905ca15da50baa37f66d2d95b1cb20474e6">
+    <div class="fcheck" data-salt="55e193d12e00a1b3" data-hash="19643f48f0b14b86123c8886026a7b56ed87a20f97e4efb0bc83562f0a0b4135">
       <label>Root flag</label>
       <div class="row"><input type="text" placeholder="FLAG{...}" autocomplete="off" spellcheck="false" aria-label="Root flag"><button type="button" class="go">Check</button><span class="res" aria-live="polite"></span></div>
     </div>
@@ -185,9 +184,9 @@ code{font:0.9em ui-monospace,Menlo,Consolas,monospace;background:var(--why);padd
   <section class="step" id="s4" data-title="Rules">
     <h2><span class="num">4</span>Rules</h2>
     <ul>
-      <li>Attack <b>only</b> the <span class="ph ipv">&lt;target-ip&gt;</span> you were given — nothing else on the network.</li>
-      <li>Any tools are allowed: <code>nmap</code>, forensic carvers, password tools, and so on.</li>
-      <li>Note down how you got in and how you escalated — being able to explain it matters more than the flag.</li>
+      <li>Attack <b>only</b> the <span class="ph ipv">&lt;target-ip&gt;</span> you were given.</li>
+      <li>Any tools are allowed — sqlmap, hashcat/john, and so on.</li>
+      <li>Keep notes on each step; being able to explain the chain is the point.</li>
     </ul>
   </section>
 
@@ -195,9 +194,9 @@ code{font:0.9em ui-monospace,Menlo,Consolas,monospace;background:var(--why);padd
     <h2><span class="num">5</span>A nudge</h2>
     <div class="note">
       <h3>If you get stuck</h3>
-      <p>Think about what a <i>backup</i> really contains. "Deleted" is not the same as "gone." Start by seeing which services the box exposes, and follow what they hand you.</p>
+      <p>Find the parameter the database trusts and take what it stores. Those secrets won't be usable as-is — you'll have to turn them into something you can log in with. For root, one account can act as another, and somewhere an ordinary-looking binary has more power than it should.</p>
     </div>
-    <p>Full walkthrough (spoilers): <code>writeups/m1-recovery.html</code>.</p>
+    <p>Full walkthrough (spoilers): <code>writeup.html</code>.</p>
   </section>
 
 </div>
@@ -212,7 +211,6 @@ code{font:0.9em ui-monospace,Menlo,Consolas,monospace;background:var(--why);padd
   document.getElementById("themeBtn").addEventListener("click",function(){var s=root.getAttribute("data-theme");var c=s?s:(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light");root.setAttribute("data-theme",c==="dark"?"light":"dark");});
   document.getElementById("topBtn").addEventListener("click",function(){window.scrollTo({top:0,behavior:(matchMedia("(prefers-reduced-motion:reduce)").matches?"auto":"smooth")});});
 
-  /* ---- target-IP variable + per-command copy ---- */
   var IPLABEL="<target-ip>";
   var ipInput=document.getElementById("ipv");
   function ipVal(){var v=ipInput&&ipInput.value.trim();return v||IPLABEL;}
@@ -238,19 +236,13 @@ code{font:0.9em ui-monospace,Menlo,Consolas,monospace;background:var(--why);padd
     });
     codeBlocks.push(rows);
   });
-  function renderIP(){
-    var v=ipVal();
-    proseIp.forEach(function(s){s.textContent=v;s.classList.toggle("set",v!==IPLABEL);});
-    codeBlocks.forEach(function(rows){rows.forEach(function(r){r.t.textContent=sub(r.raw);});});
-  }
+  function renderIP(){var v=ipVal();proseIp.forEach(function(s){s.textContent=v;s.classList.toggle("set",v!==IPLABEL);});codeBlocks.forEach(function(rows){rows.forEach(function(r){r.t.textContent=sub(r.raw);});});}
   if(ipInput)ipInput.addEventListener("input",renderIP);
   renderIP();
 
-  /* ---- count-up timer ---- */
   var tEl=document.getElementById("timer");
   if(tEl){var t0=Date.now();setInterval(function(){var s=Math.floor((Date.now()-t0)/1000);tEl.textContent=Math.floor(s/60)+":"+("0"+(s%60)).slice(-2);},1000);}
 
-  /* ---- flag checker (salted, offline) ---- */
   function sha256(ascii){function rr(v,a){return (v>>>a)|(v<<(32-a));}var mp=Math.pow,mw=mp(2,32),result='',words=[],bl=ascii.length*8;var hash=sha256.h=sha256.h||[],k=sha256.k=sha256.k||[],pc=k.length,comp={},i,j;for(var c=2;pc<64;c++){if(!comp[c]){for(i=0;i<313;i+=c){comp[i]=c;}hash[pc]=(mp(c,.5)*mw)|0;k[pc++]=(mp(c,1/3)*mw)|0;}}ascii+='\x80';while(ascii.length%64-56)ascii+='\x00';for(i=0;i<ascii.length;i++){j=ascii.charCodeAt(i);if(j>>8)return;words[i>>2]|=j<<((3-i)%4)*8;}words[words.length]=((bl/mw)|0);words[words.length]=(bl);for(j=0;j<words.length;){var w=words.slice(j,j+=16),oh=hash;hash=hash.slice(0,8);for(i=0;i<64;i++){var w15=w[i-15],w2=w[i-2],a=hash[0],e=hash[4];var t1=hash[7]+(rr(e,6)^rr(e,11)^rr(e,25))+((e&hash[5])^((~e)&hash[6]))+k[i]+(w[i]=(i<16)?w[i]:(w[i-16]+(rr(w15,7)^rr(w15,18)^(w15>>>3))+w[i-7]+(rr(w2,17)^rr(w2,19)^(w2>>>10)))|0);var t2=(rr(a,2)^rr(a,13)^rr(a,22))+((a&hash[1])^(a&hash[2])^(hash[1]&hash[2]));hash=[(t1+t2)|0].concat(hash);hash[4]=(hash[4]+t1)|0;}for(i=0;i<8;i++){hash[i]=(hash[i]+oh[i])|0;}}for(i=0;i<8;i++){for(j=3;j+1;j--){var b=(hash[i]>>(j*8))&255;result+=((b<16)?0:'')+b.toString(16);}}return result;}
   var ITER=2000;function kdf(flag,salt){var h=sha256(salt+":"+flag);for(var i=0;i<ITER;i++){h=sha256(h+salt);}return h;}
   document.querySelectorAll(".fcheck").forEach(function(fc){
@@ -262,7 +254,6 @@ code{font:0.9em ui-monospace,Menlo,Consolas,monospace;background:var(--why);padd
     input.addEventListener("input",function(){if(fc.classList.contains("bad")){fc.classList.remove("bad");res.textContent="";}});
   });
 
-  /* ---- section nav ---- */
   var steps=[].slice.call(document.querySelectorAll("section.step"));
   var chips=document.getElementById("chips"),now=document.getElementById("now"),score=document.getElementById("score"),fill=document.getElementById("fill");
   steps.forEach(function(s,i){var a=document.createElement("a");a.href="#"+s.id;a.textContent=(i+1);a.setAttribute("aria-label","Section "+(i+1)+": "+s.dataset.title);chips.appendChild(a);});

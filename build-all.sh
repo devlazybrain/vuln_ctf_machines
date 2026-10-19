@@ -2,7 +2,7 @@
 # Author: devlazybrain — https://github.com/devlazybrain
 # =====================================================================
 # build-all.sh — builds the 3 lab boxes with Vagrant + VirtualBox and
-# exports portable .ova files into ./ova/
+# exports a portable .ova into each machine's own folder
 #
 # Requirements on the host (Kali):  virtualbox  vagrant
 #   sudo apt update && sudo apt install -y virtualbox vagrant
@@ -12,9 +12,6 @@
 # =====================================================================
 set -euo pipefail
 HERE="$(cd "$(dirname "$0")" && pwd)"
-OUT="$HERE/ova"
-mkdir -p "$OUT"
-
 command -v vagrant   >/dev/null || { echo "ERROR: vagrant not installed";   exit 1; }
 command -v VBoxManage>/dev/null || { echo "ERROR: VirtualBox not installed"; exit 1; }
 
@@ -35,9 +32,9 @@ build() {
   VBoxManage controlvm "$vm" poweroff 2>/dev/null || true
   sleep 2
 
-  echo "--- exporting -> $OUT/$vm.ova ---"
-  rm -f "$OUT/$vm.ova"
-  VBoxManage export "$vm" -o "$OUT/$vm.ova" \
+  echo "--- exporting -> $HERE/$dir/$vm.ova ---"
+  rm -f "$HERE/$dir/$vm.ova"
+  VBoxManage export "$vm" -o "$HERE/$dir/$vm.ova" \
     --vsys 0 --product "$vm" --vendor "assessment-lab"
 
   echo "--- removing vagrant working VM (ova already saved) ---"
@@ -59,5 +56,5 @@ else
 fi
 
 echo
-echo "All done. OVA files are in: $OUT"
-ls -lh "$OUT"
+echo "All done. Each .ova is in its machine folder:"
+ls -lh "$HERE"/*/*.ova 2>/dev/null
