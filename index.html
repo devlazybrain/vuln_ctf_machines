@@ -31,17 +31,16 @@ html{min-height:100%;scroll-behavior:smooth}
 body{margin:0;color:var(--ink);font:16px/1.6 "Figtree","Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
   background:radial-gradient(1200px 500px at 85% -5%,rgba(0,180,216,.18),transparent 60%),linear-gradient(180deg,var(--bg2),var(--bg) 420px);background-color:var(--bg)}
 main{max-width:780px;margin:0 auto;padding:0 14px 90px}
-header{margin:0 -14px 22px;padding:40px 22px 44px;color:#d8f3dc;border-radius:0 0 28px 28px;position:relative;overflow:hidden;
+header{margin:0 -14px 22px;padding:34px 22px 30px;color:#d8f3dc;border-radius:0 0 28px 28px;position:relative;overflow:hidden;
   background:linear-gradient(135deg,var(--hero1) 0%,var(--hero2) 55%,var(--hero3) 100%)}
-header::after{content:"";position:absolute;right:-70px;top:-70px;width:260px;height:260px;border-radius:50%;
+header::after{content:"";position:absolute;right:-70px;top:-70px;width:240px;height:240px;border-radius:50%;
   background:radial-gradient(circle at 35% 35%,#90e0ef,#00b4d8 45%,#0077b6 75%,transparent 76%);opacity:.9}
-header::before{content:"";position:absolute;right:70px;bottom:-60px;width:140px;height:140px;border-radius:50%;background:#52b788;opacity:.35}
+header::before{content:"";position:absolute;right:60px;bottom:-60px;width:130px;height:130px;border-radius:50%;background:#52b788;opacity:.35}
 .eyebrow{position:relative;z-index:1;margin:0 0 8px;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:#90e0ef;font-weight:700}
-h1{font-family:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;font-size:clamp(2rem,6vw,3rem);line-height:1.05;margin:0 0 12px;letter-spacing:-.02em;font-weight:800;position:relative;z-index:1;max-width:80%}
+h1{font-family:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;font-size:clamp(1.9rem,6vw,2.7rem);line-height:1.05;margin:0 0 10px;letter-spacing:-.02em;font-weight:800;position:relative;z-index:1;max-width:82%}
 header p{margin:0;max-width:40em;color:#b7e4c7;position:relative;z-index:1}
-.toolbar{display:flex;justify-content:flex-end;margin:0 0 18px}
-.toolbar button{font:inherit;font-weight:600;font-size:.88rem;padding:7px 14px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
-.toolbar button:hover{border-color:var(--accent);color:var(--accent)}
+.toggle{position:absolute;top:18px;right:18px;z-index:2;font:inherit;font-weight:600;font-size:.82rem;padding:6px 12px;border-radius:10px;cursor:pointer;color:#d8f3dc;background:rgba(0,0,0,.25);border:1px solid rgba(144,224,239,.4)}
+.toggle:hover{border-color:#90e0ef}
 .lead{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px 20px;margin:0 0 22px;box-shadow:var(--shadow)}
 .lead p{margin:.4rem 0}
 .card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px;margin:0 0 18px;box-shadow:var(--shadow)}
@@ -65,14 +64,13 @@ header p{margin:0;max-width:40em;color:#b7e4c7;position:relative;z-index:1}
 </head>
 <body>
 <header>
+  <button class="toggle" id="themeBtn" type="button">◐ Theme</button>
   <p class="eyebrow">Open-source practice lab</p>
   <h1>Vulnerable Linux Boxes</h1>
   <p>Four self-contained, intentionally vulnerable Debian machines — easy to hard — for hands-on practice, exams, or self-training. Each has flags, a built-in flag checker, and a full write-up.</p>
 </header>
 
 <main>
-<div class="toolbar"><button id="themeBtn" type="button">Switch theme</button></div>
-
 <div class="lead">
   <p><b>How it works.</b> Import a box's <code>.ova</code>, set it to a host-only network, and attack the IP. Read the <b>host</b> page to run it, hand a player the <b>challenge</b> page, and open the <b>write-up</b> only when you want the solution.</p>
   <p><b>Get the images</b> from <a href="https://github.com/devlazybrain/vuln_ctf_machines/releases">Releases</a> (too large for the repo), import with <code>VBoxManage import &lt;box&gt;.ova</code>, and run. No build step needed.</p>
