@@ -269,7 +269,7 @@ uid=0(root) gid=0(root) groups=0(root)
 
   /* ---- clipboard (file:// fallback) ---- */
   function copyText(txt,el){
-    function flash(){ if(!el)return; el.classList.add('done','copied');if(el.classList.contains('copy')){if(el.dataset.o===undefined)el.dataset.o=el.textContent;el.textContent='Copied \u2713';} setTimeout(function(){el.classList.remove('done','copied');if(el.dataset.o!==undefined)el.textContent=el.dataset.o;},1200); }
+    function flash(){ if(!el)return; el.classList.add('done','copied');if(el.classList.contains('copy')){if(el.dataset.o===undefined)el.dataset.o=el.textContent;el.textContent='Copied \u2713';}else if(el.classList.contains('flag')){if(el.dataset.h===undefined)el.dataset.h=el.innerHTML;el.innerHTML='Copied \u2713';} setTimeout(function(){el.classList.remove('done','copied');if(el.dataset.o!==undefined){el.textContent=el.dataset.o;delete el.dataset.o;}if(el.dataset.h!==undefined){el.innerHTML=el.dataset.h;delete el.dataset.h;}},1200); }
     if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(flash,function(){fb(txt);flash();});}
     else{fb(txt);flash();}
   }
