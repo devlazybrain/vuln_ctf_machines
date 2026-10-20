@@ -153,7 +153,7 @@ footer a:hover{text-decoration:underline}
   </div>
 </div>
 
-<div class="warn">⚠️ <b>Training target.</b> Run host-only. Never bridge it to a real network or the internet. Every weakness below is intentional and scoped to exactly these six flags — nothing else is exploitable.</div>
+<div class="warn">⚠️ <b>Training target.</b> Run it on an isolated network — host-only, or bridged on a private LAN you control. Never on a campus, office or public network, or the internet. Every weakness below is intentional and scoped to exactly these six flags — nothing else is exploitable.</div>
 
 <div class="card">
   <p><b>Goal.</b> Capture all <b>six flags</b> in order — anonymous web recon through an SSH foothold and a localhost-only service to a root privilege escalation.</p>
@@ -162,7 +162,7 @@ footer a:hover{text-decoration:underline}
 
 <h2>Scenario &amp; overview</h2>
 <div class="card">
-<p>Candidates get only the target IP (host-only, e.g. <code>192.168.56.x</code>) and a hint that an SMB share exists. Goal: collect all six <code>FLAG{…}</code> values <em>in order</em> and show their work — the chain is linear, each flag feeds the next.</p>
+<p>Candidates get only the target IP (e.g. <code>192.168.56.x</code> host-only, or a LAN address when bridged) and a hint that an SMB share exists. Goal: collect all six <code>FLAG{…}</code> values <em>in order</em> and show their work — the chain is linear, each flag feeds the next.</p>
 <table>
 <tr><th>#</th><th>Flag</th><th>Vector</th><th>Skill</th></tr>
 <tr><td>1</td><td><span class="fv">robots_txt_is_not_a_secret</span></td><td><code>/robots.txt</code></td><td>web recon</td></tr>

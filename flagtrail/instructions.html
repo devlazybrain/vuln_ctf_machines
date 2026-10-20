@@ -122,7 +122,7 @@ footer a:hover{text-decoration:underline}
   <div class="track"><div class="fill" id="fill"></div></div>
 </div>
 
-<div class="warn">⚠️ <b>Training target.</b> Run it host-only. Never bridge it to a real network or expose it to the internet — the weaknesses are intentional and scoped to the six flags.</div>
+<div class="warn">⚠️ <b>Training target.</b> Keep it on an isolated network — host-only, or bridged on a private LAN you control. Never put it on a campus, office or public network, or expose it to the internet: the weaknesses are intentional and scoped to the six flags.</div>
 
 <div class="card sec" id="s1">
   <div class="chead"><span class="num">1</span><h3>What this box is</h3></div>
@@ -141,13 +141,18 @@ footer a:hover{text-decoration:underline}
   <div class="chead"><span class="num">3</span><h3>Import &amp; network</h3></div>
   <p>Import the appliance into VirtualBox:</p>
 <pre>$ VBoxManage import FlagTrail-Linux-CTF.ova</pre>
-  <p>Then set <b>Adapter 1 = Host-only</b> before first boot (GUI: <i>Settings → Network</i>). Do not use bridged.</p>
+  <p>Then pick <b>Adapter 1</b> before first boot (GUI: <i>Settings → Network</i>). The VM takes its address by DHCP in either mode:</p>
+  <p><b>Host-only</b> (attacker on the same PC) — <i>Attached to: Host-only Adapter</i>, <code>vboxnet0</code> (Windows: <i>VirtualBox Host-Only Ethernet Adapter</i>). VirtualBox's own DHCP hands out <code>192.168.56.x</code>.</p>
+  <p><b>Bridged</b> (attacker on a different machine) — <i>Attached to: Bridged Adapter</i>, <i>Name</i> = the host NIC that is actually connected, <i>Advanced → Promiscuous Mode: Allow All</i>. The address comes from your router, so use a <b>wired</b> port on a home or spare router; a cheap router with no uplink is ideal.</p>
+  <div class="note"><h4>Bridged but no IP?</h4>That is the network refusing the VM, not the box: many Wi-Fi access points drop a bridged VM's traffic, and campus/office networks block unknown devices. Switch to a wired port on a router you control, then reboot the VM (or wait a few minutes) so it asks for an address again.</div>
 </div>
 
 <div class="card sec" id="s4">
   <div class="chead"><span class="num">4</span><h3>Boot &amp; get the IP</h3></div>
-  <p>Boot it, then find its IP from an attacker box on the same host-only network:</p>
-<pre>$ sudo nmap -sn 192.168.56.0/24</pre>
+  <p>Boot it, then find its IP from the attacker box:</p>
+<pre>$ sudo nmap -sn 192.168.56.0/24     <span class="c"># host-only</span></pre>
+<pre>$ sudo nmap -sn 192.168.1.0/24      <span class="c"># bridged: your LAN's range</span></pre>
+  <p>In bridged mode your router's list of connected devices shows it as well.</p>
   <p>Give the player only that IP (and that an SMB share exists).</p>
   <p><b>Headless</b> (no GUI): <code>VBoxManage startvm "FlagTrail-CTF" --type headless</code>.</p>
   <p><b>Other hypervisors</b> (KVM/QEMU, Proxmox, VMware) — an <code>.ova</code> is a tar of a disk + config; extract and convert:</p>
